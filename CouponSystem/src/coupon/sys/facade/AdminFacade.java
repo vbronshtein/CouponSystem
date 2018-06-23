@@ -8,6 +8,7 @@ import coupon.sys.core.beans.Customer;
 import coupon.sys.core.dao.db.CompanyCouponDbDao;
 import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.dao.db.CouponDbDao;
+import coupon.sys.core.dao.db.CustomerCouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
@@ -15,18 +16,20 @@ public class AdminFacade implements CouponClientFacade {
 	private CompanyDbDao companyDbDao;
 	private CouponDbDao couponDbDao;
 	private CompanyCouponDbDao companyCouponDbDao;
-	private CustomerDbDao customerDbDao ;
+	private CustomerDbDao customerDbDao;
+	private CustomerCouponDbDao customerCouponDbDao;
 
 	public AdminFacade() {
 		this.companyDbDao = new CompanyDbDao();
 		this.couponDbDao = new CouponDbDao();
 		this.companyCouponDbDao = new CompanyCouponDbDao();
 		this.customerDbDao = new CustomerDbDao();
+		this.customerCouponDbDao = new CustomerCouponDbDao();
 	}
 
 	public void createCompany(Company company) throws CouponSystemException {
 
-		if (companyDbDao.getCompanyByName(company.getName()) != null) {
+		if (companyDbDao.getCompanyByName(company.getName()) == null) {
 			companyDbDao.create(company);
 		} else {
 			throw new CouponSystemException(
@@ -73,103 +76,52 @@ public class AdminFacade implements CouponClientFacade {
 		return companies;
 	}
 
-	public void createCustomer(Customer customer) {
+	public void createCustomer(Customer customer) throws CouponSystemException {
 
-		try {
-			// Check if customer with same name is exist on DB
-			Collection<Customer> customers = customerDbDao.getAllCustomer();
-			boolean nameIsExist = false;
-			for (Customer customerTmp : customers) {
-				if (customer.isNameEqualTo(customerTmp)) {
-					nameIsExist = true;
-					break;
-				}
-			}
-
-			// Add customer to DB if was not found
-			if (!nameIsExist) {
-				customerDbDao.create(customer);
-			} else {
-				throw new CouponSystemException(
-						"Customer with name : " + customer.getCustName() + " is already exist on Data Base");
-			}
-
-		} catch (CouponSystemException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void removeCustomer(Customer customer) {
-		CustomerDbDao customerDb = new CustomerDbDao();
-		CouponDbDao couponDb = new CouponDbDao();
-
-		try {
-			// Delete all customer coupons
-			Collection<Coupon> currentCustomerCoupons = customer.getCoupons();
-			if (currentCustomerCoupons != null) {
-				for (Coupon coupon : currentCustomerCoupons) {
-					couponDb.delete(coupon);
-				}
-			}
-			// Delete customer
-			customerDb.delete(customer);
-
-		} catch (CouponSystemException e) {
-			e.printStackTrace();
+		if (customerDbDao.getCustomerByName(customer.getCustName()) == null) {
+			customerDbDao.create(customer);
+		} else {
+			throw new CouponSystemException(
+					"Customer with name : " + customer.getCustName() + " is already exist on Data Base");
 		}
 
 	}
 
-	public void updateCustomer(Customer customer) {
+	public void removeCustomer(Customer customer) throws CouponSystemException {
+		// delete all company coupons
+		customerCouponDbDao.deleteAllCustomerCoupons(customer);
+		// delete company
+		customerDbDao.delete(customer);
 
-		try {
-			CustomerDbDao customerDb = new CustomerDbDao();
-			Customer customerFromDb = customerDb.read(customer.getId());
+	}
 
-			if (customerFromDb.getCustName() == null) {
-				throw new CouponSystemException(
-						"Update Database fail , Customer : " + customer.getCustName() + " was not found");
-			} else if (customerFromDb.getCustName().equals(customer.getCustName())) {
-				customerDb.update(customer);
-			} else {
-				customer.setCustName(customerFromDb.getCustName());
-				customerDb.update(customer);
-				throw new CouponSystemException(
-						"Customer info was secessfully updated except name ( Customer name cant' be override by buseness logic ");
-			}
+	public void updateCustomer(Customer customer) throws CouponSystemException {
 
-		} catch (CouponSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Customer customerFromDB = customerDbDao.read(customer.getId());
+
+		// update company except for the company name
+		if (!customer.getCustName().equals(customer.getCustName())) {
+			customer.setCustName(customerFromDB.getCustName());
+			customerDbDao.update(customer);
+
+			throw new CouponSystemException(
+					"Customer info was secessfully updated except Customer name ( Customer name cant' be override by buseness logic ");
+		} else {
+			customerDbDao.update(customer);
 		}
 
 	}
 
-	public Customer getCustomer(long id) {
+	public Customer getCustomer(long id) throws CouponSystemException {
 
-		CustomerDbDao customerDb = new CustomerDbDao();
-		Customer customer = null;
-		try {
-			customer = customerDb.read(id);
-		} catch (CouponSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Customer customer = customerDbDao.read(id);
 
 		return customer;
 	}
 
-	public Collection<Customer> getAllCustomers() {
-		CustomerDbDao customerDb = new CustomerDbDao();
+	public Collection<Customer> getAllCustomers() throws CouponSystemException {
 		Collection<Customer> customers = null;
-
-		try {
-			customers = customerDb.getAllCustomer();
-		} catch (CouponSystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		customers = customerDbDao.getAllCustomer();
 		return customers;
 
 	}

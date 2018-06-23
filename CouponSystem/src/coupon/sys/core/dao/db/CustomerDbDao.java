@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
@@ -56,7 +57,7 @@ public class CustomerDbDao implements CustomerDao {
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
+			if (rs.next()) {
 				customer.setId(rs.getLong("ID"));
 				customer.setCustName(rs.getString("CUST_NAME"));
 				customer.setPassword(rs.getString("PASSWORD"));
@@ -142,6 +143,33 @@ public class CustomerDbDao implements CustomerDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	public Customer getCustomerByName(String name) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT * FROM customer WHERE CUST_NAME= '" + name+"'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				Customer customer = new Customer();
+				customer.setId(rs.getLong("ID"));
+				customer.setCustName(rs.getString("CUST_NAME"));
+				customer.setPassword(rs.getString("PASSWORD"));
+				return customer;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+		return null;
+
+	}
+
 
 	@Override
 	public boolean login(String custName, String password) {

@@ -7,6 +7,13 @@ import java.io.IOException;
 
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Class Configure connection to Database ( current configure to work with Derby
+ * DB , without password)
+ * 
+ * @author vbronshtein
+ *
+ */
 public class Configuration {
 
 	// init method declaration
@@ -29,6 +36,12 @@ public class Configuration {
 		return istance;
 	}
 
+	/**
+	 * Read Database URL from External file : "files/db.txt"
+	 * 
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	private String readDbUrlFromFile() throws CouponSystemException {
 		// source file
 		File file = new File("files/db.txt");
@@ -45,6 +58,10 @@ public class Configuration {
 
 	}
 
+	/**
+	 * Init function , perform all Database Configurations ( Create URL , Config nam
+	 * of Connections to DB )
+	 */
 	private void init() {
 
 		try {

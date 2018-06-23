@@ -11,6 +11,12 @@ import java.util.Set;
 
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Class manage pool of the connections to Data Base (get/return connection)
+ * 
+ * @author vbronshtein
+ *
+ */
 public class ConnectionPool {
 	Set<Connection> availableConnections = new HashSet<>();
 
@@ -48,6 +54,12 @@ public class ConnectionPool {
 	}
 
 	// Get-Return Connection methods
+	/**
+	 * Get SQL Connection to Data Base
+	 *  
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public synchronized Connection getConnection() throws CouponSystemException {
 		while (availableConnections.isEmpty()) {
 			try {
@@ -56,7 +68,6 @@ public class ConnectionPool {
 				throw new CouponSystemException("Cant wait() to availableConnection ", e);
 			}
 		}
-		// notify();
 
 		Iterator<Connection> it = availableConnections.iterator();
 		Connection currentConnection = it.next();
@@ -66,11 +77,21 @@ public class ConnectionPool {
 
 	}
 
+	/**
+	 * Return Connection to pool
+	 * 
+	 * @param connection
+	 */
 	public synchronized void returnConnection(Connection connection) {
 		availableConnections.add(connection);
 		notify();
 	}
 
+	/**
+	 * Check current pool size
+	 * 
+	 * @return
+	 */
 	public int poolSize() {
 		return availableConnections.size();
 	}
