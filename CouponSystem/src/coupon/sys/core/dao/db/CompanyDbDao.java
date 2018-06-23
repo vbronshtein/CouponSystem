@@ -31,7 +31,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		try {
 			String sql = "INSERT INTO company VALUES(" + company.getId() + ", " + "'" + company.getName() + "'" + ", "
 					+ "'" + company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
-			;
+			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 
@@ -142,6 +142,33 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		// TODO Auto-generated method stub
 		pool.returnConnection(connection);
 		return null;
+	}
+	
+	
+	public Company getCompanyByName(String name) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT * FROM company WHERE COMP_NAME= '" + name+"'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				Company company = new Company();
+				company.setId(rs.getLong("ID"));
+				company.setName(rs.getString("COMP_NAME"));
+				company.setPassword(rs.getString("PASSWORD"));
+				company.setEmail(rs.getString("EMAIL"));
+				return company;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+		return null;
+
 	}
 
 	@Override
