@@ -61,7 +61,7 @@ public class DbDaoTests {
 			System.out.println(customerDbDao.read(3));
 
 			System.out.println();
-			System.out.println(couponDbDao.read(1));
+			System.out.println(couponDbDao.read(1L));
 			System.out.println(couponDbDao.read(2));
 			System.out.println(couponDbDao.read(3));
 

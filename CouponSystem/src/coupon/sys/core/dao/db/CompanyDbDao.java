@@ -46,17 +46,18 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		Company company = new Company();
 
 		String sql = "SELECT * FROM company WHERE ID=" + id;
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
+			if (rs.next()) {
+				Company company = new Company();
 				company.setId(rs.getLong("ID"));
 				company.setName(rs.getString("COMP_NAME"));
 				company.setPassword(rs.getString("PASSWORD"));
 				company.setEmail(rs.getString("EMAIL"));
+				return company;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 			pool.returnConnection(connection);
 		}
 
-		return company;
+		return null;
 
 	}
 

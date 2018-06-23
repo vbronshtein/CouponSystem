@@ -16,7 +16,7 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 	public void createCoupon(Coupon coupon) {
-
+		
 	}
 
 	public void removeCoupon(Coupon coupon) {
