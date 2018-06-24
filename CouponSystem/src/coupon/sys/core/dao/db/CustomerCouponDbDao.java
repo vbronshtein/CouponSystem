@@ -101,6 +101,25 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
+		
+	}
 
+	public void deleteListOfCustomerCoupons(Collection<Coupon> coupons) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		try {
+			for (Coupon coupon : coupons) {
+				String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
+				Statement stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+		
+			
 	}
 }

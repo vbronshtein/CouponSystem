@@ -40,8 +40,14 @@ public class AdminFacade implements CouponClientFacade {
 
 	public void removeCompany(Company company) throws CouponSystemException {
 
+		//delete Company coupons that was buy by costomers
+		Collection<Coupon> coupons = companyCouponDbDao.getAllCompanyCoupons(company);
+		if(coupons != null) {
+			customerCouponDbDao.deleteListOfCustomerCoupons(coupons);
+		}
 		// delete all company coupons
 		companyCouponDbDao.deleteAllCompanyCoupons(company);
+		
 		// delete company
 		companyDbDao.delete(company);
 	}

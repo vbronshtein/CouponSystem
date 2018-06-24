@@ -2,21 +2,43 @@ package coupon.sys.facade;
 
 import java.util.Collection;
 
+import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
+import coupon.sys.core.dao.db.CompanyCouponDbDao;
 import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.dao.db.CouponDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 public class CompanyFacade implements CouponClientFacade {
 
-	private CompanyDbDao compDbDao = new CompanyDbDao();
-	private CouponDbDao couponDbDao = new CouponDbDao();
+	private Company company;
+	private CompanyDbDao companyDbDao;
+	private CouponDbDao couponDbDao;
+	private CompanyCouponDbDao companyCouponDbDao;
 
-	public CompanyFacade() {
-		// TODO Auto-generated constructor stub
+	public CompanyFacade(Company company) {
+		this.company = company;
+		companyDbDao = new CompanyDbDao();
+		couponDbDao = new CouponDbDao();
+		companyCouponDbDao = new CompanyCouponDbDao();
 	}
 
 	public void createCoupon(Coupon coupon) throws CouponSystemException {
+		
+		if(couponDbDao.getCouponByTitle(coupon.getTitle()) == null) {
+			couponDbDao.create(coupon);
+			companyCouponDbDao.create(this.company, coupon);
+		} else {
+			throw new CouponSystemException(
+					"Coupon with title : " + coupon.getTitle() + " is already exist on Data Base");
+		}
+		
+		
+		
+		
+		
+		
+		
 		// Check if Coupon with same title already exist on DB
 		Collection<Coupon> coupons = couponDbDao.getAllCoupon();
 		for (Coupon dbCoupon : coupons) {

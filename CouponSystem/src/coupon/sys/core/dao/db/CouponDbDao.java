@@ -46,14 +46,14 @@ public class CouponDbDao implements CouponDao {
 	@Override
 	public Coupon read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		Coupon coupon = new Coupon();
 
 		String sql = "SELECT * FROM coupon WHERE ID=" + id;
 
 		try {
+			Coupon coupon = new Coupon();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
+			if(rs.next()) {
 				coupon.setId(rs.getLong("ID"));
 				coupon.setTitle(rs.getString("TITLE"));
 				coupon.setStartDate(rs.getDate("START_DATE"));
@@ -63,6 +63,7 @@ public class CouponDbDao implements CouponDao {
 				coupon.setMessage(rs.getString("MESSAGE"));
 				coupon.setPrice(rs.getDouble("PRICE"));
 				coupon.setImage(rs.getString("IMAGE"));
+				return coupon;
 			}
 
 		} catch (SQLException e) {
@@ -71,7 +72,7 @@ public class CouponDbDao implements CouponDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return coupon;
+		return null;
 	}
 
 	@Override
@@ -153,6 +154,38 @@ public class CouponDbDao implements CouponDao {
 	public Collection<Coupon> getCouponByType(CouponType couponType) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Coupon getCouponByTitle(String title) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT * FROM coupon WHERE TITLE='" + title + "'";
+
+		try {
+			Coupon coupon = new Coupon();
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				return coupon;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+
 	}
 
 }
