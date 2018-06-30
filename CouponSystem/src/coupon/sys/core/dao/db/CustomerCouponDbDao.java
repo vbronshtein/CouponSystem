@@ -44,8 +44,10 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 
 	@Override
 	public void delete(Customer customer, Coupon coupon) throws CouponSystemException {
+
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COMP_ID=" + customer.getId() + " and COUPON_ID=" + coupon.getId();
+		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COMP_ID=" + customer.getId() + " and COUPON_ID="
+				+ coupon.getId();
 
 		Statement stmt;
 		try {
@@ -64,23 +66,20 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		Connection connection = pool.getConnection();
 
 		try {
-			// read all company coupons
-			String sql = "SELECT * FROM CUSTOMER_COUPON WHERE CUST_ID= " + customer.getId();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			// delete all company coupons from coupon table
-			while (rs.next()) {
-				String sqlCoupon = "DELETE FROM customer WHERE ID=" + rs.getLong("CUSTOMER_ID");
-				Statement stmt2 = connection.createStatement();
-				stmt2.executeUpdate(sqlCoupon);
+			String sql_coupon = "DELETE FROM Coupon WHERE ID IN (SELECT COUPON_ID FROM Coupon INNER JOIN Customer_Coupon ON Coupon.Id =Customer_Coupon.COUPON_Id WHERE Customer_Id = "
+					+ customer.getId();
+			String sql_companyCoupon = "DELETE FROM Company_coupon WHERE coupon_id IN (SELECT COUPON_ID FROM Company_coupon INNER JOIN Customer_Coupon ON Company_Coupon.COUPON_Id =Customer_Coupon.COUPON_Id WHERE customer_Id = "
+					+ customer.getId();
 
-			}
-			// delete all company coupons from CompanyCoupons table
-			deleteCustomer(customer);
+			String sql_customerCoupon = "DELETE FROM customer_coupon WHERE Customer_ID=" + customer.getId();
+
+			Statement stmt = connection.createStatement();
+			stmt.executeQuery(sql_coupon);
+			stmt.executeQuery(sql_companyCoupon);
+			stmt.executeQuery(sql_customerCoupon);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -101,7 +100,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
-		
+
 	}
 
 	public void deleteListOfCustomerCoupons(Collection<Coupon> coupons) throws CouponSystemException {
@@ -119,7 +118,23 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
-		
-			
+
+	}
+
+	public void deleteCoupon(Coupon coupon) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
+
+		Statement stmt;
+		try {
+			stmt = connection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+
 	}
 }

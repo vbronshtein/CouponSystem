@@ -1,6 +1,7 @@
 package coupon.sys.core.dao.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -59,13 +60,46 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	}
 
+	public Coupon readCompanyCoupon(long compId, long couponId) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		try {
+			// read all company coupons
+			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="
+					+ compId + "and c.id =" + couponId;
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				Coupon coupon = new Coupon();
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				return coupon;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+	}
+
 	public Collection<Coupon> getAllCompanyCoupons(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
 			Collection<Coupon> coupons = new ArrayList<>();
 			// read all company coupons
-			String sql = "SELECT * FROM COMPANY_COUPON WHERE COMP_ID= " + company.getId();
+			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="
+					+ company.getId();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			// delete all company coupons from coupon table
@@ -83,7 +117,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 				coupons.add(coupon);
 
 			}
-			return coupons ;
+			return coupons;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
@@ -92,34 +126,28 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		}
 		return null;
 
-		
 	}
-	
+
 	public void deleteAllCompanyCoupons(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
-			// read all company coupons
-			String sql = "SELECT * FROM COMPANY_COUPON WHERE COMP_ID= " + company.getId();
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			// delete all company coupons from coupon table
-			while (rs.next()) {
-				String sqlCoupon = "DELETE FROM coupon WHERE ID=" + rs.getLong("COUPON_ID");
-				Statement stmt2 = connection.createStatement();
-				stmt2.executeUpdate(sqlCoupon);
+			String sql_coupon = "DELETE FROM Coupon WHERE ID IN (SELECT COUPON_ID FROM Coupon INNER JOIN Company_Coupon ON Coupon.Id =Company_Coupon.COUPON_Id WHERE COMP_Id = "
+					+ company.getId();
+			String sql_customerCoupon = "DELETE FROM Customer_coupon WHERE coupon_id IN (SELECT COUPON_ID FROM Customer_coupon INNER JOIN Company_Coupon ON Customer_Coupon.COUPON_Id =Company_Coupon.COUPON_Id WHERE COMP_Id = "
+					+ company.getId();
+			String sql_companyCoupon = "DELETE FROM company_coupon WHERE COMP_ID=" + company.getId();
 
-			}
-			// delete all company coupons from CompanyCoupons table
-			deleteCompany(company);
+			Statement stmt = connection.createStatement();
+			stmt.executeQuery(sql_coupon);
+			stmt.executeQuery(sql_customerCoupon);
+			stmt.executeQuery(sql_companyCoupon);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-
 	}
 
 	public void deleteCompany(Company company) throws CouponSystemException {
@@ -138,4 +166,104 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		}
 
 	}
+	
+	public Collection<Coupon> getCouponByType(Company company, CouponType type) throws CouponSystemException{
+		Connection connection = pool.getConnection();
+
+		try {
+			Collection<Coupon> coupons = new ArrayList<>();
+			// read all company coupons
+			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="+ company.getId() +" and c.type="+ type;
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Coupon coupon = new Coupon();
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				coupons.add(coupon);
+
+			}
+			return coupons;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+	}
+
+	public Collection<Coupon> getCouponUpToPrice(Company company, double price) throws CouponSystemException{
+		Connection connection = pool.getConnection();
+
+		try {
+			Collection<Coupon> coupons = new ArrayList<>();
+			// read all company coupons
+			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="+ company.getId() +" and c.price<"+price;
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Coupon coupon = new Coupon();
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				coupons.add(coupon);
+
+			}
+			return coupons;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+	}
+	
+	public Collection<Coupon> getCouponUpToDate(Company company, Date date) throws CouponSystemException{
+		Connection connection = pool.getConnection();
+		
+		try {
+			Collection<Coupon> coupons = new ArrayList<>();
+			// read all company coupons
+			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="+ company.getId() +" and c.date<"+ date;
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Coupon coupon = new Coupon();
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				coupons.add(coupon);
+				
+			}
+			return coupons;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+	}
+	
 }
