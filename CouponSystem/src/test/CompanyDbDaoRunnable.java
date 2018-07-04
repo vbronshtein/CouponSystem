@@ -9,7 +9,6 @@ import java.util.Collection;
 import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.connectionPool.ConnectionPool;
-import coupon.sys.core.connectionPool.ConnectionPoooldl;
 import coupon.sys.core.dao.CompanyDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 

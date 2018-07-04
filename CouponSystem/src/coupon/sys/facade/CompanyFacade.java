@@ -40,6 +40,10 @@ public class CompanyFacade implements CouponClientFacade {
 
 	}
 
+	/*
+	 * Functional but no protection
+	 * !!!Need to add protection ( with join delete only this company coupons and not each coupon
+	 */
 	public void removeCoupon(Coupon coupon) throws CouponSystemException {
 
 		companyCouponDbDao.delete(this.company, coupon);
@@ -91,3 +95,4 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 }
+

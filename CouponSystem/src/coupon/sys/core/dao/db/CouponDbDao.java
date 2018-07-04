@@ -1,6 +1,7 @@
 package coupon.sys.core.dao.db;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,7 +54,7 @@ public class CouponDbDao implements CouponDao {
 			Coupon coupon = new Coupon();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			if(rs.next()) {
+			if (rs.next()) {
 				coupon.setId(rs.getLong("ID"));
 				coupon.setTitle(rs.getString("TITLE"));
 				coupon.setStartDate(rs.getDate("START_DATE"));
@@ -165,7 +166,7 @@ public class CouponDbDao implements CouponDao {
 			Coupon coupon = new Coupon();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			if(rs.next()) {
+			if (rs.next()) {
 				coupon.setId(rs.getLong("ID"));
 				coupon.setTitle(rs.getString("TITLE"));
 				coupon.setStartDate(rs.getDate("START_DATE"));
@@ -185,6 +186,81 @@ public class CouponDbDao implements CouponDao {
 			pool.returnConnection(connection);
 		}
 		return null;
+
+	}
+
+	public int getCouponAmount(String title) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				return rs.getInt("AMOUNT");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+		return -1;
+	}
+
+	public boolean isExpired(String title) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT END_DATE FROM coupon WHERE TITLE='" + title + "'";
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				Date endDate = rs.getDate("END_DATE");
+				if (endDate.before(new Date(System.currentTimeMillis()))) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+		return false;
+	}
+
+	public void updateCouponAmount(String title) throws CouponSystemException {
+
+		Connection connection = pool.getConnection();
+
+		String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
+
+		try {
+			int tempAmount = 0;
+			Statement stmt = connection.createStatement();
+
+			ResultSet rs = stmt.executeQuery(getAmount);
+			if (rs.next()) {
+				tempAmount = rs.getInt("AMOUNT");
+			}
+
+			String updatedAmount = "UPDATE coupon SET AMOUNT=" + (tempAmount - 1);
+			stmt.executeUpdate(updatedAmount);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
 
 	}
 
