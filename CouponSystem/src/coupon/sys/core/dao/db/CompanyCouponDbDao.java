@@ -265,5 +265,22 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		}
 		return null;
 	}
-	
+
+	public void deleteCoupon(Long couponId) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		String sql = "DELETE FROM COMPANY_COUPON WHERE COUPON_ID=" + couponId;
+
+		Statement stmt;
+		try {
+			stmt = connection.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+	}
+
 }

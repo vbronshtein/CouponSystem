@@ -263,5 +263,39 @@ public class CouponDbDao implements CouponDao {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @return Collection<Long> of removed Coupon IDs from "coupon table
+	 * @throws CouponSystemException
+	 */
+	public Collection<Long> RemoveExpiredCoupons(Date date) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sqlCheck = "SELECT * FROM coupon WHERE END_DATE>'" + date + "'";
+		String sqlDelete = "DELETE FROM coupon END_DATE>'" + date + "'";
+		
+		try {
+			Collection<Long> expiredIds = new ArrayList<>();
+
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlCheck);
+			while (rs.next()) {
+				expiredIds.add(rs.getLong("ID"));
+			}
+			stmt.executeQuery(sqlDelete);
+			return expiredIds;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
+
+	}
+
 
 }

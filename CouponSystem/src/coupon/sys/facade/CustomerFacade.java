@@ -36,19 +36,16 @@ public class CustomerFacade implements CouponClientFacade {
 
 	}
 
-	public Collection<Coupon> getAllPurchesedCoupons() {
-		
-		
-		return null;
-		
+	public Collection<Coupon> getAllPurchesedCoupons() throws CouponSystemException {
+		return customerCouponDbDao.getAllCustomerCoupons(this.customer);
 	}
 
-	public void getAllPurchasedCouponsByType(CouponType couponType) {
-
+	public Collection<Coupon> getAllPurchasedCouponsByType(CouponType couponType) throws CouponSystemException {
+		return customerCouponDbDao.getCouponByType(this.customer, couponType);
 	}
 
-	public void getAllPurchasedCouponsByPrice(double price) {
-
+	public Collection<Coupon> getAllPurchasedCouponsUpToPrice(double price) throws CouponSystemException {
+		return customerCouponDbDao.getCouponUpToPrice(this.customer, price);
 	}
 
 	@Override
