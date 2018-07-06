@@ -56,7 +56,7 @@ public class ConnectionPool {
 	// Get-Return Connection methods
 	/**
 	 * Get SQL Connection to Data Base
-	 *  
+	 * 
 	 * @return
 	 * @throws CouponSystemException
 	 */
@@ -94,6 +94,21 @@ public class ConnectionPool {
 	 */
 	public int poolSize() {
 		return availableConnections.size();
+	}
+
+	public void closeAllConnection() throws CouponSystemException {
+		// add aditional logic how to close connectinns grasefully ( with Timeout on case
+		// no available ) , also block to give available connections to waited threads
+		Iterator<Connection> it = availableConnections.iterator();
+		try {
+			while (it.hasNext()) {
+				it.next().close();
+			}
+			System.out.println("all connections are closed");
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to close all Connections to database");
+		}
+
 	}
 
 }

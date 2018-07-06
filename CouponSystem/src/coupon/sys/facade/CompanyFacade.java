@@ -20,13 +20,16 @@ public class CompanyFacade implements CouponClientFacade {
 	private CompanyCouponDbDao companyCouponDbDao;
 	private CustomerCouponDbDao customerCouponDbDao;
 
-	public CompanyFacade(Company company) {
-		this.company = company;
+	
+	public CompanyFacade(String companyName) throws CouponSystemException {
 		companyDbDao = new CompanyDbDao();
 		couponDbDao = new CouponDbDao();
 		companyCouponDbDao = new CompanyCouponDbDao();
 		customerCouponDbDao = new CustomerCouponDbDao();
+
+		this.company = companyDbDao.getCompanyByName(companyName);
 	}
+	
 
 	public void createCoupon(Coupon coupon) throws CouponSystemException {
 

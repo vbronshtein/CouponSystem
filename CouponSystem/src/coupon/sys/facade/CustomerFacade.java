@@ -17,11 +17,12 @@ public class CustomerFacade implements CouponClientFacade {
 	private CouponDbDao couponDbDao;
 	private CustomerCouponDbDao customerCouponDbDao;
 
-	public CustomerFacade(Customer customer) {
-		this.customer = customer;
+	public CustomerFacade(String customerName) throws CouponSystemException {
 		customerDbDao = new CustomerDbDao();
 		couponDbDao = new CouponDbDao();
 		customerCouponDbDao = new CustomerCouponDbDao();
+
+		this.customer = customerDbDao.getCustomerByName(customerName);
 	}
 
 	public void purshaseCoupon(Coupon coupon) throws CouponSystemException {
