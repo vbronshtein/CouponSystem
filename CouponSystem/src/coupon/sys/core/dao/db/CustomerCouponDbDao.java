@@ -30,10 +30,20 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		Connection connection = pool.getConnection();
 
 		try {
-			String sql = "INSERT INTO CUSTOMER_COUPON VALUES(" + customer.getId() + ", " + coupon.getId() + ")";
-			;
+			String sqlCreate = "INSERT INTO CUSTOMER_COUPON VALUES(" + customer.getId() + ", " + coupon.getId() + ")";
+			String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + coupon.getTitle() + "'";
+
 			Statement stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sqlCreate);
+
+			int tempAmount = 0;
+			ResultSet rs = stmt.executeQuery(getAmount);
+			if (rs.next()) {
+				tempAmount = rs.getInt("AMOUNT");
+			}
+			String updatedAmount = "UPDATE coupon SET AMOUNT=" + (tempAmount - 1) + " WHERE TITLE='" + coupon.getTitle()
+					+ "'";
+			stmt.executeUpdate(updatedAmount);
 
 		} catch (SQLException e) {
 			throw new CouponSystemException("Incert customer : " + customer.getCustName() + "intro table fail", e);
@@ -63,21 +73,53 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 
 	}
 
+	public Coupon read(Customer customer, Coupon coupon) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		Coupon customerCoupon = null;
+
+		try {
+			String sql = "SELECT * FROM customer_coupon WHERE CUST_ID=" + customer.getId() + " and COUPON_ID="
+					+ coupon.getId();
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				customerCoupon = new Coupon();
+				customerCoupon.setId(rs.getLong("ID"));
+				customerCoupon.setTitle(rs.getString("TITLE"));
+				customerCoupon.setStartDate(rs.getDate("START_DATE"));
+				customerCoupon.setEndDate(rs.getDate("END_DATE"));
+				customerCoupon.setAmount(rs.getInt("AMOUNT"));
+				customerCoupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				customerCoupon.setMessage(rs.getString("MESSAGE"));
+				customerCoupon.setPrice(rs.getDouble("PRICE"));
+				customerCoupon.setImage(rs.getString("IMAGE"));
+
+			}
+			return customerCoupon;
+
+		} catch (SQLException e) {
+			throw new CouponSystemException("Incert customer : " + customer.getCustName() + " intro table fail", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+	}
+
 	public void deleteAllCustomerCoupons(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
-			String sql_coupon = "DELETE FROM Coupon WHERE ID IN (SELECT COUPON_ID FROM Coupon INNER JOIN Customer_Coupon ON Coupon.Id =Customer_Coupon.COUPON_Id WHERE Customer_Id = "
-					+ customer.getId();
-			String sql_companyCoupon = "DELETE FROM Company_coupon WHERE coupon_id IN (SELECT COUPON_ID FROM Company_coupon INNER JOIN Customer_Coupon ON Company_Coupon.COUPON_Id =Customer_Coupon.COUPON_Id WHERE customer_Id = "
-					+ customer.getId();
+			String sql_coupon = "DELETE FROM Coupon WHERE ID IN (SELECT COUPON_ID FROM Coupon INNER JOIN Customer_Coupon ON Coupon.Id =Customer_Coupon.COUPON_Id WHERE Cust_Id = "
+					+ customer.getId() + ")";
+			String sql_companyCoupon = "DELETE FROM Company_coupon WHERE coupon_id IN (SELECT Company_coupon.COUPON_ID FROM Company_coupon INNER JOIN Customer_Coupon ON Company_Coupon.COUPON_Id =Customer_Coupon.COUPON_Id WHERE cust_Id = "
+					+ customer.getId() + ")";
 
-			String sql_customerCoupon = "DELETE FROM customer_coupon WHERE Customer_ID=" + customer.getId();
+			String sql_customerCoupon = "DELETE FROM customer_coupon WHERE CUST_ID=" + customer.getId();
 
 			Statement stmt = connection.createStatement();
-			stmt.executeQuery(sql_coupon);
-			stmt.executeQuery(sql_companyCoupon);
-			stmt.executeQuery(sql_customerCoupon);
+			stmt.executeUpdate(sql_coupon);
+			stmt.executeUpdate(sql_companyCoupon);
+			stmt.executeUpdate(sql_customerCoupon);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -163,7 +205,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			Collection<Coupon> coupons = new ArrayList<>();
 			// read all customer coupons
 			String sql = "SELECT c.* FROM coupon c INNER JOIN customer_coupon cc ON c.id=cc.coupon_id WHERE cc.cust_id="
-					+ customer.getCustName();
+					+ customer.getId();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			// delete all company coupons from coupon table
@@ -198,7 +240,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			Collection<Coupon> coupons = new ArrayList<>();
 			// read all company coupons
 			String sql = "SELECT c.* FROM coupon c INNER JOIN customer_coupon cc ON c.id=cc.coupon_id WHERE cc.cust_id="
-					+ customer.getId() + " and c.type=" + type;
+					+ customer.getId() + " and c.type='" + type + "'";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -257,6 +299,27 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			pool.returnConnection(connection);
 		}
 		return null;
+	}
+
+	public boolean isCouponExistOnDb(long id) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		try {
+			String sql = "SELECT * FROM customer_coupon WHERE COUPON_ID=" + id;
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			throw new CouponSystemException("Read customer_coupon table fail", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
 	}
 
 }

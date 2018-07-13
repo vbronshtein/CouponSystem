@@ -26,13 +26,14 @@ public class CustomerFacade implements CouponClientFacade {
 	}
 
 	public void purshaseCoupon(Coupon coupon) throws CouponSystemException {
-
-		if (couponDbDao.getCouponByTitle(coupon.getTitle()) == null
+		// can buy coupon only ones ,amount > 0 , not expiried
+		if (customerCouponDbDao.read(this.customer, coupon) == null
 				&& couponDbDao.getCouponAmount(coupon.getTitle()) > 0 && couponDbDao.isExpired(coupon.getTitle())) {
 			customerCouponDbDao.create(this.customer, coupon);
-			couponDbDao.updateCouponAmount(coupon.getTitle());
+			// couponDbDao.updateCouponAmount(coupon.getTitle());
+
 		} else {
-			throw new CouponSystemException("purshase coupon fail");
+			throw new CouponSystemException("purshase coupon fail , no available coupons");
 		}
 
 	}

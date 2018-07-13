@@ -1,10 +1,6 @@
 package test;
 
 import java.sql.Date;
-import java.util.Collection;
-import java.util.Random;
-
-import org.apache.derby.tools.sysinfo;
 
 import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
@@ -17,8 +13,12 @@ import coupon.sys.facade.AdminFacade;
 import coupon.sys.facade.CompanyFacade;
 import coupon.sys.facade.CustomerFacade;
 
-public class CompanyFacadeTest {
-	public static void main(String[] args) {
+public class GeneralInitialDatabese {
+
+	public GeneralInitialDatabese() {
+	}
+
+	public void generateBasicRecords() {
 
 		Company company1 = new Company(1, "company1", "1111", "111@company.com");
 		Company company2 = new Company(2, "company2", "1112", "112@company.com");
@@ -91,16 +91,8 @@ public class CompanyFacadeTest {
 			compFacade2.createCoupon(coupon9);
 			compFacade2.createCoupon(coupon10);
 
-			// try to add coupon with existed name
-			System.out.println("try to add coupon with existed name");
-			// compFacade2.createCoupon(coupon8);
-
-			// try to add coupon with existed name from different company
-			System.out.println("try to add coupon with existed name from different company");
-			// compFacade3.createCoupon(coupon8);
-
-			// delete coupon - check also client coupons will delete
-			System.out.println("delete coupon - check also client coupons will delete");
+			
+			
 			adminFacade.createCustomer(customer11);
 			adminFacade.createCustomer(customer12);
 			adminFacade.createCustomer(customer13);
@@ -113,67 +105,9 @@ public class CompanyFacadeTest {
 			customerFacade12.purshaseCoupon(coupon6);
 			customerFacade12.purshaseCoupon(coupon7);
 
-			// End helper
-
-			compFacade1.removeCoupon(coupon4);
-
-			// delete non-exist coupon
-			System.out.println("delete non-exist coupon");
-			compFacade1.removeCoupon(coupon11);
-
-			// delete coupon of other company
-			System.out.println("delete coupon of other company");
-			compFacade1.removeCoupon(coupon6);
-
-			// update coupon - only endDate and price
-			System.out.println("update coupon - only endDate and price");
-			coupon6.setEndDate(new Date(System.currentTimeMillis()+ 1000*3600*48 ));
-			coupon6.setPrice(500000);
-			compFacade2.updateCoupon(coupon6);
-			
-			
-			// update non exist coupon
-			System.out.println("update non exist coupon");
-
-			// update coupon of other company
-			System.out.println("update coupon of other company");
-			coupon2.setEndDate(new Date(System.currentTimeMillis()+ 1000*3600*48 ));
-			coupon2.setPrice(500000);
-			compFacade2.updateCoupon(coupon2);
-
-			// get this company info
-			System.out.println("get this company info");
-			System.out.println( compFacade1.getCoupon(coupon3.getId()));
-
-			
-			// check coupon by CouponType
-			System.out.println("check coupon by CouponType");
-			System.out.println(compFacade2.getCouponByType(CouponType.HEALTH));
-			// check coupon by CouponType - empty case
-			System.out.println("check coupon by CouponType - empty case");
-
-			// check coupon upTo Price
-			System.out.println("check coupon upTo Price");
-			System.out.println(compFacade2.getCouponUptoPrice(3000));
-			// check coupon upTo Price - empty case
-			System.out.println("check coupon upTo Price - empty case");
-			System.out.println(compFacade2.getCouponUptoPrice(10));
-
-			// check coupon upTo End Date
-			System.out.println("check coupon upTo End Date");
-			coupon7.setEndDate(new Date(System.currentTimeMillis() - 1000*3600*48 ));
-			long curr = System.currentTimeMillis();
-			System.out.println(compFacade2.getCouponUpToDate(new Date(curr)));
-
-			// check coupon upTo End Date - empty case
-			System.out.println("check coupon upTo End Date - empty case");
-			System.out.println(compFacade3.getCouponUpToDate(new Date(curr)));
-
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
 }

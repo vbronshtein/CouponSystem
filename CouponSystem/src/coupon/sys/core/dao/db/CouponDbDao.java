@@ -238,31 +238,32 @@ public class CouponDbDao implements CouponDao {
 		return false;
 	}
 
-	public void updateCouponAmount(String title) throws CouponSystemException {
-
-		Connection connection = pool.getConnection();
-
-		String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
-
-		try {
-			int tempAmount = 0;
-			Statement stmt = connection.createStatement();
-
-			ResultSet rs = stmt.executeQuery(getAmount);
-			if (rs.next()) {
-				tempAmount = rs.getInt("AMOUNT");
-			}
-
-			String updatedAmount = "UPDATE coupon SET AMOUNT=" + (tempAmount - 1);
-			stmt.executeUpdate(updatedAmount);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
+	// public void updateCouponAmount(String title) throws CouponSystemException {
+	//
+	// Connection connection = pool.getConnection();
+	//
+	// String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
+	//
+	// try {
+	// int tempAmount = 0;
+	// Statement stmt = connection.createStatement();
+	//
+	// ResultSet rs = stmt.executeQuery(getAmount);
+	// if (rs.next()) {
+	// tempAmount = rs.getInt("AMOUNT");
+	// }
+	//
+	// String updatedAmount = "UPDATE coupon SET AMOUNT=" + (tempAmount - 1) + "
+	// WHERE TITLE='" + title + "'";
+	// stmt.executeUpdate(updatedAmount);
+	//
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// } finally {
+	// pool.returnConnection(connection);
+	// }
+	//
+	// }
 	
 	/**
 	 * 

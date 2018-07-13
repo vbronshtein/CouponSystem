@@ -7,7 +7,6 @@ import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.dao.db.CompanyDbDao;
-import coupon.sys.core.dao.db.CouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 import coupon.sys.core.helper.TruncateAllTables;
@@ -15,14 +14,16 @@ import coupon.sys.facade.AdminFacade;
 import coupon.sys.facade.CompanyFacade;
 import coupon.sys.facade.CustomerFacade;
 
-public class AdminFacadeTest {
+public class CustomerFacadeTest {
 	public static void main(String[] args) {
 
+		//Generate Basic Database records
+		
+		
 		Company company1 = new Company(1, "company1", "1111", "111@company.com");
 		Company company2 = new Company(2, "company2", "1112", "112@company.com");
 		Company company3 = new Company(3, "company3", "1113", "113@company.com");
 		Company company4 = new Company(4, "company4", "1114", "114@company.com");
-		Company company5 = new Company(5, "company5", "1115", "114@company.com");
 
 		Customer customer11 = new Customer(11, "David", "pass4");
 		Customer customer12 = new Customer(12, "Yossi", "pass5");
@@ -106,127 +107,60 @@ public class AdminFacadeTest {
 		
 		
 		
+		System.out.println("\n\n\n");
+		// buy coupon - check amount -=1
+		System.out.println("buy coupon - check amount -=1");
 		customerFacade11.purshaseCoupon(coupon1);
+		// Try to buy coupon twice
+		System.out.println("Try to buy coupon twice");
+//		customerFacade11.purshaseCoupon(coupon1);
+
+		// buy coupon twice from two different customers
+		System.out.println("buy coupon twice from two different customers");
 		customerFacade11.purshaseCoupon(coupon2);
 		customerFacade11.purshaseCoupon(coupon3);
 		customerFacade12.purshaseCoupon(coupon2);
 		customerFacade12.purshaseCoupon(coupon3);
-		customerFacade12.purshaseCoupon(coupon9);
-		customerFacade12.purshaseCoupon(coupon10);
-			
-			
-			System.out.println("\n\n\n");
-			// create new company
-			System.out.println("create new company :");
-			adminFacade.createCompany(company4);
-			
-			//create company with same name will fail
-			System.out.println("create company with same name will fail");
-//			adminFacade.createCompany(company4);
-			
-			//delete company - check all coupons was delete also customer coupon will delete
-			System.out.println("delete company");
-			adminFacade.removeCompany(company1);
-			
-			// delete un-exist company
-			//----------!add exception - company not found
-			System.out.println("delete un-exist company");
-			adminFacade.removeCompany(company5);
-			
-			
-			//company update --all except company name 
-			System.out.println("company update");
-			company2.setPassword("new pass");
-			adminFacade.updateCompany(company2);
-			
-			// update company with different name 
-			System.out.println("update company with different name");
-//			company3.setPassword("new pass3");
-//			company3.setName("newName");
-//			adminFacade.updateCompany(company3);
-			
-			//update un-exist company
-//			System.out.println("update un-exist company");
-//			company5.setPassword("new pass3");
-//			adminFacade.updateCompany(company5);
-			
-			
-			//get All company 
-			System.out.println("get All company ");
-			System.out.println(adminFacade.getAllCompanies());
-			
-			//get spesific company
-			System.out.println("get spesific company");
-			System.out.println(adminFacade.getCompany(4));
-			
-			//get spesific  un-exist company
-			System.out.println("get spesific  un-exist company");
-//			System.out.println(adminFacade.getCompany(5));
-			
-			
-			
-			
-			
-			//Create new client
-			System.out.println("Create new client");
-			adminFacade.createCustomer(customer14);
-			
-			
-			//craate client with existed name
-			System.out.println("craate client with existed name");
-//			Customer customer15 =new Customer();
-//			customer15.setCustName(customer14.getCustName());
-//			adminFacade.createCustomer(customer14);
-			
-			// delete client - check all coupons was deleted 
-			System.out.println("delete client - check all coupons was deleted ");
-			customerFacade11.purshaseCoupon(coupon6);
-			customerFacade11.purshaseCoupon(coupon7);
-			customerFacade11.purshaseCoupon(coupon8);
-			customerFacade13.purshaseCoupon(coupon6);
-			customerFacade13.purshaseCoupon(coupon7);
-			customerFacade13.purshaseCoupon(coupon8);
-			
-			adminFacade.removeCustomer(customer13);
-			
-			//delete un-exist client
-			System.out.println("delete un-exist client");
-			adminFacade.removeCustomer(customer13);
-			
-			//update client - all without name
-			System.out.println("update client - all without name");
-			customer12.setPassword("New pass");
-			adminFacade.updateCustomer(customer12);
-			
-			// update client name  will fail
-//			System.out.println("update client name  will fail");
-//			customer12.setCustName("New Name");
-//			adminFacade.updateCustomer(customer12);
-			
-			//update un-exist client
-			System.out.println("update un-exist client");
-			
-			Customer customer111 = new Customer(1111, "Natly1111", "pass6");
-//			adminFacade.updateCustomer(customer111);
-			
-			//get al clients
-			System.out.println("get al clients");
-			System.out.println(adminFacade.getAllCustomers());
+		
+		// try to by coupon with 0 amount
+		System.out.println("try to by coupon with 0 amount");
+		customerFacade11.purshaseCoupon(coupon11);
+//		customerFacade13.purshaseCoupon(coupon11);
 
-			//get spesific client
-			System.out.println("get spesific client");
-			System.out.println(adminFacade.getCustomer(12));
+		// try to buy non exist coupon ( not any company coupon )
+		System.out.println("try to buy non exist coupon ( not any company coupon )");
+//		customerFacade13.purshaseCoupon(coupon11111);
 
-			// get un-exist client
-			System.out.println("get un-exist client");
-			System.out.println(adminFacade.getCustomer(1111111));
-			
-			
-			
+		
+		//get all client coupon history
+		System.out.println("get all client coupon history");
+		System.out.println(customerFacade11.getAllPurchesedCoupons());
+		System.out.println(customerFacade12.getAllPurchesedCoupons());
+		
+		//get all client coupon history - empty case
+		System.out.println("get all client coupon history - empty case");
+		System.out.println(customerFacade13.getAllPurchesedCoupons());
+		
+		//get client coupon history by couponType
+		System.out.println("get client coupon history by couponType");
+		System.out.println(customerFacade11.getAllPurchasedCouponsByType(CouponType.CAMPING));
+		
+		//get client coupon history by couponType - empty case
+		System.out.println("get client coupon history by couponType - empty case");
+		System.out.println(customerFacade11.getAllPurchasedCouponsByType(CouponType.TRAVELLING));
+		
+		//get client coupon history up to price
+		System.out.println("get client coupon history up to price");
+		System.out.println(customerFacade11.getAllPurchasedCouponsUpToPrice(100000));
+		System.out.println(customerFacade11.getAllPurchasedCouponsUpToPrice(2500));
+		
+		//get client coupon history up to price - empty case
+		System.out.println("get client coupon history up to price - empty case");
+		System.out.println(customerFacade11.getAllPurchasedCouponsUpToPrice(20));
+
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

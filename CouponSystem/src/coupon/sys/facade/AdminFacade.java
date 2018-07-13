@@ -14,14 +14,14 @@ import coupon.sys.core.exceptions.CouponSystemException;
 
 public class AdminFacade implements CouponClientFacade {
 	private CompanyDbDao companyDbDao;
-	private CouponDbDao couponDbDao;
+	// private CouponDbDao couponDbDao;
 	private CompanyCouponDbDao companyCouponDbDao;
 	private CustomerDbDao customerDbDao;
 	private CustomerCouponDbDao customerCouponDbDao;
 
 	public AdminFacade() {
 		this.companyDbDao = new CompanyDbDao();
-		this.couponDbDao = new CouponDbDao();
+		// this.couponDbDao = new CouponDbDao();
 		this.companyCouponDbDao = new CompanyCouponDbDao();
 		this.customerDbDao = new CustomerDbDao();
 		this.customerCouponDbDao = new CustomerCouponDbDao();
@@ -40,7 +40,6 @@ public class AdminFacade implements CouponClientFacade {
 
 	public void removeCompany(Company company) throws CouponSystemException {
 
-		// delete Company coupons that was buy by customers
 		// delete all company coupons
 		companyCouponDbDao.deleteAllCompanyCoupons(company);
 		// delete company
@@ -55,7 +54,7 @@ public class AdminFacade implements CouponClientFacade {
 		if (companyFromDB == null) {
 			throw new CouponSystemException("Update Fail , company not found on DataBase");
 
-		} else if (company.getName().equals(companyFromDB.getName())) {
+		} else if (!company.getName().equals(companyFromDB.getName())) {
 			company.setName(companyFromDB.getName());
 			companyDbDao.update(company);
 
@@ -76,7 +75,9 @@ public class AdminFacade implements CouponClientFacade {
 	public Company getCompany(long id) throws CouponSystemException {
 
 		Company company = companyDbDao.read(id);
-
+		if(company.getName() == null) {
+			throw new CouponSystemException("Company :"+ id + " Not found on Data Base");
+		}
 		return company;
 	}
 
@@ -104,11 +105,11 @@ public class AdminFacade implements CouponClientFacade {
 
 		Customer customerFromDB = customerDbDao.read(customer.getId());
 
-		if (customerFromDB == null) {
+		if (customerFromDB.getCustName() == null) {
 			throw new CouponSystemException(
 					"Update Fail , customer " + customer.getCustName() + " not found on DataBase");
 
-		} else if (customer.getCustName().equals(customer.getCustName())) {
+		} else if (!customer.getCustName().equals(customerFromDB.getCustName())) {
 			customer.setCustName(customerFromDB.getCustName());
 			customerDbDao.update(customer);
 
@@ -123,16 +124,17 @@ public class AdminFacade implements CouponClientFacade {
 		Collection<Customer> customers = null;
 		customers = customerDbDao.getAllCustomer();
 		return customers;
-		
+
 	}
 
 	public Customer getCustomer(long id) throws CouponSystemException {
 
 		Customer customer = customerDbDao.read(id);
-
+		if(customer.getCustName() == null) {
+			throw new CouponSystemException("Customer :"+ id + " Not found on Data Base");
+		}
 		return customer;
 	}
-
 
 	@Override
 	public CouponClientFacade login(String name, String password, String clientType) {

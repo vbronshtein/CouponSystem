@@ -16,25 +16,23 @@ public class CompanyFacade implements CouponClientFacade {
 
 	private Company company;
 	private CompanyDbDao companyDbDao;
-	private CouponDbDao couponDbDao;
+	// private CouponDbDao couponDbDao;
 	private CompanyCouponDbDao companyCouponDbDao;
 	private CustomerCouponDbDao customerCouponDbDao;
 
-	
 	public CompanyFacade(String companyName) throws CouponSystemException {
 		companyDbDao = new CompanyDbDao();
-		couponDbDao = new CouponDbDao();
+		// couponDbDao = new CouponDbDao();
 		companyCouponDbDao = new CompanyCouponDbDao();
 		customerCouponDbDao = new CustomerCouponDbDao();
 
 		this.company = companyDbDao.getCompanyByName(companyName);
 	}
-	
 
 	public void createCoupon(Coupon coupon) throws CouponSystemException {
 
-		if (couponDbDao.getCouponByTitle(coupon.getTitle()) == null) {
-			couponDbDao.create(coupon);
+		if (!companyCouponDbDao.isCouponTytleAlresdyExist(coupon.getTitle())) {
+			// couponDbDao.create(coupon);
 			companyCouponDbDao.create(this.company, coupon);
 		} else {
 			throw new CouponSystemException(
@@ -44,18 +42,18 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 	/*
-	 * Functional but no protection
-	 * !!!Need to add protection ( with join delete only this company coupons and not each coupon
+	 * Functional but no protection !!!Need to add protection ( with join delete
+	 * only this company coupons and not each coupon
 	 */
 	public void removeCoupon(Coupon coupon) throws CouponSystemException {
 
 		companyCouponDbDao.delete(this.company, coupon);
-		customerCouponDbDao.deleteCoupon(coupon);
-		couponDbDao.delete(coupon);
+		// customerCouponDbDao.deleteCoupon(coupon);
+		// couponDbDao.delete(coupon);
 	}
 
 	public void updateCoupon(Coupon coupon) throws CouponSystemException {
-		Coupon couponFromDb = couponDbDao.read(coupon.getId());
+		Coupon couponFromDb = companyCouponDbDao.readCompanyCoupon(this.company.getId() , coupon.getId());
 
 		if (couponFromDb == null) {
 			throw new CouponSystemException("Update Coupon Fail , coupon not found on DB");
@@ -63,7 +61,8 @@ public class CompanyFacade implements CouponClientFacade {
 			// update only price and end Date
 			couponFromDb.setEndDate(coupon.getEndDate());
 			couponFromDb.setPrice(coupon.getPrice());
-			couponDbDao.update(couponFromDb);
+			companyCouponDbDao.update(this.company , couponFromDb);
+//			couponDbDao.update(couponFromDb);
 		}
 	}
 
@@ -84,11 +83,8 @@ public class CompanyFacade implements CouponClientFacade {
 		return companyCouponDbDao.getCouponUpToPrice(this.company, price);
 	}
 
-	public Collection<Coupon> getCouponUpToDate(Date date) {
-		/*
-		 * I'm here
-		 */
-		return null;
+	public Collection<Coupon> getCouponUpToDate(Date date) throws CouponSystemException {
+		return companyCouponDbDao.getCouponUpToDate(this.company, date);
 	}
 
 	@Override
@@ -98,4 +94,3 @@ public class CompanyFacade implements CouponClientFacade {
 	}
 
 }
-
