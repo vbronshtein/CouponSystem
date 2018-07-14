@@ -27,6 +27,14 @@ public class CouponSystemTest {
 			
 			AdminFacade adminFacade = (AdminFacade) couponSystem.login("admin", "1234", ClientType.ADMIN);
 			System.out.println(adminFacade.getAllCompanies());
+			
+			
+			
+			
+//			Thread.sleep(21 *1000 );
+			couponSystem.shutdown();
+			System.out.println("exit from program");
+			
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

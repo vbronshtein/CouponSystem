@@ -2,6 +2,12 @@ package coupon.sys.core.beans;
 
 import java.util.Collection;
 
+/**
+ * Company bean
+ * 
+ * @author vbronshtein
+ *
+ */
 public class Company {
 
 	private long id;
@@ -13,10 +19,10 @@ public class Company {
 	public Company() {
 		super();
 	}
-	public Company( long id) {
-		super();
-		this.id = id;
-	}
+//	public Company( long id) {
+//		super();
+//		this.id = id;
+//	}
 	
 
 	public Company(long id, String name, String password, String email) {

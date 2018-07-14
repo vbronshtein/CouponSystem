@@ -17,16 +17,16 @@ public class CouponSystem {
 
 	private static CouponSystem instance = new CouponSystem();
 
+	private Thread t1;
+
 	private CouponSystem() {
 		initDao();
-//		initDailyThread();
+		// initDailyThread();
 	}
 
 	public static CouponSystem getInstance() {
 		return instance;
 	}
-
-
 
 	public CouponClientFacade login(String name, String password, ClientType type) throws CouponSystemException {
 		switch (type) {
@@ -39,7 +39,7 @@ public class CouponSystem {
 		case COMPANY:
 			if (companyDbDao.login(name, password)) {
 				System.out.println("Login succed !!!!");
-				return new CompanyFacade(name); 
+				return new CompanyFacade(name);
 			} else {
 				throw new CouponSystemException("Incorrect username or password");
 			}
@@ -58,23 +58,25 @@ public class CouponSystem {
 
 	public void shutdown() throws CouponSystemException {
 		ConnectionPool pool = ConnectionPool.getInstance();
-		DailyCouponExparationTask exparationTask = new DailyCouponExparationTask();
+		// DailyCouponExparationTask exparationTask = new DailyCouponExparationTask();
+
+		// exparationTask.stopTask();
+		// t1.interrupt();
 
 		pool.closeAllConnection();
-		exparationTask.stopTask();
+
 	}
 
-	
 	private void initDao() {
 		companyDbDao = new CompanyDbDao();
 		customerDbDao = new CustomerDbDao();
 	}
 
-	private void initDailyThread() {
-		
-		DailyCouponExparationTask d = new DailyCouponExparationTask();
-		Thread t1 = new Thread(d, "dailyExpired");
-		t1.start();
-		
-	}
+	// private void initDailyThread() {
+	//
+	// DailyCouponExparationTask d = new DailyCouponExparationTask();
+	// t1 = new Thread(d, "dailyExpired");
+	// t1.start();
+
+	// }
 }

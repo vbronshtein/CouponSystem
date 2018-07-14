@@ -2,6 +2,12 @@ package coupon.sys.core.beans;
 
 import java.util.Date;
 
+/**
+ * Coupon Bean
+ * 
+ * @author vbronshtein
+ *
+ */
 public class Coupon {
 	private long id;
 	private String title;

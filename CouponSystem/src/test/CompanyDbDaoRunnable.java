@@ -91,7 +91,9 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 	public void run() {
 		try {
 			long id = (long) (Math.random()*10000);
-			create(new Company(id));
+			Company company= new Company();
+			company.setId(id);
+			create(company);
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

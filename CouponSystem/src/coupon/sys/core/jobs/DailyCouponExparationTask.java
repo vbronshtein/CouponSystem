@@ -24,26 +24,38 @@ public class DailyCouponExparationTask implements Runnable {
 
 	@Override
 	public void run() {
-		while (!quit) {
+		int counter = 0;
+		while (!Thread.currentThread().isInterrupted()) {
 			try {
-				System.out.println("Thread Started");
+				
+				System.out.println("Start thread cicle ");
 				Date currentDate = new Date(System.currentTimeMillis());
-				Collection<Long> removedCouponIds = null;
-				removedCouponIds = couponDbDao.RemoveExpiredCoupons(currentDate);
-				if(removedCouponIds != null) {
-					for (Long id : removedCouponIds) {
-						companyCouponDbDao.deleteCoupon(id);
-						customerCouponDbDao.deleteCoupon(id);
-					}
-				}
-				System.out.println("Before sleep");
-//				Thread.sleep(3600 * 24 * 1000); 
-				Thread.sleep(60 * 1000); 
-			} catch (CouponSystemException | InterruptedException e) {
+				System.out.println("Execute delete  number : " + counter);
+				couponDbDao.deleteAllExpiriedCoupons(currentDate);
+				Thread.sleep(10 * 1000);
+				// Thread.sleep(3600 * 24 * 1000);
+				counter++;
+			} catch (InterruptedException e) {
+				System.out.println("!!!! Thread was interupted here ");
+			} catch (CouponSystemException e ) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		// while (!quit) {
+		// try {
+		// Thread.sleep(20 * 1000);
+		// System.out.println("Thread Started");
+		// Date currentDate = new Date(System.currentTimeMillis());
+		// couponDbDao.deleteAllExpiriedCoupons(currentDate);
+		// System.out.println("Before sleep");
+		// // Thread.sleep(3600 * 24 * 1000);
+		// } catch (CouponSystemException | InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		System.out.println("Daily Thread is stoped !!");
 	}
 
 	public void stopTask() {

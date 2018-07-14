@@ -2,6 +2,12 @@ package coupon.sys.core.beans;
 
 import java.util.Collection;
 
+/**
+ * Customer bean
+ * 
+ * @author vbronshtein
+ *
+ */
 public class Customer {
 	private long id;
 	private String custName;
@@ -12,7 +18,12 @@ public class Customer {
 		super();
 	}
 	
-
+	/**
+	 * 
+	 * @param id
+	 * @param custName
+	 * @param password
+	 */
 	public Customer(long id, String custName, String password) {
 		super();
 		this.id = id;
@@ -25,6 +36,10 @@ public class Customer {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -33,6 +48,10 @@ public class Customer {
 		return custName;
 	}
 
+	/**
+	 * 
+	 * @param custName
+	 */
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
@@ -41,6 +60,10 @@ public class Customer {
 		return password;
 	}
 
+	/**
+	 * 
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -49,6 +72,10 @@ public class Customer {
 		return coupons;
 	}
 
+	/**
+	 * 
+	 * @param coupons
+	 */
 	public void setCoupons(Collection<Coupon> coupons) {
 		this.coupons = coupons;
 	}

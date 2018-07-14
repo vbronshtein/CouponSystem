@@ -264,7 +264,7 @@ public class CouponDbDao implements CouponDao {
 	// }
 	//
 	// }
-	
+
 	/**
 	 * 
 	 * @param date
@@ -276,7 +276,7 @@ public class CouponDbDao implements CouponDao {
 
 		String sqlCheck = "SELECT * FROM coupon WHERE END_DATE>'" + date + "'";
 		String sqlDelete = "DELETE FROM coupon where END_DATE<'" + date + "'";
-		
+
 		try {
 			Collection<Long> expiredIds = new ArrayList<>();
 
@@ -298,5 +298,26 @@ public class CouponDbDao implements CouponDao {
 
 	}
 
+	public void deleteAllExpiriedCoupons(Date date) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		
+		String sqlCustCoupon = "DELETE FROM customer_coupon WHERE COUPON_ID IN (select ID from coupon where end_date <='" + date + "')";
+		String sqlCompCoupon = "DELETE FROM company_coupon WHERE COUPON_ID IN (select ID from coupon where end_date <='" + date +"')";
+		String sqlCoupon = "DELETE FROM coupon WHERE END_DATE<='" + date + "'";
+
+		Statement stmt;
+		try {
+			stmt = connection.createStatement();
+			stmt.executeUpdate(sqlCustCoupon);
+			stmt.executeUpdate(sqlCompCoupon);
+			stmt.executeUpdate(sqlCoupon);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(connection);
+		}
+		
+	}
 
 }
