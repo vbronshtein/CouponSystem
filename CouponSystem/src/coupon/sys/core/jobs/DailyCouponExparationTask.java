@@ -26,6 +26,7 @@ public class DailyCouponExparationTask implements Runnable {
 	public void run() {
 		while (!quit) {
 			try {
+				System.out.println("Thread Started");
 				Date currentDate = new Date(System.currentTimeMillis());
 				Collection<Long> removedCouponIds = null;
 				removedCouponIds = couponDbDao.RemoveExpiredCoupons(currentDate);
@@ -35,7 +36,9 @@ public class DailyCouponExparationTask implements Runnable {
 						customerCouponDbDao.deleteCoupon(id);
 					}
 				}
-				Thread.sleep(3600 * 24 * 1000); 
+				System.out.println("Before sleep");
+//				Thread.sleep(3600 * 24 * 1000); 
+				Thread.sleep(60 * 1000); 
 			} catch (CouponSystemException | InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

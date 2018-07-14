@@ -31,7 +31,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		try {
 			String sql = "INSERT INTO company VALUES(" + company.getId() + ", " + "'" + company.getName() + "'" + ", "
 					+ "'" + company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
-			
+
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 
@@ -111,8 +111,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	public Collection<Company> getAllCompanies() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		Collection<Company> companies = new ArrayList<>();
-		
-		String sql = "SELECT * FROM company " ;
+
+		String sql = "SELECT * FROM company ";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -122,7 +122,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 				company.setName(rs.getString("COMP_NAME"));
 				company.setPassword(rs.getString("PASSWORD"));
 				company.setEmail(rs.getString("EMAIL"));
-				
+
 				companies.add(company);
 			}
 		} catch (SQLException e) {
@@ -131,7 +131,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
-		
+
 		return companies;
 
 	}
@@ -143,12 +143,11 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		pool.returnConnection(connection);
 		return null;
 	}
-	
-	
+
 	public Company getCompanyByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
-		String sql = "SELECT * FROM company WHERE COMP_NAME= '" + name+"'";
+		String sql = "SELECT * FROM company WHERE COMP_NAME= '" + name + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -174,9 +173,25 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public boolean login(String compName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		// TODO Auto-generated method stub
-		pool.returnConnection(connection);
+
+		String sql = "SELECT PASSWORD FROM company WHERE COMP_NAME='" + compName + "'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				if(password.equals(rs.getString("PASSWORD"))) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
 		return false;
+
 	}
 
 }

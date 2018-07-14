@@ -20,6 +20,6 @@ public interface CustomerDao {
 
 	Collection<Coupon> getCoupons();
 
-	boolean login(String custName, String password);
+	boolean login(String custName, String password) throws CouponSystemException;
 
 }

@@ -1,4 +1,4 @@
-package test;
+package coupon.sys.core.helper;
 
 import java.sql.Date;
 
@@ -8,7 +8,6 @@ import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
-import coupon.sys.core.helper.TruncateAllTables;
 import coupon.sys.facade.AdminFacade;
 import coupon.sys.facade.CompanyFacade;
 import coupon.sys.facade.CustomerFacade;
@@ -31,19 +30,19 @@ public class GeneralInitialDatabese {
 		Customer customer14 = new Customer(14, "Nataly", "pass6");
 
 		Coupon coupon1 = new Coupon(1, "coupon1", new Date(System.currentTimeMillis()),
-				new Date(System.currentTimeMillis()), 100, CouponType.HEALTH, "Stam coupon14", 1000,
+				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 100, CouponType.HEALTH, "Stam coupon14", 1000,
 				"http://google4.com");
 		Coupon coupon2 = new Coupon(2, "coupon2", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis()), 200, CouponType.CAMPING, "Stam coupon3", 2000,
 				"http://google5.com");
 		Coupon coupon3 = new Coupon(3, "coupon3", new Date(System.currentTimeMillis()),
-				new Date(System.currentTimeMillis()), 300, CouponType.HEALTH, "Stam coupon5", 3000,
+				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 300, CouponType.HEALTH, "Stam coupon5", 3000,
 				"http://google6.com");
 		Coupon coupon4 = new Coupon(4, "coupon4", new Date(System.currentTimeMillis()),
-				new Date(System.currentTimeMillis()), 400, CouponType.CAMPING, "Stam coupon7", 4000,
+				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 400, CouponType.CAMPING, "Stam coupon7", 4000,
 				"http://google4.com");
 		Coupon coupon5 = new Coupon(5, "coupon5", new Date(System.currentTimeMillis()),
-				new Date(System.currentTimeMillis()), 500, CouponType.ELECTRICITY, "Stam coupon8", 5000,
+				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 500, CouponType.ELECTRICITY, "Stam coupon8", 5000,
 				"http://google5.com");
 		Coupon coupon6 = new Coupon(6, "coupon6", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis()), 100, CouponType.ELECTRICITY, "Stam coupon26", 1000,
@@ -91,8 +90,6 @@ public class GeneralInitialDatabese {
 			compFacade2.createCoupon(coupon9);
 			compFacade2.createCoupon(coupon10);
 
-			
-			
 			adminFacade.createCustomer(customer11);
 			adminFacade.createCustomer(customer12);
 			adminFacade.createCustomer(customer13);
@@ -100,10 +97,22 @@ public class GeneralInitialDatabese {
 			CustomerFacade customerFacade12 = new CustomerFacade(customer12.getCustName());
 			CustomerFacade customerFacade13 = new CustomerFacade(customer13.getCustName());
 
+			customerFacade11.purshaseCoupon(coupon1);
+			customerFacade11.purshaseCoupon(coupon2);
+			customerFacade11.purshaseCoupon(coupon3);
 			customerFacade11.purshaseCoupon(coupon4);
 			customerFacade11.purshaseCoupon(coupon5);
-			customerFacade12.purshaseCoupon(coupon6);
-			customerFacade12.purshaseCoupon(coupon7);
+			customerFacade11.purshaseCoupon(coupon6);
+			customerFacade11.purshaseCoupon(coupon7);
+			customerFacade11.purshaseCoupon(coupon8);
+			customerFacade11.purshaseCoupon(coupon9);
+			customerFacade11.purshaseCoupon(coupon10);
+			
+			customerFacade12.purshaseCoupon(coupon1);
+			customerFacade12.purshaseCoupon(coupon2);
+			customerFacade12.purshaseCoupon(coupon3);
+			customerFacade12.purshaseCoupon(coupon4);
+			customerFacade12.purshaseCoupon(coupon5);
 
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block

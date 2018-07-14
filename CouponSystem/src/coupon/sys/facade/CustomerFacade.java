@@ -28,7 +28,7 @@ public class CustomerFacade implements CouponClientFacade {
 	public void purshaseCoupon(Coupon coupon) throws CouponSystemException {
 		// can buy coupon only ones ,amount > 0 , not expiried
 		if (customerCouponDbDao.read(this.customer, coupon) == null
-				&& couponDbDao.getCouponAmount(coupon.getTitle()) > 0 && couponDbDao.isExpired(coupon.getTitle())) {
+				&& couponDbDao.getCouponAmount(coupon.getTitle()) > 0 ) {//&& couponDbDao.isExpired(coupon.getTitle())) {
 			customerCouponDbDao.create(this.customer, coupon);
 			// couponDbDao.updateCouponAmount(coupon.getTitle());
 

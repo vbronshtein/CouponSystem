@@ -172,9 +172,27 @@ public class CustomerDbDao implements CustomerDao {
 
 
 	@Override
-	public boolean login(String custName, String password) {
-		// TODO Auto-generated method stub
+	public boolean login(String custName, String password) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		String sql = "SELECT PASSWORD FROM customer WHERE CUST_NAME='" + custName + "'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				if(password.equals(rs.getString("PASSWORD"))) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
 		return false;
+
 	}
 
 }
