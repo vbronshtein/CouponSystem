@@ -96,6 +96,11 @@ public class ConnectionPool {
 		return availableConnections.size();
 	}
 
+	/**
+	 * Close all Connections from Connection pool
+	 * 
+	 * @throws CouponSystemException
+	 */
 	public void closeAllConnection() throws CouponSystemException {
 		// add aditional logic how to close connectinns grasefully ( with Timeout on case
 		// no available ) , also block to give available connections to waited threads

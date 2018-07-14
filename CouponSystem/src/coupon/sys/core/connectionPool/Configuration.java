@@ -25,6 +25,7 @@ public class Configuration {
 	// public static String DB_PASSWORD;
 	// public static String DB_DRIVER;
 
+	
 	// Singleton Declaration
 	private static Configuration istance = new Configuration();
 
@@ -66,7 +67,7 @@ public class Configuration {
 
 		try {
 			DB_URL = readDbUrlFromFile();
-			DB_MAX_CONNECTIONS = 5;
+			DB_MAX_CONNECTIONS = 10;
 
 			// For MYSQL
 			// DB_USER_NAME = "root";
