@@ -19,12 +19,15 @@ public class Company {
 	public Company() {
 		super();
 	}
-//	public Company( long id) {
-//		super();
-//		this.id = id;
-//	}
 	
 
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param password
+	 * @param email
+	 */
 	public Company(long id, String name, String password, String email) {
 		super();
 		this.id = id;
@@ -32,10 +35,15 @@ public class Company {
 		this.password = password;
 		this.email = email;
 	}
+
 	public long getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -44,6 +52,10 @@ public class Company {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -52,6 +64,10 @@ public class Company {
 		return password;
 	}
 
+	/**
+	 * 
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -60,6 +76,10 @@ public class Company {
 		return email;
 	}
 
+	/**
+	 * 
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -68,6 +88,10 @@ public class Company {
 		return coupons;
 	}
 
+	/**
+	 * 
+	 * @param coupons
+	 */
 	public void setCoupons(Collection<Coupon> coupons) {
 		this.coupons = coupons;
 	}

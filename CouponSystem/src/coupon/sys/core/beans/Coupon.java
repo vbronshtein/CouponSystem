@@ -24,7 +24,18 @@ public class Coupon {
 	}
 	
 	
-
+	/**
+	 * 
+	 * @param id
+	 * @param title
+	 * @param startDate
+	 * @param endDate
+	 * @param amount
+	 * @param type
+	 * @param message
+	 * @param price
+	 * @param image
+	 */
 	public Coupon(long id, String title, Date startDate, Date endDate, int amount, CouponType type, String message,
 			double price, String image) {
 		super();
@@ -45,6 +56,10 @@ public class Coupon {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -53,6 +68,10 @@ public class Coupon {
 		return title;
 	}
 
+	/**
+	 * 
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -61,6 +80,10 @@ public class Coupon {
 		return startDate;
 	}
 
+	/**
+	 * 
+	 * @param startDate
+	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -69,6 +92,10 @@ public class Coupon {
 		return endDate;
 	}
 
+	/**
+	 * 
+	 * @param endDate
+	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
@@ -77,6 +104,10 @@ public class Coupon {
 		return amount;
 	}
 
+	/**
+	 * 
+	 * @param amount
+	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
@@ -85,6 +116,10 @@ public class Coupon {
 		return type;
 	}
 
+	/**
+	 * 
+	 * @param type
+	 */
 	public void setType(CouponType type) {
 		this.type = type;
 	}
@@ -93,6 +128,10 @@ public class Coupon {
 		return message;
 	}
 
+	/**
+	 * 
+	 * @param message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
@@ -101,6 +140,10 @@ public class Coupon {
 		return price;
 	}
 
+	/**
+	 * 
+	 * @param price
+	 */
 	public void setPrice(double price) {
 		this.price = price;
 	}
@@ -109,6 +152,10 @@ public class Coupon {
 		return image;
 	}
 
+	/**
+	 * 
+	 * @param image
+	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
