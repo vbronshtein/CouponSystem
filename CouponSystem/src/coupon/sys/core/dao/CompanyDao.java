@@ -6,6 +6,13 @@ import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Company Dao interface 
+ * Define "must implement" methods 
+ * 
+ * @author vbronshtein
+ *
+ */
 public interface CompanyDao {
 	void create(Company company) throws CouponSystemException;
 
