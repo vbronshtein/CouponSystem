@@ -19,12 +19,19 @@ import coupon.sys.core.exceptions.CouponSystemException;
  */
 public class ConnectionPool {
 	Set<Connection> availableConnections = new HashSet<>();
+	Set<Connection> connectionBackup = new HashSet<>();
+	private boolean shutdown;
 
 	// singleton declaration
 	private static ConnectionPool instance = new ConnectionPool();
 
 	private ConnectionPool() {
-		initialyzeConnectionPool();
+
+		try {
+			initialyzeConnectionPool();
+		} catch (CouponSystemException e) {
+		}
+		shutdown = false;
 	}
 
 	public static ConnectionPool getInstance() {
@@ -38,17 +45,18 @@ public class ConnectionPool {
 			Connection connection = DriverManager.getConnection(configuration.DB_URL);
 			return connection;
 		} catch (SQLException e) {
-			throw new CouponSystemException("Cant create connection for pool", e);
+			throw new CouponSystemException("Fail to create connection for pool", e);
 		}
 	}
 
 	// fill all pool
-	private void initialyzeConnectionPool() {
+	private void initialyzeConnectionPool() throws CouponSystemException {
 		while (availableConnections.size() < Configuration.getInstance().DB_MAX_CONNECTIONS) {
 			try {
 				availableConnections.add(createNewConnectionForPool());
+				connectionBackup.add(createNewConnectionForPool());
 			} catch (CouponSystemException e) {
-				e.printStackTrace();
+				throw new CouponSystemException("Fail to initialyze Connecton Pool", e);
 			}
 		}
 	}
@@ -65,16 +73,17 @@ public class ConnectionPool {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				throw new CouponSystemException("Cant wait() to availableConnection ", e);
+				throw new CouponSystemException("Getconnection from pool was interupt", e);
 			}
 		}
+		if (!shutdown) {
+			Iterator<Connection> it = availableConnections.iterator();
+			Connection currentConnection = it.next();
+			it.remove();
 
-		Iterator<Connection> it = availableConnections.iterator();
-		Connection currentConnection = it.next();
-		it.remove();
-
-		return currentConnection;
-
+			return currentConnection;
+		}
+		return null;
 	}
 
 	/**
@@ -83,8 +92,10 @@ public class ConnectionPool {
 	 * @param connection
 	 */
 	public synchronized void returnConnection(Connection connection) {
-		availableConnections.add(connection);
-		notify();
+		if (!shutdown) {
+			availableConnections.add(connection);
+			notify();
+		}
 	}
 
 	/**
@@ -102,18 +113,14 @@ public class ConnectionPool {
 	 * @throws CouponSystemException
 	 */
 	public void closeAllConnection() throws CouponSystemException {
-		// add aditional logic how to close connectinns grasefully ( with Timeout on case
-		// no available ) , also block to give available connections to waited threads
-		Iterator<Connection> it = availableConnections.iterator();
-		try {
-			while (it.hasNext()) {
-				it.next().close();
+		for (Connection connection : connectionBackup) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			System.out.println("all connections are closed");
-		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to close all Connections to database");
 		}
-
 	}
 
 }

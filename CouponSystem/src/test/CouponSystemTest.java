@@ -31,11 +31,14 @@ public class CouponSystemTest {
 			
 			
 			
-//			Thread.sleep(21 *1000 );
+			Thread.sleep(30 *1000 );
 			couponSystem.shutdown();
 			System.out.println("exit from program");
 			
 		} catch (CouponSystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

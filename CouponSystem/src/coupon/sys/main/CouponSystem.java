@@ -17,11 +17,13 @@ public class CouponSystem {
 
 	private static CouponSystem instance = new CouponSystem();
 
-	private Thread t1;
+	DailyCouponExparationTask dailyExpTask;
+
+	// private Thread t1;
 
 	private CouponSystem() {
 		initDao();
-		// initDailyThread();
+		initDailyThread();
 	}
 
 	public static CouponSystem getInstance() {
@@ -58,11 +60,8 @@ public class CouponSystem {
 
 	public void shutdown() throws CouponSystemException {
 		ConnectionPool pool = ConnectionPool.getInstance();
-		// DailyCouponExparationTask exparationTask = new DailyCouponExparationTask();
 
-		// exparationTask.stopTask();
-		// t1.interrupt();
-
+		dailyExpTask.stopTask();
 		pool.closeAllConnection();
 
 	}
@@ -72,11 +71,11 @@ public class CouponSystem {
 		customerDbDao = new CustomerDbDao();
 	}
 
-	// private void initDailyThread() {
-	//
-	// DailyCouponExparationTask d = new DailyCouponExparationTask();
-	// t1 = new Thread(d, "dailyExpired");
-	// t1.start();
+	private void initDailyThread() {
 
-	// }
+		dailyExpTask = new DailyCouponExparationTask();
+		Thread t1 = new Thread(dailyExpTask, "dailyExpired");
+		t1.start();
+
+	}
 }

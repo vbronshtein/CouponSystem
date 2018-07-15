@@ -15,6 +15,12 @@ import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.CompanyCouponDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * CompanyCouponDbDao class implement methods to connect to DB for update company records
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	private ConnectionPool pool;
@@ -49,6 +55,12 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	public void update(Company company, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -58,10 +70,8 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 				+ "' WHERE id=" + coupon.getId();
 
 		try {
-			// if(isCompanyCoupon(company, coupon)) {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
-			// }
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -305,22 +315,6 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		return null;
 	}
 
-	public void deleteCoupon(Long couponId) throws CouponSystemException {
-		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM COMPANY_COUPON WHERE COUPON_ID=" + couponId;
-
-		Statement stmt;
-		try {
-			stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
 
 	public boolean isCouponTytleAlresdyExist(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -346,30 +340,5 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	}
 
-	// public boolean isCompanyCoupon(Company company, Coupon coupon) throws
-	// CouponSystemException {
-	// Connection connection = pool.getConnection();
-	//
-	// String sql = "SELECT * FROM company_coupon WHERE COMP_ID= " + company.getId()
-	// +" and COUPON_ID= "+ coupon.getId() ;
-	//
-	// try {
-	// Statement stmt = connection.createStatement();
-	// ResultSet rs = stmt.executeQuery(sql);
-	// if (rs.next()) {
-	// return true;
-	// } else {
-	// return false;
-	// }
-	//
-	// } catch (SQLException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } finally {
-	// pool.returnConnection(connection);
-	// }
-	// return false;
-	//
-	// }
 
 }

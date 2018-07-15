@@ -15,16 +15,47 @@ import coupon.sys.core.exceptions.CouponSystemException;
  */
 public interface CouponDao {
 	// create,read,update,delete
+	/**
+	 * 
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	void create(Coupon coupon) throws CouponSystemException;
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	Coupon read(long id) throws CouponSystemException;
 
+	/**
+	 * 
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	void update(Coupon coupon) throws CouponSystemException;
 
+	/**
+	 * 
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	void delete(Coupon coupon) throws CouponSystemException;
 
+	/**
+	 * 
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	Collection<Coupon> getAllCoupon() throws CouponSystemException;
 
+	/**
+	 * 
+	 * @param couponType
+	 * @return
+	 */
 	Collection<Coupon> getCouponByType(CouponType couponType);
 
 }

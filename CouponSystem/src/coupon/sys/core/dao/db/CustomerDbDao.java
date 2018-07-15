@@ -145,6 +145,12 @@ public class CustomerDbDao implements CustomerDao {
 	}
 	
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Customer getCustomerByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 

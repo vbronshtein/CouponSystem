@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
@@ -14,6 +13,12 @@ import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.CompanyDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * CompanyDbDao class implement methods for connect to "Company" table on Database
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CompanyDbDao extends Thread implements CompanyDao {
 
 	private ConnectionPool pool;
@@ -24,6 +29,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	}
 
 	// Interface methods
+	
+	
 	@Override
 	public void create(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -43,6 +50,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();

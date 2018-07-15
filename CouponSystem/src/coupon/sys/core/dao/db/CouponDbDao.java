@@ -23,6 +23,12 @@ public class CouponDbDao implements CouponDao {
 		this.pool = ConnectionPool.getInstance();
 	}
 
+	/**
+	 *Create method will be implemented bu two diffrent classes :
+	 *1.CompanyCouponDbDao.create for company coupon 
+	 *2.CustomerCouponDbDao.create for customer coupon 
+	 */
+	@Deprecated
 	@Override
 	public void create(Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -157,6 +163,12 @@ public class CouponDbDao implements CouponDao {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Coupon getCouponByTitle(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -189,6 +201,12 @@ public class CouponDbDao implements CouponDao {
 
 	}
 
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public int getCouponAmount(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -211,6 +229,12 @@ public class CouponDbDao implements CouponDao {
 		return -1;
 	}
 
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public boolean isExpired(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -238,37 +262,11 @@ public class CouponDbDao implements CouponDao {
 		return false;
 	}
 
-	// public void updateCouponAmount(String title) throws CouponSystemException {
-	//
-	// Connection connection = pool.getConnection();
-	//
-	// String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
-	//
-	// try {
-	// int tempAmount = 0;
-	// Statement stmt = connection.createStatement();
-	//
-	// ResultSet rs = stmt.executeQuery(getAmount);
-	// if (rs.next()) {
-	// tempAmount = rs.getInt("AMOUNT");
-	// }
-	//
-	// String updatedAmount = "UPDATE coupon SET AMOUNT=" + (tempAmount - 1) + "
-	// WHERE TITLE='" + title + "'";
-	// stmt.executeUpdate(updatedAmount);
-	//
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// } finally {
-	// pool.returnConnection(connection);
-	// }
-	//
-	// }
 
 	/**
 	 * 
 	 * @param date
-	 * @return Collection<Long> of removed Coupon IDs from "coupon table
+	 * @return Collection<Long> of removed Coupon IDs from "coupon" table
 	 * @throws CouponSystemException
 	 */
 	public Collection<Long> RemoveExpiredCoupons(Date date) throws CouponSystemException {

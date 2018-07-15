@@ -25,7 +25,7 @@ public class DailyCouponExparationTask implements Runnable {
 	@Override
 	public void run() {
 		int counter = 0;
-		while (!Thread.currentThread().isInterrupted()) {
+		while (!quit) {
 			try {
 				
 				System.out.println("Start thread cicle ");
@@ -42,19 +42,6 @@ public class DailyCouponExparationTask implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		// while (!quit) {
-		// try {
-		// Thread.sleep(20 * 1000);
-		// System.out.println("Thread Started");
-		// Date currentDate = new Date(System.currentTimeMillis());
-		// couponDbDao.deleteAllExpiriedCoupons(currentDate);
-		// System.out.println("Before sleep");
-		// // Thread.sleep(3600 * 24 * 1000);
-		// } catch (CouponSystemException | InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
 		System.out.println("Daily Thread is stoped !!");
 	}
 

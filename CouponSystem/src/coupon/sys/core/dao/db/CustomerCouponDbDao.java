@@ -7,12 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.connectionPool.ConnectionPool;
-import coupon.sys.core.dao.CompanyCouponDao;
 import coupon.sys.core.dao.CustomerCouponDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
@@ -146,57 +144,57 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 
 	}
 
-	public void deleteListOfCustomerCoupons(Collection<Coupon> coupons) throws CouponSystemException {
-		Connection connection = pool.getConnection();
+//	public void deleteListOfCustomerCoupons(Collection<Coupon> coupons) throws CouponSystemException {
+//		Connection connection = pool.getConnection();
+//
+//		try {
+//			for (Coupon coupon : coupons) {
+//				String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
+//				Statement stmt = connection.createStatement();
+//				stmt.executeUpdate(sql);
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			pool.returnConnection(connection);
+//		}
+//
+//	}
 
-		try {
-			for (Coupon coupon : coupons) {
-				String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
-				Statement stmt = connection.createStatement();
-				stmt.executeUpdate(sql);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			pool.returnConnection(connection);
-		}
+//	public void deleteCoupon(Coupon coupon) throws CouponSystemException {
+//		Connection connection = pool.getConnection();
+//		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
+//
+//		Statement stmt;
+//		try {
+//			stmt = connection.createStatement();
+//			stmt.executeUpdate(sql);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			pool.returnConnection(connection);
+//		}
+//
+//	}
 
-	}
-
-	public void deleteCoupon(Coupon coupon) throws CouponSystemException {
-		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
-
-		Statement stmt;
-		try {
-			stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
-
-	public void deleteCoupon(Long couponId) throws CouponSystemException {
-		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + couponId;
-
-		Statement stmt;
-		try {
-			stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
+//	public void deleteCoupon(Long couponId) throws CouponSystemException {
+//		Connection connection = pool.getConnection();
+//		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + couponId;
+//
+//		Statement stmt;
+//		try {
+//			stmt = connection.createStatement();
+//			stmt.executeUpdate(sql);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			pool.returnConnection(connection);
+//		}
+//
+//	}
 
 	public Collection<Coupon> getAllCustomerCoupons(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -301,25 +299,25 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		return null;
 	}
 
-	public boolean isCouponExistOnDb(long id) throws CouponSystemException {
-		Connection connection = pool.getConnection();
-
-		try {
-			String sql = "SELECT * FROM customer_coupon WHERE COUPON_ID=" + id;
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} catch (SQLException e) {
-			throw new CouponSystemException("Read customer_coupon table fail", e);
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
+//	public boolean isCouponExistOnDb(long id) throws CouponSystemException {
+//		Connection connection = pool.getConnection();
+//
+//		try {
+//			String sql = "SELECT * FROM customer_coupon WHERE COUPON_ID=" + id;
+//			Statement stmt = connection.createStatement();
+//			ResultSet rs = stmt.executeQuery(sql);
+//			if (rs.next()) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//
+//		} catch (SQLException e) {
+//			throw new CouponSystemException("Read customer_coupon table fail", e);
+//		} finally {
+//			pool.returnConnection(connection);
+//		}
+//
+//	}
 
 }

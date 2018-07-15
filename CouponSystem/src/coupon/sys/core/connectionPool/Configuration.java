@@ -25,7 +25,6 @@ public class Configuration {
 	// public static String DB_PASSWORD;
 	// public static String DB_DRIVER;
 
-	
 	// Singleton Declaration
 	private static Configuration istance = new Configuration();
 
@@ -52,7 +51,7 @@ public class Configuration {
 			// reading from file
 			dbUrl = in.readLine();
 		} catch (IOException e) {
-			throw new CouponSystemException("Cant find DB_URL", e);
+			throw new CouponSystemException("Fail to read Data Base URL (DB_URL)", e);
 		}
 
 		return dbUrl;
@@ -62,6 +61,8 @@ public class Configuration {
 	/**
 	 * Init function , perform all Database Configurations ( Create URL , Config nam
 	 * of Connections to DB )
+	 * 
+	 * @throws CouponSystemException
 	 */
 	private void init() {
 
@@ -69,14 +70,15 @@ public class Configuration {
 			DB_URL = readDbUrlFromFile();
 			DB_MAX_CONNECTIONS = 10;
 
-			// For MYSQL
-			// DB_USER_NAME = "root";
-			// DB_PASSWORD = "root";
-			// DB_DRIVER = "com.mysql.jdbc.Driver";
 		} catch (CouponSystemException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		// For MYSQL
+		// DB_USER_NAME = "root";
+		// DB_PASSWORD = "root";
+		// DB_DRIVER = "com.mysql.jdbc.Driver";
 	}
 
 }
