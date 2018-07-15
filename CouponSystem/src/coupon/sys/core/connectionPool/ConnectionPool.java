@@ -113,6 +113,7 @@ public class ConnectionPool {
 	 * @throws CouponSystemException
 	 */
 	public void closeAllConnection() throws CouponSystemException {
+		System.out.println("Pool size : " +availableConnections.size());
 		for (Connection connection : connectionBackup) {
 			try {
 				connection.close();
