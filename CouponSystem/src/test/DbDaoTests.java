@@ -23,15 +23,15 @@ public class DbDaoTests {
 		Company company2 = new Company("company2", "1112", "112@company.com");
 		Company company3 = new Company("company3", "1113", "113@company.com");
 
-		Customer customer1 = new Customer(1, "David", "pass1");
-		Customer customer2 = new Customer(2, "Yossi", "pass2");
-		Customer customer3 = new Customer(3, "Neta", "pass3");
+		Customer customer1 = new Customer("David", "pass1");
+		Customer customer2 = new Customer("Yossi", "pass2");
+		Customer customer3 = new Customer("Neta", "pass3");
 
-		Coupon coupon1 = new Coupon(1, "coupon1", new Date(2018, 07, 22), new Date(2018, 07, 22), 100, CouponType.FOOD,
+		Coupon coupon1 = new Coupon("coupon1", new Date(2018, 07, 22), new Date(2018, 07, 22), 100, CouponType.FOOD,
 				"Stam coupon1", 1000, "http://google.com");
-		Coupon coupon2 = new Coupon(2, "coupon2", new Date(2018, 07, 22), new Date(2018, 07, 22), 200,
+		Coupon coupon2 = new Coupon("coupon2", new Date(2018, 07, 22), new Date(2018, 07, 22), 200,
 				CouponType.CAMPING, "Stam coupon2", 2000, "http://google2.com");
-		Coupon coupon3 = new Coupon(3, "coupon3", new Date(2018, 07, 22), new Date(2018, 07, 22), 300,
+		Coupon coupon3 = new Coupon("coupon3", new Date(2018, 07, 22), new Date(2018, 07, 22), 300,
 				CouponType.HEALTH, "Stam coupon3", 3000, "http://google3.com");
 
 		try {
