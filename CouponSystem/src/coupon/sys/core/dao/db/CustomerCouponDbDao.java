@@ -44,7 +44,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			stmt.executeUpdate(updatedAmount);
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Incert customer : " + customer.getCustName() + "intro table fail", e);
+			throw new CouponSystemException("Fail to create new customer coupon", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -63,8 +63,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete customer coupon ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -96,7 +95,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			return customerCoupon;
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Incert customer : " + customer.getCustName() + " intro table fail", e);
+			throw new CouponSystemException("Fail to read customer coupon", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -120,7 +119,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			stmt.executeUpdate(sql_customerCoupon);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete all customer coupons", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -136,8 +135,7 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete customer", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -223,12 +221,10 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to get all customer coupons", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
 	public Collection<Coupon> getCouponByType(Customer customer, CouponType type) throws CouponSystemException {
@@ -257,12 +253,10 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to get coupons by Type :" + type, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
 	public Collection<Coupon> getCouponUpToPrice(Customer customer, double price) throws CouponSystemException {
@@ -291,12 +285,10 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to get coupons up to price :" + price, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
 //	public boolean isCouponExistOnDb(long id) throws CouponSystemException {

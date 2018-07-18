@@ -27,18 +27,12 @@ public class DailyCouponExparationTask implements Runnable {
 		int counter = 0;
 		while (!quit) {
 			try {
-				
-				System.out.println("Start thread cicle ");
 				Date currentDate = new Date(System.currentTimeMillis());
 				System.out.println("Execute delete  number : " + counter);
 				couponDbDao.deleteAllExpiriedCoupons(currentDate);
-				Thread.sleep(10 * 1000);
-				// Thread.sleep(3600 * 24 * 1000);
-				counter++;
+				Thread.sleep(1000 * 60 *60 * 24); // 1000msec * 60sec * 60min * 24Hours
 			} catch (InterruptedException e) {
-				System.out.println("!!!! Thread was interupted here ");
 			} catch (CouponSystemException e ) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

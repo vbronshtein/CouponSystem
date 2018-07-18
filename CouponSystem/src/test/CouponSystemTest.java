@@ -13,34 +13,33 @@ public class CouponSystemTest {
 		try {
 			GeneralInitialDatabese generateDb = new GeneralInitialDatabese();
 			generateDb.generateBasicRecords();
-			
-			
+
 			CouponSystem couponSystem = CouponSystem.getInstance();
+
 			CompanyFacade companyFacade = (CompanyFacade) couponSystem.login("company2", "1112", ClientType.COMPANY);
+			System.out.println("Get all  company2 coupons:");
 			System.out.println(companyFacade.getAllCoupons());
-//			CompanyFacade companyFacade2 = (CompanyFacade) couponSystem.login("company3", "new pass", ClientType.COMPANY);
-//			System.out.println(companyFacade2.getAllCoupons());
-			CustomerFacade customerFacade = (CustomerFacade) couponSystem.login("Yossi","pass5", ClientType.CUSTOMER);
-			System.out.println(customerFacade.getAllPurchesedCoupons());
-			
-//			CustomerFacade customerFacade1 = (CustomerFacade) couponSystem.login("Yossi1","New pass", ClientType.CUSTOMER);
-			
-			AdminFacade adminFacade = (AdminFacade) couponSystem.login("admin", "1234", ClientType.ADMIN);
-			System.out.println(adminFacade.getAllCompanies());
-			
-			
-			
-			
-			Thread.sleep(30 *1000 );
-			couponSystem.shutdown();
-			System.out.println("exit from program");
-			
+
+			 CustomerFacade customerFacade = (CustomerFacade) couponSystem.login("Yossi",
+			 "pass5", ClientType.CUSTOMER);
+			 System.out.println("Get all  customer coupons:");
+			 System.out.println(customerFacade.getAllPurchesedCoupons());
+
+			 AdminFacade adminFacade = (AdminFacade) couponSystem.login("admin", "1234",
+			 ClientType.ADMIN);
+			 System.out.println("Get all companies:");
+			 System.out.println(adminFacade.getAllCompanies());
+
+			 Thread.sleep(90 * 1000);
+			 couponSystem.shutdown();
+			 System.out.println("exit from program");
+
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 }

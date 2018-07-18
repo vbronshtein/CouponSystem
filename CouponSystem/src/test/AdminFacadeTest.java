@@ -18,11 +18,11 @@ import coupon.sys.facade.CustomerFacade;
 public class AdminFacadeTest {
 	public static void main(String[] args) {
 
-		Company company1 = new Company(1, "company1", "1111", "111@company.com");
-		Company company2 = new Company(2, "company2", "1112", "112@company.com");
-		Company company3 = new Company(3, "company3", "1113", "113@company.com");
-		Company company4 = new Company(4, "company4", "1114", "114@company.com");
-		Company company5 = new Company(5, "company5", "1115", "114@company.com");
+		Company company1 = new Company("company1", "1111", "111@company.com");
+		Company company2 = new Company("company2", "1112", "112@company.com");
+		Company company3 = new Company("company3", "1113", "113@company.com");
+		Company company4 = new Company("company4", "1114", "114@company.com");
+		Company company5 = new Company("company5", "1115", "114@company.com");
 
 		Customer customer11 = new Customer(11, "David", "pass4");
 		Customer customer12 = new Customer(12, "Yossi", "pass5");

@@ -48,7 +48,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql_compCoupon);
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Incert company : " + company.getName() + "intro table fail", e);
+			throw new CouponSystemException("Fail to create new company : "+ company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -74,7 +74,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to update company : "+ company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -98,14 +98,20 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql_customerCoupon);
 			stmt.executeUpdate(sql_companyCoupon);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete company : "+ company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 
 	}
 
+	/**
+	 * 
+	 * @param compId
+	 * @param couponId
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Coupon readCompanyCoupon(long compId, long couponId) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -130,14 +136,19 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read Company coupon", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 		return null;
 	}
-
+	
+	/**
+	 * 
+	 * @param company
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Collection<Coupon> getAllCompanyCoupons(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -165,15 +176,18 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to get all Company coupons", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @throws CouponSystemException
+	 */
 	public void deleteAllCompanyCoupons(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -190,12 +204,17 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql_companyCoupon);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete all Company coupons", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @throws CouponSystemException
+	 */
 	public void deleteCompany(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		String sql = "DELETE FROM COMPANY_COUPON WHERE COMP_ID=" + company.getId();
@@ -205,14 +224,20 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete Company :" + company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @param type
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Collection<Coupon> getCouponByType(Company company, CouponType type) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -239,14 +264,19 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read coupon by type", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @param price
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Collection<Coupon> getCouponUpToPrice(Company company, double price) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -273,14 +303,19 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read coupon up tp price " + price , e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
+	/**
+	 * 
+	 * @param company
+	 * @param date
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Collection<Coupon> getCouponUpToDate(Company company, Date date) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -307,15 +342,18 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read coupon up tp date " + date , e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return null;
 	}
 
-
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public boolean isCouponTytleAlresdyExist(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -331,12 +369,10 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to check if coupon exist " , e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		return false;
 
 	}
 

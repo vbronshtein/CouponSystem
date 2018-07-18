@@ -6,11 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
-import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.CustomerDao;
@@ -36,10 +33,7 @@ public class CustomerDbDao implements CustomerDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Incert company : " + customer.getCustName()
-			// + "intro table fail", e);
-
+			throw new CouponSystemException("Fail to create new customer :" + customer.getCustName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -63,8 +57,7 @@ public class CustomerDbDao implements CustomerDao {
 				customer.setPassword(rs.getString("PASSWORD"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of customer ID:" + id, e);
+			throw new CouponSystemException("Fail to read customer ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -83,7 +76,7 @@ public class CustomerDbDao implements CustomerDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to update customer ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -101,7 +94,7 @@ public class CustomerDbDao implements CustomerDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete customer ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -128,8 +121,7 @@ public class CustomerDbDao implements CustomerDao {
 			}
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to get all customers ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -166,8 +158,7 @@ public class CustomerDbDao implements CustomerDao {
 				return customer;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to get customer by name", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -191,8 +182,7 @@ public class CustomerDbDao implements CustomerDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to login to customer account", e);
 		} finally {
 			pool.returnConnection(connection);
 		}

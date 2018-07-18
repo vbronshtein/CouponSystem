@@ -19,9 +19,9 @@ public class DbDaoTests {
 		CustomerDbDao customerDbDao = new CustomerDbDao();
 		CouponDbDao couponDbDao = new CouponDbDao();
 
-		Company company1 = new Company(1, "company1", "1111", "111@company.com");
-		Company company2 = new Company(2, "company2", "1112", "112@company.com");
-		Company company3 = new Company(3, "company3", "1113", "113@company.com");
+		Company company1 = new Company("company1", "1111", "111@company.com");
+		Company company2 = new Company("company2", "1112", "112@company.com");
+		Company company3 = new Company("company3", "1113", "113@company.com");
 
 		Customer customer1 = new Customer(1, "David", "pass1");
 		Customer customer2 = new Customer(2, "Yossi", "pass2");

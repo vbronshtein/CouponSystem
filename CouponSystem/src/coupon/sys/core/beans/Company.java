@@ -28,9 +28,8 @@ public class Company {
 	 * @param password
 	 * @param email
 	 */
-	public Company(long id, String name, String password, String email) {
+	public Company( String name, String password, String email) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;

@@ -14,7 +14,8 @@ import coupon.sys.core.dao.CompanyDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * CompanyDbDao class implement methods for connect to "Company" table on Database
+ * CompanyDbDao class implement methods for connect to "Company" table on
+ * Database
  * 
  * @author vbronshtein
  *
@@ -29,28 +30,27 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	}
 
 	// Interface methods
-	
-	
+
 	@Override
 	public void create(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
-			String sql = "INSERT INTO company VALUES(" + company.getId() + ", " + "'" + company.getName() + "'" + ", "
+			long id = getLastAvailableId();
+			String sql = "INSERT INTO company VALUES(" + id + ", " + "'" + company.getName() + "'" + ", "
 					+ "'" + company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
 
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Incert company : " + company.getName() + "intro table fail", e);
+			throw new CouponSystemException("Fail to create new company :" + company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 
 	}
 
-	
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -68,8 +68,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 				return company;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read company ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -89,8 +88,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to update company ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -107,8 +105,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 			stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CouponSystemException("Fail to delete company ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -134,8 +131,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 				companies.add(company);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read all company ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -143,11 +139,14 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		return companies;
 
 	}
-
+	/**
+	 * Method non in Use , 
+	 * Mark as depricated
+	 */
+	@Deprecated
 	@Override
 	public Collection<Coupon> getCoupons() throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		// TODO Auto-generated method stub
 		pool.returnConnection(connection);
 		return null;
 	}
@@ -168,8 +167,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 				return company;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to read Company by Name ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -187,18 +185,42 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				if(password.equals(rs.getString("PASSWORD"))) {
+				if (password.equals(rs.getString("PASSWORD"))) {
 					return true;
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// throw new CouponSystemException("Cant read info of company ID:" + id, e);
+			throw new CouponSystemException("Fail to login to Company account ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 
 		return false;
+
+	}
+
+	public long getLastAvailableId() throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		long id;
+
+		String sql = "SELECT id FROM last_id WHERE type='Company'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getLong("ID");
+				long nextId = id + 1;
+				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Company'";
+				stmt.executeUpdate(sqlUpdate);
+				return id;
+			}
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to get last available ID from Database  ", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+		return -1;
 
 	}
 
