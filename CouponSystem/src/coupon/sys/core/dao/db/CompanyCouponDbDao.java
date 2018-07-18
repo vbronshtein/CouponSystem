@@ -16,7 +16,8 @@ import coupon.sys.core.dao.CompanyCouponDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * CompanyCouponDbDao class implement methods to connect to DB for update company records
+ * CompanyCouponDbDao class implement methods to connect to DB for update
+ * company records
  * 
  * @author vbronshtein
  *
@@ -36,7 +37,8 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		Connection connection = pool.getConnection();
 
 		try {
-			String sql_coupon = "INSERT INTO coupon VALUES(" + coupon.getId() + ",'" + coupon.getTitle() + "','"
+			long id = getLastAvailableId();
+			String sql_coupon = "INSERT INTO coupon VALUES(" + id + ",'" + coupon.getTitle() + "','"
 					+ coupon.getStartDate() + "','" + coupon.getEndDate() + "'," + coupon.getAmount() + ",'"
 					+ coupon.getType() + "','" + coupon.getMessage() + "'," + coupon.getPrice() + ",'"
 					+ coupon.getImage() + "')";
@@ -48,7 +50,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql_compCoupon);
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to create new company : "+ company.getName(), e);
+			throw new CouponSystemException("Fail to create new company : " + company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -74,7 +76,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql);
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to update company : "+ company.getName(), e);
+			throw new CouponSystemException("Fail to update company : " + company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -98,7 +100,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			stmt.executeUpdate(sql_customerCoupon);
 			stmt.executeUpdate(sql_companyCoupon);
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to delete company : "+ company.getName(), e);
+			throw new CouponSystemException("Fail to delete company : " + company.getName(), e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -142,7 +144,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param company
@@ -303,7 +305,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to read coupon up tp price " + price , e);
+			throw new CouponSystemException("Fail to read coupon up tp price " + price, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -342,7 +344,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 			return coupons;
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to read coupon up tp date " + date , e);
+			throw new CouponSystemException("Fail to read coupon up tp date " + date, e);
 		} finally {
 			pool.returnConnection(connection);
 		}
@@ -369,12 +371,40 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 			}
 
 		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to check if coupon exist " , e);
+			throw new CouponSystemException("Fail to check if coupon exist ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
 
 	}
 
+	public long getLastAvailableId() throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		long id;
+
+		String sql = "SELECT id FROM last_id WHERE type='Coupon'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getLong("ID");
+				long nextId = id + 1;
+				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Coupon'";
+				stmt.executeUpdate(sqlUpdate);
+				return id;
+			} else {
+				String sqlInitTable = "INSERT INTO last_id VALUES('Coupon',1)";
+				stmt.executeUpdate(sqlInitTable);
+				return 1;
+			}
+			
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to get last available ID from Database  ", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+
+
+	}
 
 }

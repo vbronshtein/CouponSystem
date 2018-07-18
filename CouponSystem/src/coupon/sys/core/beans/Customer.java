@@ -24,9 +24,8 @@ public class Customer {
 	 * @param custName
 	 * @param password
 	 */
-	public Customer(long id, String custName, String password) {
+	public Customer(String custName, String password) {
 		super();
-		this.id = id;
 		this.custName = custName;
 		this.password = password;
 	}

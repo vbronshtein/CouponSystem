@@ -31,6 +31,7 @@ public class TruncateAllTables {
 			String sql_table3 ="TRUNCATE TABLE COUPON" ;                    
 			String sql_table4 ="TRUNCATE TABLE CUSTOMER";                  
 			String sql_table5 ="TRUNCATE TABLE CUSTOMER_COUPON" ;  
+			String sql_table6 ="TRUNCATE TABLE LAST_ID" ;  
 			
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql_table1);
@@ -38,6 +39,7 @@ public class TruncateAllTables {
 			stmt.executeUpdate(sql_table3);
 			stmt.executeUpdate(sql_table4);
 			stmt.executeUpdate(sql_table5);
+			stmt.executeUpdate(sql_table6);
 
 		} catch (SQLException e) {
 			throw new CouponSystemException("Truncate fail", e);

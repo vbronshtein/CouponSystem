@@ -26,7 +26,8 @@ public class CustomerDbDao implements CustomerDao {
 	public void create(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
-		String sql = "INSERT INTO CUSTOMER VALUES(" + customer.getId() + ",'" + customer.getCustName() + "','"
+		long id = getLastAvailableId();
+		String sql = "INSERT INTO CUSTOMER VALUES(" + id + ",'" + customer.getCustName() + "','"
 				+ customer.getPassword() + "')";
 		Statement stmt;
 		try {
@@ -69,8 +70,8 @@ public class CustomerDbDao implements CustomerDao {
 	@Override
 	public void update(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		String sql = "UPDATE customer SET CUST_NAME='" + customer.getCustName() + "',PASSWORD='" + customer.getPassword()
-				+ "' WHERE id=" + customer.getId();
+		String sql = "UPDATE customer SET CUST_NAME='" + customer.getCustName() + "',PASSWORD='"
+				+ customer.getPassword() + "' WHERE id=" + customer.getId();
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -106,28 +107,28 @@ public class CustomerDbDao implements CustomerDao {
 		Connection connection = pool.getConnection();
 		Collection<Customer> customers = new ArrayList<>();
 		String sql = "SELECT * FROM customer";
-		
+
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			while (rs.next()) {
 				Customer customer = new Customer();
 				customer.setId(rs.getLong("ID"));
 				customer.setCustName(rs.getString("CUST_NAME"));
 				customer.setPassword(rs.getString("PASSWORD"));
-				
+
 				customers.add(customer);
-			
+
 			}
-		
+
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to get all customers ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-		
+
 		return customers;
-		
+
 	}
 
 	@Override
@@ -135,8 +136,7 @@ public class CustomerDbDao implements CustomerDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param name
@@ -146,7 +146,7 @@ public class CustomerDbDao implements CustomerDao {
 	public Customer getCustomerByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
-		String sql = "SELECT * FROM customer WHERE CUST_NAME= '" + name+"'";
+		String sql = "SELECT * FROM customer WHERE CUST_NAME= '" + name + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -167,7 +167,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-
 	@Override
 	public boolean login(String custName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -177,7 +176,7 @@ public class CustomerDbDao implements CustomerDao {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				if(password.equals(rs.getString("PASSWORD"))) {
+				if (password.equals(rs.getString("PASSWORD"))) {
 					return true;
 				}
 			}
@@ -188,6 +187,34 @@ public class CustomerDbDao implements CustomerDao {
 		}
 
 		return false;
+
+	}
+
+	public long getLastAvailableId() throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		long id;
+
+		String sql = "SELECT id FROM last_id WHERE type='Customer'";
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				id = rs.getLong("ID");
+				long nextId = id + 1;
+				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Customer'";
+				stmt.executeUpdate(sqlUpdate);
+				return id;
+			} else {
+				String sqlInitTable = "INSERT INTO last_id VALUES('Customer',1)";
+				stmt.executeUpdate(sqlInitTable);
+				return 1;
+			}
+
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to get last available ID from Database  ", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
 
 	}
 

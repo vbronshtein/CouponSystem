@@ -24,42 +24,42 @@ public class GeneralInitialDatabese {
 		Company company3 = new Company("company3", "1113", "113@company.com");
 		Company company4 = new Company("company4", "1114", "114@company.com");
 
-		Customer customer11 = new Customer(11, "David", "pass4");
-		Customer customer12 = new Customer(12, "Yossi", "pass5");
-		Customer customer13 = new Customer(13, "Neta", "pass6");
-		Customer customer14 = new Customer(14, "Nataly", "pass6");
+		Customer customer11 = new Customer("David", "pass11");
+		Customer customer12 = new Customer("Yossi", "pass12");
+		Customer customer13 = new Customer("Neta", "pass13");
+		Customer customer14 = new Customer("Nataly", "pass14");
 
-		Coupon coupon1 = new Coupon(1, "coupon1", new Date(System.currentTimeMillis()),
+		Coupon coupon1 = new Coupon("coupon1", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 100, CouponType.HEALTH, "Stam coupon14", 1000,
 				"http://google4.com");
-		Coupon coupon2 = new Coupon(2, "coupon2", new Date(System.currentTimeMillis()),
+		Coupon coupon2 = new Coupon("coupon2", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 200, CouponType.CAMPING, "Stam coupon3", 2000,
 				"http://google5.com");
-		Coupon coupon3 = new Coupon(3, "coupon3", new Date(System.currentTimeMillis()),
+		Coupon coupon3 = new Coupon("coupon3", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis()), 300, CouponType.HEALTH, "Stam coupon5", 3000,
 				"http://google6.com");
-		Coupon coupon4 = new Coupon(4, "coupon4", new Date(System.currentTimeMillis()),
+		Coupon coupon4 = new Coupon("coupon4", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 400, CouponType.CAMPING, "Stam coupon7", 4000,
 				"http://google4.com");
-		Coupon coupon5 = new Coupon(5, "coupon5", new Date(System.currentTimeMillis()),
+		Coupon coupon5 = new Coupon("coupon5", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 500, CouponType.ELECTRICITY, "Stam coupon8", 5000,
 				"http://google5.com");
-		Coupon coupon6 = new Coupon(6, "coupon6", new Date(System.currentTimeMillis()),
+		Coupon coupon6 = new Coupon("coupon6", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 100, CouponType.ELECTRICITY, "Stam coupon26", 1000,
 				"http://google6.com");
-		Coupon coupon7 = new Coupon(7, "coupon7", new Date(System.currentTimeMillis()),
+		Coupon coupon7 = new Coupon("coupon7", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 2), 200, CouponType.HEALTH, "Stam coupon34", 2000,
 				"http://google4.com");
-		Coupon coupon8 = new Coupon(8, "coupon8", new Date(System.currentTimeMillis()),
+		Coupon coupon8 = new Coupon("coupon8", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis()), 300, CouponType.HEALTH, "Stam coupon35", 3000,
 				"http://google5.com");
-		Coupon coupon9 = new Coupon(9, "coupon9", new Date(System.currentTimeMillis()),
+		Coupon coupon9 = new Coupon("coupon9", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 400, CouponType.HEALTH, "Stam coupon36", 4000,
 				"http://google6.com");
-		Coupon coupon10 = new Coupon(10, "coupon10", new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 30),
+		Coupon coupon10 = new Coupon("coupon10", new Date(System.currentTimeMillis() - 1000 * 3600 * 24 * 30),
 				new Date(System.currentTimeMillis() + 1000 * 3600 * 24 * 2), 500, CouponType.HEALTH, "Stam coupon36",
 				5000, "http://google6.com");
-		Coupon coupon11 = new Coupon(11, "coupon11", new Date(System.currentTimeMillis()),
+		Coupon coupon11 = new Coupon("coupon11", new Date(System.currentTimeMillis()),
 				new Date(System.currentTimeMillis()), 600, CouponType.HEALTH, "Stam coupon36", 5000,
 				"http://google6.com");
 

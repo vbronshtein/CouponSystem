@@ -37,8 +37,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 		try {
 			long id = getLastAvailableId();
-			String sql = "INSERT INTO company VALUES(" + id + ", " + "'" + company.getName() + "'" + ", "
-					+ "'" + company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
+			String sql = "INSERT INTO company VALUES(" + id + ", " + "'" + company.getName() + "'" + ", " + "'"
+					+ company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
 
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
@@ -139,9 +139,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		return companies;
 
 	}
+
 	/**
-	 * Method non in Use , 
-	 * Mark as depricated
+	 * Method non in Use , Mark as depricated
 	 */
 	@Deprecated
 	@Override
@@ -213,14 +213,17 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Company'";
 				stmt.executeUpdate(sqlUpdate);
 				return id;
+			} else {
+				String sqlInitTable = "INSERT INTO last_id VALUES('Company',1)";
+				stmt.executeUpdate(sqlInitTable);
+				return 1;
 			}
+
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to get last available ID from Database  ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-
-		return -1;
 
 	}
 
