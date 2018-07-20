@@ -203,7 +203,7 @@ public class CustomerDbDao implements CustomerDao {
 				long nextId = id + 1;
 				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Customer'";
 				stmt.executeUpdate(sqlUpdate);
-				return id;
+				return nextId;
 			} else {
 				String sqlInitTable = "INSERT INTO last_id VALUES('Customer',1)";
 				stmt.executeUpdate(sqlInitTable);

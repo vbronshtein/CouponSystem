@@ -1,4 +1,4 @@
-package coupon.sys.facade;
+package coupon.sys.core.facade;
 
 import java.util.Collection;
 

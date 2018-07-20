@@ -28,7 +28,8 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		Connection connection = pool.getConnection();
 
 		try {
-			String sqlCreate = "INSERT INTO CUSTOMER_COUPON VALUES(" + customer.getId() + ", " + coupon.getId() + ")";
+			long couponId = getCouponId(coupon);
+			String sqlCreate = "INSERT INTO CUSTOMER_COUPON VALUES(" + customer.getId() + ", " + couponId + ")";
 			String getAmount = "SELECT AMOUNT FROM coupon WHERE TITLE='" + coupon.getTitle() + "'";
 
 			Statement stmt = connection.createStatement();
@@ -69,14 +70,21 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		}
 
 	}
-
+	
+	/*
+	 * issue here incorrect query ( or incorrect resultSet ); 
+	 * 
+	 */
 	public Coupon read(Customer customer, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		Coupon customerCoupon = null;
 
 		try {
-			String sql = "SELECT * FROM customer_coupon WHERE CUST_ID=" + customer.getId() + " and COUPON_ID="
-					+ coupon.getId();
+			// String sql = "SELECT * FROM customer_coupon WHERE CUST_ID=" +
+			// customer.getId() + " and COUPON_ID="
+			// + coupon.getId();
+			String sql = "SELECT c.* FROM coupon c INNER JOIN customer_coupon cc ON c.id=cc.coupon_id WHERE cc.cust_id="
+					+ customer.getId() + " and cc.coupon_id=" + coupon.getId();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
@@ -142,57 +150,6 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 
 	}
 
-//	public void deleteListOfCustomerCoupons(Collection<Coupon> coupons) throws CouponSystemException {
-//		Connection connection = pool.getConnection();
-//
-//		try {
-//			for (Coupon coupon : coupons) {
-//				String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
-//				Statement stmt = connection.createStatement();
-//				stmt.executeUpdate(sql);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			pool.returnConnection(connection);
-//		}
-//
-//	}
-
-//	public void deleteCoupon(Coupon coupon) throws CouponSystemException {
-//		Connection connection = pool.getConnection();
-//		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + coupon.getId();
-//
-//		Statement stmt;
-//		try {
-//			stmt = connection.createStatement();
-//			stmt.executeUpdate(sql);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			pool.returnConnection(connection);
-//		}
-//
-//	}
-
-//	public void deleteCoupon(Long couponId) throws CouponSystemException {
-//		Connection connection = pool.getConnection();
-//		String sql = "DELETE FROM CUSTOMER_COUPON WHERE COUPON_ID=" + couponId;
-//
-//		Statement stmt;
-//		try {
-//			stmt = connection.createStatement();
-//			stmt.executeUpdate(sql);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			pool.returnConnection(connection);
-//		}
-//
-//	}
 
 	public Collection<Coupon> getAllCustomerCoupons(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -289,6 +246,29 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 		} finally {
 			pool.returnConnection(connection);
 		}
+		
+	}
+	
+	public long getCouponId(Coupon coupon) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+		long id = -1;
+		
+		try {
+			String sqlGetCouponId = "SELECT ID FROM coupon WHERE TITLE='" + coupon.getTitle() + "'";
+			Statement stmt = connection.createStatement();
+			
+			ResultSet rs = stmt.executeQuery(sqlGetCouponId);
+			if (rs.next()) {
+				id = rs.getLong("ID");
+			}
+			return id;
+					
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to create new customer coupon", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		
 	}
 
 //	public boolean isCouponExistOnDb(long id) throws CouponSystemException {
@@ -312,4 +292,6 @@ public class CustomerCouponDbDao implements CustomerCouponDao {
 //
 //	}
 
+	
+	
 }

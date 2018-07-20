@@ -1,4 +1,4 @@
-package coupon.sys.facade;
+package coupon.sys.core.facade;
 
 import java.sql.Date;
 import java.util.Collection;

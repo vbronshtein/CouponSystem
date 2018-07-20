@@ -1,7 +1,7 @@
-package test;
+package coupon.sys.core.test;
 
+import coupon.sys.core.create.db.DerbyDb;
 import coupon.sys.core.exceptions.CouponSystemException;
-import create.db.DerbyDb;
 
 public class DatabaceTest {
 

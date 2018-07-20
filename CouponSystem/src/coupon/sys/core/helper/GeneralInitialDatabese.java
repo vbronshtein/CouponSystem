@@ -8,9 +8,9 @@ import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
-import coupon.sys.facade.AdminFacade;
-import coupon.sys.facade.CompanyFacade;
-import coupon.sys.facade.CustomerFacade;
+import coupon.sys.core.facade.AdminFacade;
+import coupon.sys.core.facade.CompanyFacade;
+import coupon.sys.core.facade.CustomerFacade;
 
 public class GeneralInitialDatabese {
 

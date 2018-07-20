@@ -1,4 +1,4 @@
-package test;
+package coupon.sys.core.test;
 
 import java.sql.Date;
 
@@ -10,10 +10,10 @@ import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.dao.db.CouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
+import coupon.sys.core.facade.AdminFacade;
+import coupon.sys.core.facade.CompanyFacade;
+import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.helper.TruncateAllTables;
-import coupon.sys.facade.AdminFacade;
-import coupon.sys.facade.CompanyFacade;
-import coupon.sys.facade.CustomerFacade;
 
 public class AdminFacadeTest {
 	public static void main(String[] args) {

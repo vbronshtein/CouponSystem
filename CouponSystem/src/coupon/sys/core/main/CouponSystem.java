@@ -1,14 +1,14 @@
-package coupon.sys.main;
+package coupon.sys.core.main;
 
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.db.CompanyDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
+import coupon.sys.core.facade.AdminFacade;
+import coupon.sys.core.facade.CompanyFacade;
+import coupon.sys.core.facade.CouponClientFacade;
+import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.jobs.DailyCouponExparationTask;
-import coupon.sys.facade.AdminFacade;
-import coupon.sys.facade.CompanyFacade;
-import coupon.sys.facade.CouponClientFacade;
-import coupon.sys.facade.CustomerFacade;
 
 public class CouponSystem {
 

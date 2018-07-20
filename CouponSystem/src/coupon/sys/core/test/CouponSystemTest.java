@@ -1,12 +1,12 @@
-package test;
+package coupon.sys.core.test;
 
 import coupon.sys.core.exceptions.CouponSystemException;
+import coupon.sys.core.facade.AdminFacade;
+import coupon.sys.core.facade.CompanyFacade;
+import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.helper.GeneralInitialDatabese;
-import coupon.sys.facade.AdminFacade;
-import coupon.sys.facade.CompanyFacade;
-import coupon.sys.facade.CustomerFacade;
-import coupon.sys.main.ClientType;
-import coupon.sys.main.CouponSystem;
+import coupon.sys.core.main.ClientType;
+import coupon.sys.core.main.CouponSystem;
 
 public class CouponSystemTest {
 	public static void main(String[] args) {
@@ -21,7 +21,7 @@ public class CouponSystemTest {
 			System.out.println(companyFacade.getAllCoupons());
 
 			 CustomerFacade customerFacade = (CustomerFacade) couponSystem.login("Yossi",
-			 "pass5", ClientType.CUSTOMER);
+			 "pass12", ClientType.CUSTOMER);
 			 System.out.println("Get all  customer coupons:");
 			 System.out.println(customerFacade.getAllPurchesedCoupons());
 

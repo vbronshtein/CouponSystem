@@ -42,8 +42,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 					+ coupon.getStartDate() + "','" + coupon.getEndDate() + "'," + coupon.getAmount() + ",'"
 					+ coupon.getType() + "','" + coupon.getMessage() + "'," + coupon.getPrice() + ",'"
 					+ coupon.getImage() + "')";
-			String sql_compCoupon = "INSERT INTO company_coupon VALUES(" + company.getId() + ", " + coupon.getId()
-					+ ")";
+			String sql_compCoupon = "INSERT INTO company_coupon VALUES(" + company.getId() + ", " + id + ")";
 
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql_coupon);
@@ -391,19 +390,18 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 				long nextId = id + 1;
 				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Coupon'";
 				stmt.executeUpdate(sqlUpdate);
-				return id;
+				return nextId;
 			} else {
 				String sqlInitTable = "INSERT INTO last_id VALUES('Coupon',1)";
 				stmt.executeUpdate(sqlInitTable);
 				return 1;
 			}
-			
+
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to get last available ID from Database  ", e);
 		} finally {
 			pool.returnConnection(connection);
 		}
-
 
 	}
 

@@ -1,4 +1,4 @@
-package create.db;
+package coupon.sys.core.create.db;
 
 import java.io.BufferedReader;
 import java.io.File;

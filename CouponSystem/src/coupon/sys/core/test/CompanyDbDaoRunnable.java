@@ -1,4 +1,4 @@
-package test;
+package coupon.sys.core.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
