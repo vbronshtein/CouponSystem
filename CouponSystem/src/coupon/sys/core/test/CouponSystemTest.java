@@ -19,22 +19,31 @@ public class CouponSystemTest {
 			CouponSystem couponSystem = CouponSystem.getInstance();
 
 			// login to Company ( company 2 )
+			System.out.println("Login as company ...");
 			CompanyFacade companyFacade = (CompanyFacade) couponSystem.login("company2", "1112", ClientType.COMPANY);
-			System.out.println("Get all  company2 coupons:");
+			System.out.println("Login as company succed!!");
+			System.out.print("Get all  company2 coupons: ");
 			// read company 2 coupons
 			System.out.println(companyFacade.getAllCoupons());
+			System.out.println("-------------------------------");
 
 			// login as Customer "Yossi"
+			System.out.println("Login as customer ...");
 			CustomerFacade customerFacade = (CustomerFacade) couponSystem.login("Yossi", "pass12", ClientType.CUSTOMER);
-			System.out.println("Get all  customer coupons:");
+			System.out.println("Login as customer succed!!");
+			System.out.print("Get all customer coupons: ");
 			// get all customer (Yossi) purchased coupons
 			System.out.println(customerFacade.getAllPurchesedCoupons());
+			System.out.println("-------------------------------");
 
 			// login as admin
+			System.out.println("Login as admin ...");
 			AdminFacade adminFacade = (AdminFacade) couponSystem.login("admin", "1234", ClientType.ADMIN);
-			System.out.println("Get all companies:");
+			System.out.println("Login as admin succed!!");
+			System.out.print("Get all companies: ");
 			// get all companies
 			System.out.println(adminFacade.getAllCompanies());
+			System.out.println("-------------------------------");
 
 			Thread.sleep(90 * 1000);
 			couponSystem.shutdown();

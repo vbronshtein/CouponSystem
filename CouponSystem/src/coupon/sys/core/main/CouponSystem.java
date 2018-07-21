@@ -56,7 +56,6 @@ public class CouponSystem {
 			}
 		case COMPANY:
 			if (companyDbDao.login(name, password)) {
-				System.out.println("Login succed !!!!");
 				return new CompanyFacade(name);
 			} else {
 				throw new CouponSystemException("Incorrect username or password");
