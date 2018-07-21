@@ -7,32 +7,34 @@ import java.sql.Statement;
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Class truncate all Coupon system records ( delete all records from coupon
+ * system tables)
+ * 
+ * @author vbronshtein
+ *
+ */
 public class TruncateAllTables {
-	
+
 	private ConnectionPool pool;
 
-	
-	
 	public TruncateAllTables() {
 		super();
 		this.pool = ConnectionPool.getInstance();
 	}
 
-
-	
 	public void trancateAll() throws CouponSystemException {
-		
-		
+
 		Connection connection = pool.getConnection();
 
 		try {
-			String sql_table1 = "TRUNCATE TABLE COMPANY";          
-			String sql_table2 ="TRUNCATE TABLE COMPANY_COUPON"  ;      
-			String sql_table3 ="TRUNCATE TABLE COUPON" ;                    
-			String sql_table4 ="TRUNCATE TABLE CUSTOMER";                  
-			String sql_table5 ="TRUNCATE TABLE CUSTOMER_COUPON" ;  
-			String sql_table6 ="TRUNCATE TABLE LAST_ID" ;  
-			
+			String sql_table1 = "TRUNCATE TABLE COMPANY";
+			String sql_table2 = "TRUNCATE TABLE COMPANY_COUPON";
+			String sql_table3 = "TRUNCATE TABLE COUPON";
+			String sql_table4 = "TRUNCATE TABLE CUSTOMER";
+			String sql_table5 = "TRUNCATE TABLE CUSTOMER_COUPON";
+			String sql_table6 = "TRUNCATE TABLE LAST_ID";
+
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql_table1);
 			stmt.executeUpdate(sql_table2);

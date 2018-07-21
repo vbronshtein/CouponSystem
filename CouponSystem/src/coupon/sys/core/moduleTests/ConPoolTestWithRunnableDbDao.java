@@ -1,12 +1,18 @@
-package coupon.sys.core.test;
+package coupon.sys.core.moduleTests;
 
 import coupon.sys.core.connectionPool.ConnectionPool;
 
+/**
+ * Class for test multi thread on connection pool
+ * 
+ * @author vbronshtein
+ *
+ */
 public class ConPoolTestWithRunnableDbDao {
 
 	public static void main(String[] args) {
 		ConnectionPool pool = ConnectionPool.getInstance();
-		
+
 		CompanyDbDaoRunnable c1 = new CompanyDbDaoRunnable(pool);
 		CompanyDbDaoRunnable c2 = new CompanyDbDaoRunnable(pool);
 		CompanyDbDaoRunnable c3 = new CompanyDbDaoRunnable(pool);
@@ -34,25 +40,25 @@ public class ConPoolTestWithRunnableDbDao {
 		try {
 			t1.start();
 			Thread.sleep(100);
-		t2.start();
-		Thread.sleep(100);
-		t3.start();
-		Thread.sleep(100);
-		t4.start();
-		Thread.sleep(100);
-		t5.start();
-		Thread.sleep(100);
-		t6.start();
-		Thread.sleep(100);
-		t7.start();
-		Thread.sleep(100);
-		t8.start();
-		Thread.sleep(100);
-		t9.start();
-		Thread.sleep(100);
-		t10.start();
-		Thread.sleep(100);
-		t11.start();
+			t2.start();
+			Thread.sleep(100);
+			t3.start();
+			Thread.sleep(100);
+			t4.start();
+			Thread.sleep(100);
+			t5.start();
+			Thread.sleep(100);
+			t6.start();
+			Thread.sleep(100);
+			t7.start();
+			Thread.sleep(100);
+			t8.start();
+			Thread.sleep(100);
+			t9.start();
+			Thread.sleep(100);
+			t10.start();
+			Thread.sleep(100);
+			t11.start();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

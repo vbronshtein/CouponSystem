@@ -19,7 +19,6 @@ public class Company {
 	public Company() {
 		super();
 	}
-	
 
 	/**
 	 * 
@@ -28,7 +27,7 @@ public class Company {
 	 * @param password
 	 * @param email
 	 */
-	public Company( String name, String password, String email) {
+	public Company(String name, String password, String email) {
 		super();
 		this.name = name;
 		this.password = password;
@@ -100,6 +99,7 @@ public class Company {
 		return "Company [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", coupons="
 				+ coupons + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,9 +108,6 @@ public class Company {
 		return result;
 	}
 
-	
-	
-	
 	public boolean isNameEqualTo(Object obj) {
 		if (this == obj)
 			return true;

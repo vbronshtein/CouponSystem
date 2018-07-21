@@ -10,6 +10,14 @@ import coupon.sys.core.facade.CouponClientFacade;
 import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.jobs.DailyCouponExparationTask;
 
+/**
+ * Coupon System main class ( Singleton )
+ * 
+ * 1.Perform logins to all facades 2.Init DayliExparation task
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CouponSystem {
 
 	private CompanyDbDao companyDbDao;
@@ -19,8 +27,7 @@ public class CouponSystem {
 
 	DailyCouponExparationTask dailyExpTask;
 
-	// private Thread t1;
-
+	// CTOR
 	private CouponSystem() {
 		initDao();
 		initDailyThread();
@@ -30,6 +37,15 @@ public class CouponSystem {
 		return instance;
 	}
 
+	/**
+	 * Login method ,return facade after login
+	 * 
+	 * @param name
+	 * @param password
+	 * @param type
+	 * @return facade
+	 * @throws CouponSystemException
+	 */
 	public CouponClientFacade login(String name, String password, ClientType type) throws CouponSystemException {
 		switch (type) {
 		case ADMIN:
@@ -58,6 +74,11 @@ public class CouponSystem {
 
 	}
 
+	/**
+	 * Shutdown all threads and close all SQL connections
+	 * 
+	 * @throws CouponSystemException
+	 */
 	public void shutdown() throws CouponSystemException {
 		ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -66,11 +87,13 @@ public class CouponSystem {
 
 	}
 
+	// init Dao for login to facades
 	private void initDao() {
 		companyDbDao = new CompanyDbDao();
 		customerDbDao = new CustomerDbDao();
 	}
 
+	// init Daily thread
 	private void initDailyThread() {
 
 		dailyExpTask = new DailyCouponExparationTask();

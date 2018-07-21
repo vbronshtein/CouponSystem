@@ -17,7 +17,7 @@ public class Customer {
 	public Customer() {
 		super();
 	}
-	
+
 	/**
 	 * 
 	 * @param id
@@ -29,7 +29,6 @@ public class Customer {
 		this.custName = custName;
 		this.password = password;
 	}
-
 
 	public long getId() {
 		return id;
@@ -85,7 +84,6 @@ public class Customer {
 				+ "]";
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,8 +92,6 @@ public class Customer {
 		return result;
 	}
 
-
-	
 	public boolean isNameEqualTo(Object obj) {
 		if (this == obj)
 			return true;
@@ -111,6 +107,5 @@ public class Customer {
 			return false;
 		return true;
 	}
-	
-	
+
 }

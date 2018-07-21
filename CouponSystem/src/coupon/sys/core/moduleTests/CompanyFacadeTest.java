@@ -1,4 +1,4 @@
-package coupon.sys.core.test;
+package coupon.sys.core.moduleTests;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -17,6 +17,12 @@ import coupon.sys.core.facade.CompanyFacade;
 import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.helper.TruncateAllTables;
 
+/**
+ * Test for company facade class S
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CompanyFacadeTest {
 	public static void main(String[] args) {
 
@@ -127,25 +133,23 @@ public class CompanyFacadeTest {
 
 			// update coupon - only endDate and price
 			System.out.println("update coupon - only endDate and price");
-			coupon6.setEndDate(new Date(System.currentTimeMillis()+ 1000*3600*48 ));
+			coupon6.setEndDate(new Date(System.currentTimeMillis() + 1000 * 3600 * 48));
 			coupon6.setPrice(500000);
 			compFacade2.updateCoupon(coupon6);
-			
-			
+
 			// update non exist coupon
 			System.out.println("update non exist coupon");
 
 			// update coupon of other company
 			System.out.println("update coupon of other company");
-			coupon2.setEndDate(new Date(System.currentTimeMillis()+ 1000*3600*48 ));
+			coupon2.setEndDate(new Date(System.currentTimeMillis() + 1000 * 3600 * 48));
 			coupon2.setPrice(500000);
 			compFacade2.updateCoupon(coupon2);
 
 			// get this company info
 			System.out.println("get this company info");
-			System.out.println( compFacade1.getCoupon(coupon3.getId()));
+			System.out.println(compFacade1.getCoupon(coupon3.getId()));
 
-			
 			// check coupon by CouponType
 			System.out.println("check coupon by CouponType");
 			System.out.println(compFacade2.getCouponByType(CouponType.HEALTH));
@@ -161,7 +165,7 @@ public class CompanyFacadeTest {
 
 			// check coupon upTo End Date
 			System.out.println("check coupon upTo End Date");
-			coupon7.setEndDate(new Date(System.currentTimeMillis() - 1000*3600*48 ));
+			coupon7.setEndDate(new Date(System.currentTimeMillis() - 1000 * 3600 * 48));
 			long curr = System.currentTimeMillis();
 			System.out.println(compFacade2.getCouponUpToDate(new Date(curr)));
 

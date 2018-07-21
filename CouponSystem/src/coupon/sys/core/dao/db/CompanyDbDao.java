@@ -30,7 +30,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	}
 
 	// Interface methods
-
+	/**
+	 * Create new company on DB
+	 */
 	@Override
 	public void create(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -51,6 +53,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	/**
+	 * Read company from DB
+	 */
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -77,6 +82,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	/**
+	 * Update Company fields on DB
+	 */
 	@Override
 	public void update(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -95,6 +103,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	/**
+	 * Delete company from DB
+	 */
 	@Override
 	public void delete(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -112,6 +123,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	/**
+	 * Get all companies from DB
+	 */
 	@Override
 	public Collection<Company> getAllCompanies() throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -151,6 +165,13 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 		return null;
 	}
 
+	/**
+	 * Get Company by Name from DB
+	 * 
+	 * @param name
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public Company getCompanyByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -199,6 +220,12 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
+	/**
+	 * Get last available ID for creating new company
+	 * 
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public long getLastAvailableId() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		long id;

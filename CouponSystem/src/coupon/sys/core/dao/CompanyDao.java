@@ -7,14 +7,13 @@ import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * Company Dao interface 
- * Define "must implement" methods 
+ * Company Dao interface Define "must implement" methods
  * 
  * @author vbronshtein
  *
  */
 public interface CompanyDao {
-	
+
 	/**
 	 * 
 	 * @param company
@@ -66,5 +65,5 @@ public interface CompanyDao {
 	 * @throws CouponSystemException
 	 */
 	boolean login(String compName, String password) throws CouponSystemException;
-	
+
 }

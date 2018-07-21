@@ -1,4 +1,4 @@
-package coupon.sys.core.test;
+package coupon.sys.core.moduleTests;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,11 +12,17 @@ import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.dao.CompanyDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
-public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
+/**
+ * Class for test multi thread on connection pool will use on
+ * ConPoolTestWithRunnableDbDao class
+ * 
+ * @author vbronshtein
+ *
+ */
+public class CompanyDbDaoRunnable implements CompanyDao, Runnable {
 
 	private ConnectionPool pool;
-	
-	
+
 	public CompanyDbDaoRunnable(ConnectionPool pool) {
 		super();
 		this.pool = pool;
@@ -25,9 +31,11 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 	@Override
 	public void create(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		System.out.println(Thread.currentThread().getName() + " : Connection taken" + " , Connection pool size: " + pool.poolSize());
-//		String sql1 = "INSERT INTO company VALUES(111,'electra','password','el@electra.com')";
-		String sql1 = "INSERT INTO company VALUES("+ company.getId() +",'electra','password','el@electra.com')";
+		System.out.println(Thread.currentThread().getName() + " : Connection taken" + " , Connection pool size: "
+				+ pool.poolSize());
+		// String sql1 = "INSERT INTO company
+		// VALUES(111,'electra','password','el@electra.com')";
+		String sql1 = "INSERT INTO company VALUES(" + company.getId() + ",'electra','password','el@electra.com')";
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -35,7 +43,7 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Statement stmt = con.createStatement();
 		// // execution
 		// stmt.executeUpdate(sql1);
@@ -45,10 +53,11 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		pool.returnConnection(connection);
-		System.out.println(Thread.currentThread().getName() + " : Connection returned" + " , Connection pool size: " + pool.poolSize());
-		
+		System.out.println(Thread.currentThread().getName() + " : Connection returned" + " , Connection pool size: "
+				+ pool.poolSize());
+
 	}
 
 	@Override
@@ -60,13 +69,13 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 	@Override
 	public void update(Company company) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(Company company) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -87,11 +96,12 @@ public class CompanyDbDaoRunnable implements CompanyDao , Runnable {
 		return false;
 	}
 
+	// runable will generate company with rundom ID
 	@Override
 	public void run() {
 		try {
-			long id = (long) (Math.random()*10000);
-			Company company= new Company();
+			long id = (long) (Math.random() * 10000);
+			Company company = new Company();
 			company.setId(id);
 			create(company);
 		} catch (CouponSystemException e) {

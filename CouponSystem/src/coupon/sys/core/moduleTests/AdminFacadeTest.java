@@ -1,4 +1,4 @@
-package coupon.sys.core.test;
+package coupon.sys.core.moduleTests;
 
 import java.sql.Date;
 
@@ -7,7 +7,7 @@ import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
 import coupon.sys.core.dao.db.CompanyDbDao;
-import coupon.sys.core.dao.db.CouponDbDao;
+import coupon.sys.core.dao.db.GlobalCouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 import coupon.sys.core.facade.AdminFacade;
@@ -15,6 +15,12 @@ import coupon.sys.core.facade.CompanyFacade;
 import coupon.sys.core.facade.CustomerFacade;
 import coupon.sys.core.helper.TruncateAllTables;
 
+/**
+ * Class for test Admin facade class
+ * 
+ * @author vbronshtein
+ *
+ */
 public class AdminFacadeTest {
 	public static void main(String[] args) {
 
@@ -67,118 +73,107 @@ public class AdminFacadeTest {
 				"http://google6.com");
 
 		try {
-		
-		TruncateAllTables trAllTables = new TruncateAllTables();
+			// truncate all old records on DataBase
+			TruncateAllTables trAllTables = new TruncateAllTables();
 			trAllTables.trancateAll();
-		// add new coupon
-		System.out.println("add new coupon");
-		AdminFacade adminFacade = new AdminFacade();
-		adminFacade.createCompany(company1);
-		adminFacade.createCompany(company2);
-		adminFacade.createCompany(company3);
 
-		CompanyFacade compFacade1 = new CompanyFacade(company1.getName());
-		CompanyFacade compFacade2 = new CompanyFacade(company2.getName());
-		CompanyFacade compFacade3 = new CompanyFacade(company3.getName());
+			// add new coupon
+			System.out.println("add new coupon");
+			AdminFacade adminFacade = new AdminFacade();
+			adminFacade.createCompany(company1);
+			adminFacade.createCompany(company2);
+			adminFacade.createCompany(company3);
 
-		compFacade1.createCoupon(coupon1);
-		compFacade1.createCoupon(coupon2);
-		compFacade1.createCoupon(coupon3);
-		compFacade1.createCoupon(coupon4);
-		compFacade1.createCoupon(coupon5);
+			CompanyFacade compFacade1 = new CompanyFacade(company1.getName());
+			CompanyFacade compFacade2 = new CompanyFacade(company2.getName());
+			CompanyFacade compFacade3 = new CompanyFacade(company3.getName());
 
-		compFacade2.createCoupon(coupon6);
-		compFacade2.createCoupon(coupon7);
-		compFacade2.createCoupon(coupon8);
-		compFacade2.createCoupon(coupon9);
-		compFacade2.createCoupon(coupon10);
-		compFacade2.createCoupon(coupon11);
+			compFacade1.createCoupon(coupon1);
+			compFacade1.createCoupon(coupon2);
+			compFacade1.createCoupon(coupon3);
+			compFacade1.createCoupon(coupon4);
+			compFacade1.createCoupon(coupon5);
 
-		
-		
-		adminFacade.createCustomer(customer11);
-		adminFacade.createCustomer(customer12);
-		adminFacade.createCustomer(customer13);
-		CustomerFacade customerFacade11 = new CustomerFacade(customer11.getCustName());
-		CustomerFacade customerFacade12 = new CustomerFacade(customer12.getCustName());
-		CustomerFacade customerFacade13 = new CustomerFacade(customer13.getCustName());
+			compFacade2.createCoupon(coupon6);
+			compFacade2.createCoupon(coupon7);
+			compFacade2.createCoupon(coupon8);
+			compFacade2.createCoupon(coupon9);
+			compFacade2.createCoupon(coupon10);
+			compFacade2.createCoupon(coupon11);
 
-		
-		
-		
-		customerFacade11.purshaseCoupon(coupon1);
-		customerFacade11.purshaseCoupon(coupon2);
-		customerFacade11.purshaseCoupon(coupon3);
-		customerFacade12.purshaseCoupon(coupon2);
-		customerFacade12.purshaseCoupon(coupon3);
-		customerFacade12.purshaseCoupon(coupon9);
-		customerFacade12.purshaseCoupon(coupon10);
-			
-			
+			adminFacade.createCustomer(customer11);
+			adminFacade.createCustomer(customer12);
+			adminFacade.createCustomer(customer13);
+			CustomerFacade customerFacade11 = new CustomerFacade(customer11.getCustName());
+			CustomerFacade customerFacade12 = new CustomerFacade(customer12.getCustName());
+			CustomerFacade customerFacade13 = new CustomerFacade(customer13.getCustName());
+
+			customerFacade11.purshaseCoupon(coupon1);
+			customerFacade11.purshaseCoupon(coupon2);
+			customerFacade11.purshaseCoupon(coupon3);
+			customerFacade12.purshaseCoupon(coupon2);
+			customerFacade12.purshaseCoupon(coupon3);
+			customerFacade12.purshaseCoupon(coupon9);
+			customerFacade12.purshaseCoupon(coupon10);
+
 			System.out.println("\n\n\n");
+
 			// create new company
 			System.out.println("create new company :");
 			adminFacade.createCompany(company4);
-			
-			//create company with same name will fail
+
+			// create company with same name will fail
 			System.out.println("create company with same name will fail");
-//			adminFacade.createCompany(company4);
-			
-			//delete company - check all coupons was delete also customer coupon will delete
+			// adminFacade.createCompany(company4);
+
+			// delete company - check all coupons was delete also customer coupon will
+			// delete
 			System.out.println("delete company");
 			adminFacade.removeCompany(company1);
-			
+
 			// delete un-exist company
-			//----------!add exception - company not found
 			System.out.println("delete un-exist company");
 			adminFacade.removeCompany(company5);
-			
-			
-			//company update --all except company name 
+
+			// company update --all except company name
 			System.out.println("company update");
 			company2.setPassword("new pass");
 			adminFacade.updateCompany(company2);
-			
-			// update company with different name 
+
+			// update company with different name
 			System.out.println("update company with different name");
-//			company3.setPassword("new pass3");
-//			company3.setName("newName");
-//			adminFacade.updateCompany(company3);
-			
-			//update un-exist company
-//			System.out.println("update un-exist company");
-//			company5.setPassword("new pass3");
-//			adminFacade.updateCompany(company5);
-			
-			
-			//get All company 
+			// company3.setPassword("new pass3");
+			// company3.setName("newName");
+			// adminFacade.updateCompany(company3);
+
+			// update un-exist company
+			// System.out.println("update un-exist company");
+			// company5.setPassword("new pass3");
+			// adminFacade.updateCompany(company5);
+
+			// get All company
 			System.out.println("get All company ");
 			System.out.println(adminFacade.getAllCompanies());
-			
-			//get spesific company
+
+			// get specific company
 			System.out.println("get spesific company");
 			System.out.println(adminFacade.getCompany(4));
-			
-			//get spesific  un-exist company
+
+			// get specific un-exist company
 			System.out.println("get spesific  un-exist company");
-//			System.out.println(adminFacade.getCompany(5));
-			
-			
-			
-			
-			
-			//Create new client
+			// System.out.println(adminFacade.getCompany(5));
+
+			// Create new client
 			System.out.println("Create new client");
 			adminFacade.createCustomer(customer14);
-			
-			
-			//craate client with existed name
+
+			// craate client with existed name
 			System.out.println("craate client with existed name");
-//			Customer customer15 =new Customer();
-//			customer15.setCustName(customer14.getCustName());
-//			adminFacade.createCustomer(customer14);
-			
-			// delete client - check all coupons was deleted 
+			// Customer customer15 =new Customer();
+			// customer15.setCustName(customer14.getCustName());
+			// adminFacade.createCustomer(customer14);
+
+			// delete client - check all coupons was deleted
 			System.out.println("delete client - check all coupons was deleted ");
 			customerFacade11.purshaseCoupon(coupon6);
 			customerFacade11.purshaseCoupon(coupon7);
@@ -186,43 +181,41 @@ public class AdminFacadeTest {
 			customerFacade13.purshaseCoupon(coupon6);
 			customerFacade13.purshaseCoupon(coupon7);
 			customerFacade13.purshaseCoupon(coupon8);
-			
+
 			adminFacade.removeCustomer(customer13);
-			
-			//delete un-exist client
+
+			// delete un-exist client
 			System.out.println("delete un-exist client");
 			adminFacade.removeCustomer(customer13);
-			
-			//update client - all without name
+
+			// update client - all without name
 			System.out.println("update client - all without name");
 			customer12.setPassword("New pass");
 			adminFacade.updateCustomer(customer12);
-			
-			// update client name  will fail
-//			System.out.println("update client name  will fail");
-//			customer12.setCustName("New Name");
-//			adminFacade.updateCustomer(customer12);
-			
-			//update un-exist client
+
+			// update client name will fail
+			// System.out.println("update client name will fail");
+			// customer12.setCustName("New Name");
+			// adminFacade.updateCustomer(customer12);
+
+			// update un-exist client
 			System.out.println("update un-exist client");
-			
+
 			Customer customer111 = new Customer("Natly1111", "pass6");
-//			adminFacade.updateCustomer(customer111);
-			
-			//get al clients
+			// adminFacade.updateCustomer(customer111);
+
+			// get al clients
 			System.out.println("get al clients");
 			System.out.println(adminFacade.getAllCustomers());
 
-			//get spesific client
+			// get spesific client
 			System.out.println("get spesific client");
 			System.out.println(adminFacade.getCustomer(12));
 
 			// get un-exist client
 			System.out.println("get un-exist client");
 			System.out.println(adminFacade.getCustomer(1111111));
-			
-			
-			
+
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

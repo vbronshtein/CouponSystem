@@ -22,8 +22,7 @@ public class Coupon {
 	public Coupon() {
 		super();
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param id
@@ -36,8 +35,8 @@ public class Coupon {
 	 * @param price
 	 * @param image
 	 */
-	public Coupon(String title, Date startDate, Date endDate, int amount, CouponType type, String message,
-			double price, String image) {
+	public Coupon(String title, Date startDate, Date endDate, int amount, CouponType type, String message, double price,
+			String image) {
 		super();
 		this.title = title;
 		this.startDate = startDate;
@@ -48,8 +47,6 @@ public class Coupon {
 		this.price = price;
 		this.image = image;
 	}
-
-
 
 	public long getId() {
 		return id;

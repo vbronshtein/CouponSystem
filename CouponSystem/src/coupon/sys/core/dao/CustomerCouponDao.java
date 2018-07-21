@@ -8,8 +8,7 @@ import coupon.sys.core.beans.Customer;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * Customer Coupon Dao interface 
- * Define "must implement" methods 
+ * Customer Coupon Dao interface Define "must implement" methods
  * 
  * @author vbronshtein
  *
@@ -21,7 +20,7 @@ public interface CustomerCouponDao {
 	 * @param coupon
 	 * @throws CouponSystemException
 	 */
-	void create(Customer customer , Coupon coupon) throws CouponSystemException;
+	void create(Customer customer, Coupon coupon) throws CouponSystemException;
 
 	/**
 	 * 
@@ -29,6 +28,6 @@ public interface CustomerCouponDao {
 	 * @param coupon
 	 * @throws CouponSystemException
 	 */
-	void delete(Customer customer , Coupon coupon) throws CouponSystemException;
+	void delete(Customer customer, Coupon coupon) throws CouponSystemException;
 
 }

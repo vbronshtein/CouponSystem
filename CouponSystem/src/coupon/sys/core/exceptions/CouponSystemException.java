@@ -1,7 +1,8 @@
 package coupon.sys.core.exceptions;
 
 /**
- * Use CouponSystemException for convert system exceptoions to coupon system exception format
+ * Use CouponSystemException for convert system exceptoions to coupon system
+ * exception format
  * 
  * @author vbronshtein
  *
@@ -13,6 +14,7 @@ public class CouponSystemException extends Exception {
 	public CouponSystemException() {
 		super();
 	}
+
 	/**
 	 * 
 	 * @param message
@@ -24,7 +26,7 @@ public class CouponSystemException extends Exception {
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
-	
+
 	/**
 	 * 
 	 * @param message
@@ -33,7 +35,7 @@ public class CouponSystemException extends Exception {
 	public CouponSystemException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * 
 	 * @param message
@@ -41,7 +43,7 @@ public class CouponSystemException extends Exception {
 	public CouponSystemException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * 
 	 * @param cause

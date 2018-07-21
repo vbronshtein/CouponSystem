@@ -12,7 +12,7 @@ import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.connectionPool.ConnectionPool;
-import coupon.sys.core.dao.CompanyCouponDao;
+import coupon.sys.core.dao.CouponDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
@@ -22,7 +22,8 @@ import coupon.sys.core.exceptions.CouponSystemException;
  * @author vbronshtein
  *
  */
-public class CompanyCouponDbDao implements CompanyCouponDao {
+public class CompanyCouponDbDao implements CouponDao {
+	// implements CompanyCouponDao {
 
 	private ConnectionPool pool;
 
@@ -38,10 +39,12 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 		try {
 			long id = getLastAvailableId();
+			// generate "create coupon" statement for coupon table
 			String sql_coupon = "INSERT INTO coupon VALUES(" + id + ",'" + coupon.getTitle() + "','"
 					+ coupon.getStartDate() + "','" + coupon.getEndDate() + "'," + coupon.getAmount() + ",'"
 					+ coupon.getType() + "','" + coupon.getMessage() + "'," + coupon.getPrice() + ",'"
 					+ coupon.getImage() + "')";
+			// generate "create coupon" statement for company_coupon table
 			String sql_compCoupon = "INSERT INTO company_coupon VALUES(" + company.getId() + ", " + id + ")";
 
 			Statement stmt = connection.createStatement();
@@ -57,11 +60,13 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Update coupon info
 	 * 
 	 * @param company
 	 * @param coupon
 	 * @throws CouponSystemException
 	 */
+	@Override
 	public void update(Company company, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -82,13 +87,19 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	}
 
+	/**
+	 * Delete coupon from : coupon and company_coupon tables
+	 */
 	@Override
 	public void delete(Company company, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		// generate String for delete coupon from : coupon table
 		String sql_coupon = "DELETE FROM Coupon WHERE ID IN (SELECT COUPON_ID FROM Coupon INNER JOIN Company_Coupon ON Coupon.Id =Company_Coupon.COUPON_Id WHERE COMP_Id = "
 				+ company.getId() + " and COUPON_Id= " + coupon.getId() + " )";
+		// generate String for delete coupon from : customer_coupon table
 		String sql_customerCoupon = "DELETE FROM Customer_coupon WHERE coupon_id IN (SELECT Customer_coupon.COUPON_ID FROM Customer_coupon INNER JOIN Company_Coupon ON Customer_Coupon.COUPON_Id =Company_Coupon.COUPON_Id WHERE COMP_Id = "
 				+ company.getId() + " and Company_Coupon.COUPON_Id= " + coupon.getId() + " )";
+		// generate String for delete coupon from : customer_coupon table
 		String sql_companyCoupon = "DELETE FROM company_coupon WHERE COMP_ID=" + company.getId() + " and COUPON_Id= "
 				+ coupon.getId();
 
@@ -107,17 +118,19 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Read company coupon
 	 * 
 	 * @param compId
 	 * @param couponId
 	 * @return
 	 * @throws CouponSystemException
 	 */
-	public Coupon readCompanyCoupon(long compId, long couponId) throws CouponSystemException {
+	@Override
+	public Coupon read(long compId, long couponId) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
-			// read all company coupons
+			// read company coupon
 			String sql = "SELECT c.* FROM coupon c INNER JOIN company_coupon cc ON c.id=cc.coupon_id WHERE cc.comp_id="
 					+ compId + "and c.id =" + couponId;
 			Statement stmt = connection.createStatement();
@@ -145,12 +158,13 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Get all company coupons
 	 * 
 	 * @param company
 	 * @return
 	 * @throws CouponSystemException
 	 */
-	public Collection<Coupon> getAllCompanyCoupons(Company company) throws CouponSystemException {
+	public Collection<Coupon> getAllCoupon(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
@@ -160,7 +174,6 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 					+ company.getId();
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			// delete all company coupons from coupon table
 			while (rs.next()) {
 				Coupon coupon = new Coupon();
 				coupon.setId(rs.getLong("ID"));
@@ -185,6 +198,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Delete all company coupons
 	 * 
 	 * @param company
 	 * @throws CouponSystemException
@@ -211,34 +225,37 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 		}
 	}
 
+	// /**
+	// *
+	// * @param company
+	// * @throws CouponSystemException
+	// */
+	// public void deleteCompany(Company company) throws CouponSystemException {
+	// Connection connection = pool.getConnection();
+	// String sql = "DELETE FROM COMPANY_COUPON WHERE COMP_ID=" + company.getId();
+	//
+	// Statement stmt;
+	// try {
+	// stmt = connection.createStatement();
+	// stmt.executeUpdate(sql);
+	// } catch (SQLException e) {
+	// throw new CouponSystemException("Fail to delete Company :" +
+	// company.getName(), e);
+	// } finally {
+	// pool.returnConnection(connection);
+	// }
+	//
+	// }
+
 	/**
-	 * 
-	 * @param company
-	 * @throws CouponSystemException
-	 */
-	public void deleteCompany(Company company) throws CouponSystemException {
-		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM COMPANY_COUPON WHERE COMP_ID=" + company.getId();
-
-		Statement stmt;
-		try {
-			stmt = connection.createStatement();
-			stmt.executeUpdate(sql);
-		} catch (SQLException e) {
-			throw new CouponSystemException("Fail to delete Company :" + company.getName(), e);
-		} finally {
-			pool.returnConnection(connection);
-		}
-
-	}
-
-	/**
+	 * Get coupons by type
 	 * 
 	 * @param company
 	 * @param type
 	 * @return
 	 * @throws CouponSystemException
 	 */
+	@Override
 	public Collection<Coupon> getCouponByType(Company company, CouponType type) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -272,6 +289,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Get coupons up to price
 	 * 
 	 * @param company
 	 * @param price
@@ -311,6 +329,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Get coupons up to date
 	 * 
 	 * @param company
 	 * @param date
@@ -350,6 +369,7 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 	}
 
 	/**
+	 * Check if coupon with same title already exist
 	 * 
 	 * @param title
 	 * @return
@@ -377,6 +397,12 @@ public class CompanyCouponDbDao implements CompanyCouponDao {
 
 	}
 
+	/**
+	 * Get last available ID for creating new coupon
+	 * 
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	public long getLastAvailableId() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		long id;

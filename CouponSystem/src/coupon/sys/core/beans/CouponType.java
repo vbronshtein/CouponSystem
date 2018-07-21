@@ -2,7 +2,7 @@ package coupon.sys.core.beans;
 
 /**
  * Coupon Types : RESTURANS, ELECTRICITY, FOOD, HEALTH .....
- *  
+ * 
  * @author vbronshtein
  *
  */

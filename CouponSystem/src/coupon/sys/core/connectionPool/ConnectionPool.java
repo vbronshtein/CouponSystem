@@ -3,10 +3,8 @@ package coupon.sys.core.connectionPool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import coupon.sys.core.exceptions.CouponSystemException;
@@ -113,13 +111,12 @@ public class ConnectionPool {
 	 * @throws CouponSystemException
 	 */
 	public void closeAllConnection() throws CouponSystemException {
-		System.out.println("Pool size : " +availableConnections.size());
+		System.out.println("Pool size : " + availableConnections.size());
 		for (Connection connection : connectionBackup) {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new CouponSystemException("Close SQL connection fail", e);
 			}
 		}
 	}
