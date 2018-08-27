@@ -157,7 +157,7 @@ public class AdminFacadeTest {
 
 			// get specific company
 			System.out.println("get spesific company");
-			System.out.println(adminFacade.getCompany(4));
+			System.out.println(adminFacade.getCompany(company4.getName()));
 
 			// get specific un-exist company
 			System.out.println("get spesific  un-exist company");

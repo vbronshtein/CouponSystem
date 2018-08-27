@@ -61,7 +61,7 @@ public class CompanyDbDaoRunnable implements CompanyDao, Runnable {
 	}
 
 	@Override
-	public Company read(long id) {
+	public Company read(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

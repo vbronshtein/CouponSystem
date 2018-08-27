@@ -67,7 +67,7 @@ public class AdminFacade implements CouponClientFacade {
 	 */
 	public void updateCompany(Company company) throws CouponSystemException {
 
-		Company companyFromDB = companyDbDao.read(company.getId());
+		Company companyFromDB = companyDbDao.read(company.getName());
 		// check if company exist on DB
 		if (companyFromDB == null) {
 			throw new CouponSystemException("Update Fail , company was not found on DataBase");
@@ -100,15 +100,15 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Get spesific company from Database
 	 * 
-	 * @param id
+	 * @param name
 	 * @return
 	 * @throws CouponSystemException
 	 */
-	public Company getCompany(long id) throws CouponSystemException {
+	public Company getCompany(String name) throws CouponSystemException {
 
-		Company company = companyDbDao.read(id);
+		Company company = companyDbDao.read(name);
 		if (company.getName() == null) {
-			throw new CouponSystemException("Company :" + id + " Not found on Data Base");
+			throw new CouponSystemException("Company :" + name + " Not found on Data Base");
 		}
 		return company;
 	}

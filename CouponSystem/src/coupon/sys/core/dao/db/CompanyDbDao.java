@@ -57,10 +57,10 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	 * Read company from DB
 	 */
 	@Override
-	public Company read(long id) throws CouponSystemException {
+	public Company read(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
-		String sql = "SELECT * FROM company WHERE ID=" + id;
+		String sql = "SELECT * FROM company WHERE COMP_NAME = '" + name +"'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -89,8 +89,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	public void update(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		String sql = "UPDATE company SET COMP_NAME='" + company.getName() + "',PASSWORD='" + company.getPassword()
-				+ "',EMAIL='" + company.getEmail() + "' WHERE id=" + company.getId();
-
+				+ "',EMAIL='" + company.getEmail() + "' WHERE COMP_NAME='" + company.getName() +"'";
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
