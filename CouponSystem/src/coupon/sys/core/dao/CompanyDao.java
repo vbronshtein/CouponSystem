@@ -27,7 +27,7 @@ public interface CompanyDao {
 	 * @return
 	 * @throws CouponSystemException
 	 */
-	Company read(String name) throws CouponSystemException;
+	Company read(long id) throws CouponSystemException;
 
 	/**
 	 * 
@@ -65,6 +65,7 @@ public interface CompanyDao {
 	 * @throws CouponSystemException
 	 */
 	boolean login(String compName, String password) throws CouponSystemException;
+
 
 
 }

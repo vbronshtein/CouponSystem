@@ -88,7 +88,7 @@ public class CustomerDbDao implements CustomerDao {
 	public void delete(Customer customer) throws CouponSystemException {
 
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM customer WHERE ID=" + customer.getId();
+		String sql = "DELETE FROM customer WHERE CUST_NAME='" + customer.getCustName() +"'";
 
 		Statement stmt;
 		try {

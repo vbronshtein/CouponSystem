@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import coupon.sys.core.beans.Coupon;
+import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.exceptions.CouponSystemException;
 
@@ -131,6 +133,36 @@ public class GlobalCouponDbDao {
 			pool.returnConnection(connection);
 		}
 
+	}
+	
+	public Coupon getCouponByTitle(String title) throws CouponSystemException {
+		Connection connection = pool.getConnection();
+
+		try {
+			// read company coupon
+			String sql = "SELECT END_DATE FROM coupon WHERE TITLE='" + title + "'";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				Coupon coupon = new Coupon();
+				coupon.setId(rs.getLong("ID"));
+				coupon.setTitle(rs.getString("TITLE"));
+				coupon.setStartDate(rs.getDate("START_DATE"));
+				coupon.setEndDate(rs.getDate("END_DATE"));
+				coupon.setAmount(rs.getInt("AMOUNT"));
+				coupon.setType(CouponType.valueOf(rs.getString("TYPE")));
+				coupon.setMessage(rs.getString("MESSAGE"));
+				coupon.setPrice(rs.getDouble("PRICE"));
+				coupon.setImage(rs.getString("IMAGE"));
+				return coupon;
+			}
+
+		} catch (SQLException e) {
+			throw new CouponSystemException("Fail to read Company coupon", e);
+		} finally {
+			pool.returnConnection(connection);
+		}
+		return null;
 	}
 
 }

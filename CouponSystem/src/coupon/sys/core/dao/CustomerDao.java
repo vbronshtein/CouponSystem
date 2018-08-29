@@ -65,4 +65,6 @@ public interface CustomerDao {
 	 */
 	boolean login(String custName, String password) throws CouponSystemException;
 
+
+
 }

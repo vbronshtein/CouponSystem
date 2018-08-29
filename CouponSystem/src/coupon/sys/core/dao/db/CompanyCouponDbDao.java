@@ -217,7 +217,7 @@ public class CompanyCouponDbDao implements CouponDao {
 			stmt.executeUpdate(sql_coupon);
 			stmt.executeUpdate(sql_customerCoupon);
 			stmt.executeUpdate(sql_companyCoupon);
-
+			
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to delete all Company coupons", e);
 		} finally {

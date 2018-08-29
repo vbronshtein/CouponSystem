@@ -51,7 +51,7 @@ public class AdminFacade implements CouponClientFacade {
 	 * @throws CouponSystemException
 	 */
 	public void removeCompany(Company company) throws CouponSystemException {
-
+		
 		// delete all company coupons
 		companyCouponDbDao.deleteAllCompanyCoupons(company);
 		// delete company
@@ -67,7 +67,7 @@ public class AdminFacade implements CouponClientFacade {
 	 */
 	public void updateCompany(Company company) throws CouponSystemException {
 
-		Company companyFromDB = companyDbDao.read(company.getName());
+		Company companyFromDB = companyDbDao.read(company.getId());
 		// check if company exist on DB
 		if (companyFromDB == null) {
 			throw new CouponSystemException("Update Fail , company was not found on DataBase");
@@ -104,11 +104,11 @@ public class AdminFacade implements CouponClientFacade {
 	 * @return
 	 * @throws CouponSystemException
 	 */
-	public Company getCompany(String name) throws CouponSystemException {
+	public Company getCompany(long id) throws CouponSystemException {
 
-		Company company = companyDbDao.read(name);
+		Company company = companyDbDao.read(id);
 		if (company.getName() == null) {
-			throw new CouponSystemException("Company :" + name + " Not found on Data Base");
+			throw new CouponSystemException("Company :" + id + " Not found on Data Base");
 		}
 		return company;
 	}
