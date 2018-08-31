@@ -3,7 +3,7 @@ package coupon.sys.core.beans;
 import java.util.Collection;
 
 /**
- * Company bean
+ * Company bean.
  * 
  * @author vbronshtein
  *
@@ -22,10 +22,9 @@ public class Company {
 
 	/**
 	 * 
-	 * @param id
-	 * @param name
-	 * @param password
-	 * @param email
+	 * @param name  Company name. 
+	 * @param password Password for login.
+	 * @param email Company Email.
 	 */
 	public Company(String name, String password, String email) {
 		super();
@@ -40,7 +39,7 @@ public class Company {
 
 	/**
 	 * 
-	 * @param id
+	 * @param id  Set Company ID ( ID Auto generated on DataBase ). 
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -52,7 +51,7 @@ public class Company {
 
 	/**
 	 * 
-	 * @param name
+	 * @param name  Company Name.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -64,7 +63,7 @@ public class Company {
 
 	/**
 	 * 
-	 * @param password
+	 * @param password  Company password for connect to DataBase.
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -76,7 +75,7 @@ public class Company {
 
 	/**
 	 * 
-	 * @param email
+	 * @param email  Company Email.
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -88,7 +87,7 @@ public class Company {
 
 	/**
 	 * 
-	 * @param coupons
+	 * @param coupons  Company Coupon list.
 	 */
 	public void setCoupons(Collection<Coupon> coupons) {
 		this.coupons = coupons;

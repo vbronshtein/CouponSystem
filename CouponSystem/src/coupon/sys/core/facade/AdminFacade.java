@@ -36,7 +36,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Admin facade method for create new method
 	 * 
-	 * @param company
+	 * @param company Company
 	 * @throws CouponSystemException
 	 */
 	public void createCompany(Company company) throws CouponSystemException {
@@ -53,7 +53,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Delete company from Database
 	 * 
-	 * @param company
+	 * @param company  Company
 	 * @throws CouponSystemException
 	 */
 	public void removeCompany(Company company) throws CouponSystemException {
@@ -68,7 +68,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Update company info ( all fields except company name)
 	 * 
-	 * @param company
+	 * @param company  Company
 	 * @throws CouponSystemException
 	 */
 	public void updateCompany(Company company) throws CouponSystemException {
@@ -104,10 +104,9 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	/**
-	 * Get spesific company from Database
 	 * 
-	 * @param name
-	 * @return company
+	 * @param id Company ID
+	 * @return Comapny
 	 * @throws CouponSystemException
 	 */
 	public Company getCompany(long id) throws CouponSystemException {
@@ -126,7 +125,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Create new customer on DB
 	 * 
-	 * @param customer
+	 * @param customer Customer
 	 * @throws CouponSystemException
 	 */
 	public void createCustomer(Customer customer) throws CouponSystemException {
@@ -142,7 +141,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Remove customer from DB
 	 * 
-	 * @param customer
+	 * @param customer Customer
 	 * @throws CouponSystemException
 	 */
 	public void removeCustomer(Customer customer) throws CouponSystemException {
@@ -156,7 +155,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Update Customed from DB ( all fields except customer name)
 	 * 
-	 * @param customer
+	 * @param customer Customer
 	 * @throws CouponSystemException
 	 */
 	public void updateCustomer(Customer customer) throws CouponSystemException {
@@ -195,7 +194,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Get specific customer from database
 	 * 
-	 * @param id
+	 * @param id Customer ID
 	 * @return customer
 	 * @throws CouponSystemException
 	 */

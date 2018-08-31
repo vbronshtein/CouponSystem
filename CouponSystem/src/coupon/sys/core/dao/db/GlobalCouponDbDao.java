@@ -57,7 +57,7 @@ public class GlobalCouponDbDao {
 	/**
 	 * Check if coupon is expired
 	 * 
-	 * @param title
+	 * @param title Coupon title
 	 * @return boolean parameter if Coupon is expired
 	 * @throws CouponSystemException
 	 */
@@ -90,7 +90,7 @@ public class GlobalCouponDbDao {
 	/**
 	 * Delete all expired Coupons
 	 * 
-	 * @param date
+	 * @param date  Coupon end Date
 	 * @throws CouponSystemException
 	 */
 	public void deleteAllExpiriedCoupons(Date date) throws CouponSystemException {
@@ -119,7 +119,7 @@ public class GlobalCouponDbDao {
 	/**
 	 * Get coupon by Title
 	 * 
-	 * @param title
+	 * @param title  Coupon title
 	 * @return coupon
 	 * @throws CouponSystemException
 	 */

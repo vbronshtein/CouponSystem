@@ -167,7 +167,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	/**
 	 * Get Company by Name from DB
 	 * 
-	 * @param name
+	 * @param name  Comapny name
 	 * @return Company from DB
 	 * @throws CouponSystemException
 	 */

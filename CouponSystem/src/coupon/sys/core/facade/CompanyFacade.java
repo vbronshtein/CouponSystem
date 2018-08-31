@@ -37,7 +37,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Create new coupon on DB
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public void createCoupon(Coupon coupon) throws CouponSystemException {
@@ -55,7 +55,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Remove coupon from DB
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public void removeCoupon(Coupon coupon) throws CouponSystemException {
@@ -65,7 +65,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Update Coupon info ( Update can be perform only on price or end_date )
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public void updateCoupon(Coupon coupon) throws CouponSystemException {
@@ -85,7 +85,7 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Read coupon from DB
 	 * 
 	 * @param couponId
-	 * @return coupon
+	 * @return coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public Coupon getCoupon(long couponId) throws CouponSystemException {
@@ -106,7 +106,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all company coupons by Type
 	 * 
-	 * @param couponType
+	 * @param couponType  Coupon Type
 	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
@@ -117,7 +117,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all company coupons up to price
 	 * 
-	 * @param price
+	 * @param price Coupon price
 	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
@@ -128,7 +128,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get all company coupons up to End date
 	 * 
-	 * @param date
+	 * @param date  Coupon date
 	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */

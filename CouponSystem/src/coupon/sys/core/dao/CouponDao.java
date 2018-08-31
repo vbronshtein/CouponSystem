@@ -17,44 +17,48 @@ public interface CouponDao {
 	// create,read,update,delete
 	/**
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon for create on DataBase
 	 * @throws CouponSystemException
 	 */
 	void create(Company company, Coupon coupon) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param id
-	 * @return
+	 * @param compId  Company Id
+	 * @param couponId  Coupon Id
+	 * @return Coupon from DataBase
 	 * @throws CouponSystemException
 	 */
 	Coupon read(long compId, long couponId) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param coupon
+	 * @param company  Company
+	 * @param coupon  Coupon 
 	 * @throws CouponSystemException
 	 */
 	void update(Company company, Coupon coupon) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param coupon
+	 * @param company Company
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	void delete(Company company, Coupon coupon) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @return
+	 * @return List of Coupons
 	 * @throws CouponSystemException
 	 */
 	Collection<Coupon> getAllCoupon(Company company) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param couponType
-	 * @return
+	 * @param company Comapny
+	 * @param type  Coupon Type : Travel , Food , Health ...
+	 * @return List of Coupons
 	 * @throws CouponSystemException
 	 */
 	Collection<Coupon> getCouponByType(Company company, CouponType type) throws CouponSystemException;

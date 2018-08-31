@@ -89,7 +89,7 @@ public class ConnectionPool {
 	/**
 	 * Return Connection to pool
 	 * 
-	 * @param connection
+	 * @param connection  Connection to DataBase.
 	 */
 	public synchronized void returnConnection(Connection connection) {
 		if (!shutdown) {

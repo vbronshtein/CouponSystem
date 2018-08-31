@@ -46,7 +46,7 @@ public class IdUpdater {
 	/**
 	 * Method get Coupon and update ID field according to read ID from DataBase
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public void updateCouponID(Coupon coupon) throws CouponSystemException {

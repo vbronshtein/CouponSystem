@@ -16,14 +16,14 @@ public interface CustomerDao {
 
 	/**
 	 * 
-	 * @param customer
+	 * @param customer  Customer
 	 * @throws CouponSystemException
 	 */
 	void create(Customer customer) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param id
+	 * @param id Customer Id
 	 * @return
 	 * @throws CouponSystemException
 	 */
@@ -31,36 +31,31 @@ public interface CustomerDao {
 
 	/**
 	 * 
-	 * @param customer
+	 * @param customer  Customer
 	 * @throws CouponSystemException
 	 */
 	void update(Customer customer) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param customer
+	 * @param customer  Customer
 	 * @throws CouponSystemException
 	 */
 	void delete(Customer customer) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @return
+	 * @return List of customers
 	 * @throws CouponSystemException
 	 */
 	Collection<Customer> getAllCustomer() throws CouponSystemException;
 
-	// /**
-	// *
-	// * @return
-	// */
-	// Collection<Coupon> getCoupons();
 
 	/**
 	 * 
-	 * @param custName
-	 * @param password
-	 * @return
+	 * @param custName  Customer name
+	 * @param password  Customer password
+	 * @return Boolean ( success , fail )
 	 * @throws CouponSystemException
 	 */
 	boolean login(String custName, String password) throws CouponSystemException;

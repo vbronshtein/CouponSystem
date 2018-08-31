@@ -3,7 +3,7 @@ package coupon.sys.core.beans;
 import java.util.Date;
 
 /**
- * Coupon Bean
+ * Coupon Bean.
  * 
  * @author vbronshtein
  *
@@ -25,15 +25,14 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param id
-	 * @param title
-	 * @param startDate
-	 * @param endDate
-	 * @param amount
-	 * @param type
-	 * @param message
-	 * @param price
-	 * @param image
+	 * @param title  Coupon title.
+	 * @param startDate  Coupon Start date.
+	 * @param endDate  Coupon end date.
+	 * @param amount  Total coupon amount ( can be updated ). 
+	 * @param type  Coupon type : Food , Health , Travel .....
+	 * @param message  coupon info .
+	 * @param price  Price of coupon.
+	 * @param image  Link to coupon image.
 	 */
 	public Coupon(String title, Date startDate, Date endDate, int amount, CouponType type, String message, double price,
 			String image) {
@@ -54,7 +53,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param id
+	 * @param id  Set coupon id .
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -66,7 +65,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param title
+	 * @param title  coupon title.
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -78,7 +77,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param startDate
+	 * @param startDate  Coupon start date.
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
@@ -90,7 +89,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param endDate
+	 * @param endDate  Coupon end date .
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
@@ -102,7 +101,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param amount
+	 * @param amount  Amount of coupon.
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
@@ -114,7 +113,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param type
+	 * @param type  Coupon type : Food , Health , Travel ...
 	 */
 	public void setType(CouponType type) {
 		this.type = type;
@@ -126,7 +125,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param message
+	 * @param message  Coupon info .
 	 */
 	public void setMessage(String message) {
 		this.message = message;
@@ -138,7 +137,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param price
+	 * @param price  Coupon price.
 	 */
 	public void setPrice(double price) {
 		this.price = price;
@@ -150,7 +149,7 @@ public class Coupon {
 
 	/**
 	 * 
-	 * @param image
+	 * @param image  Link to Coupon image.
 	 */
 	public void setImage(String image) {
 		this.image = image;

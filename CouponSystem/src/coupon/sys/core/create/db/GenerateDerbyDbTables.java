@@ -12,7 +12,7 @@ import java.sql.Statement;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * Class Generate Data Base Tables for Coupon system program
+ * Class Generate Data Base Tables for Coupon system program.
  * 
  * @author vbronshtein
  *

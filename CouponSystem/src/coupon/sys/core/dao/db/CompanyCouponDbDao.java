@@ -62,8 +62,8 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Update coupon info
 	 * 
-	 * @param company
-	 * @param coupon
+	 * @param company Company 
+	 * @param coupon Coupon for update
 	 * @throws CouponSystemException
 	 */
 	@Override
@@ -120,8 +120,8 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Read company coupon
 	 * 
-	 * @param compId
-	 * @param couponId
+	 * @param compId  Company Id 
+	 * @param couponId  Coupon ID 
 	 * @return Company from DB
 	 * @throws CouponSystemException
 	 */
@@ -160,7 +160,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Get all company coupons
 	 * 
-	 * @param company
+	 * @param company Company
 	 * @return Collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -200,7 +200,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Delete all company coupons
 	 * 
-	 * @param company
+	 * @param company Company
 	 * @throws CouponSystemException
 	 */
 	public void deleteAllCompanyCoupons(Company company) throws CouponSystemException {
@@ -228,8 +228,8 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Get coupons by type
 	 * 
-	 * @param company
-	 * @param type
+	 * @param company Company 
+	 * @param type Coupon type
 	 * @return Collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -269,8 +269,8 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Get coupons up to price
 	 * 
-	 * @param company
-	 * @param price
+	 * @param company  Company
+	 * @param price  Coupon Price
 	 * @return Collection of coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -309,8 +309,8 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Get coupons up to date
 	 * 
-	 * @param company
-	 * @param date
+	 * @param company Coupon
+	 * @param date coupon end Date
 	 * @return Collection of coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -349,7 +349,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Check if coupon with same title already exist
 	 * 
-	 * @param title
+	 * @param title Coupon title
 	 * @return boolean param if coupon is exist on DB
 	 * @throws CouponSystemException
 	 */

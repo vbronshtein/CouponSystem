@@ -14,18 +14,19 @@ import coupon.sys.core.exceptions.CouponSystemException;
  *
  */
 public interface CustomerCouponDao {
+	
 	/**
 	 * 
-	 * @param customer
-	 * @param coupon
+	 * @param customer  Customer
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	void create(Customer customer, Coupon coupon) throws CouponSystemException;
 
 	/**
 	 * 
-	 * @param customer
-	 * @param coupon
+	 * @param customer  Customer
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	void delete(Customer customer, Coupon coupon) throws CouponSystemException;

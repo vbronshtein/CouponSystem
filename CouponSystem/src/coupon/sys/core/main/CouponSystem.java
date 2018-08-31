@@ -43,10 +43,10 @@ public class CouponSystem {
 	/**
 	 * Login method ,return facade after login
 	 * 
-	 * @param name
-	 * @param password
-	 * @param type
-	 * @return facade
+	 * @param name  Admin/Company/Customer name
+	 * @param password  Password
+	 * @param type  User Type : Admin/Company/Customer 
+	 * @return facade Admin, Company or Customer
 	 * @throws CouponSystemException
 	 */
 	public CouponClientFacade login(String name, String password, ClientType type) throws CouponSystemException {

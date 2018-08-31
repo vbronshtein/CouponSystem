@@ -146,16 +146,11 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	// @Override
-	// public Collection<Coupon> getCoupons() {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
 
 	/**
 	 * Get Customer from DB by Name input
 	 * 
-	 * @param name
+	 * @param name  Customer name
 	 * @return customer
 	 * @throws CouponSystemException
 	 */

@@ -35,7 +35,7 @@ public class CustomerFacade implements CouponClientFacade {
 	/**
 	 * Purchase coupon for a client
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	public void purchaseCoupon(Coupon coupon) throws CouponSystemException {
@@ -61,7 +61,7 @@ public class CustomerFacade implements CouponClientFacade {
 	/**
 	 * Get all client Purchased coupons from DB
 	 * 
-	 * @return
+	 * @return  List of coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllPurchesedCoupons() throws CouponSystemException {
@@ -71,8 +71,8 @@ public class CustomerFacade implements CouponClientFacade {
 	/**
 	 * Get all client purchased coupons by required type
 	 * 
-	 * @param couponType
-	 * @return
+	 * @param couponType  Coupon type
+	 * @return List of Coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllPurchasedCouponsByType(CouponType couponType) throws CouponSystemException {
@@ -82,8 +82,8 @@ public class CustomerFacade implements CouponClientFacade {
 	/**
 	 * Get all client purchased coupons up to price
 	 * 
-	 * @param price
-	 * @return
+	 * @param price  Coupon price
+	 * @return Listo of Coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllPurchasedCouponsUpToPrice(double price) throws CouponSystemException {

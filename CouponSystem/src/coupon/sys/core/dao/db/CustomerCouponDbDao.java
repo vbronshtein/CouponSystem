@@ -35,8 +35,8 @@ public class CustomerCouponDbDao {
 	 * Purchase coupon from company ( Assign coupon to customer , and update amount
 	 * on company coupon pool
 	 * 
-	 * @param customer
-	 * @param coupon
+	 * @param customer  Customer
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	// @Override
@@ -71,8 +71,8 @@ public class CustomerCouponDbDao {
 	/**
 	 * Delete coupon from Customer user
 	 * 
-	 * @param customer
-	 * @param coupon
+	 * @param customer  Customer
+	 * @param coupon  Coupon
 	 * @throws CouponSystemException
 	 */
 	// @Override
@@ -97,8 +97,8 @@ public class CustomerCouponDbDao {
 	/**
 	 * Read coupon from customer pool
 	 * 
-	 * @param customer
-	 * @param coupon
+	 * @param customer  Customer
+	 * @param coupon  Coupon
 	 * @return coupon from DB
 	 * @throws CouponSystemException
 	 */
@@ -137,7 +137,7 @@ public class CustomerCouponDbDao {
 	/**
 	 * Delete all customer coupons
 	 * 
-	 * @param customer
+	 * @param customer  Customer
 	 * @throws CouponSystemException
 	 */
 	public void deleteAllCustomerCoupons(Customer customer) throws CouponSystemException {
@@ -167,7 +167,7 @@ public class CustomerCouponDbDao {
 	/**
 	 * Delete customer from CUSTOMER_COUPON
 	 * 
-	 * @param customer
+	 * @param customer  Customer 
 	 * @throws CouponSystemException
 	 */
 	public void deleteCustomer(Customer customer) throws CouponSystemException {
@@ -189,7 +189,7 @@ public class CustomerCouponDbDao {
 	/**
 	 * Get all Customer Coupons
 	 * 
-	 * @param customer
+	 * @param customer  Customer
 	 * @return Collection of customer coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -229,8 +229,8 @@ public class CustomerCouponDbDao {
 	/**
 	 * Get customer coupons by Type category
 	 * 
-	 * @param customer
-	 * @param type
+	 * @param customer  Customer
+	 * @param type  Coupon Type
 	 * @return collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -269,8 +269,8 @@ public class CustomerCouponDbDao {
 	/**
 	 * Get Customer Coupons from DB by Price filter
 	 * 
-	 * @param customer
-	 * @param price
+	 * @param customer  Customer 
+	 * @param price  Coupon price
 	 * @return collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
@@ -310,7 +310,7 @@ public class CustomerCouponDbDao {
 	/**
 	 * Phase 1 helper , check ID on DB by Coyupon Title
 	 * 
-	 * @param coupon
+	 * @param coupon  Coupon
 	 * @return coupon ID
 	 * @throws CouponSystemException
 	 */
