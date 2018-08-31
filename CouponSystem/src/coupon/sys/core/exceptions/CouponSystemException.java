@@ -7,6 +7,7 @@ package coupon.sys.core.exceptions;
  * @author vbronshtein
  *
  */
+
 public class CouponSystemException extends Exception {
 
 	private static final long serialVersionUID = 1L;
