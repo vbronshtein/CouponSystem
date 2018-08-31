@@ -22,6 +22,9 @@ public class CustomerDbDao implements CustomerDao {
 		this.pool = ConnectionPool.getInstance();
 	}
 
+	/**
+	 * Create new customer in DB
+	 */
 	@Override
 	public void create(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -41,6 +44,9 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Get customer from DB
+	 */
 	@Override
 	public Customer read(long id) throws CouponSystemException {
 
@@ -67,6 +73,9 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Update Existed customer
+	 */
 	@Override
 	public void update(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -84,11 +93,14 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Delete customer from DB
+	 */
 	@Override
 	public void delete(Customer customer) throws CouponSystemException {
 
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM customer WHERE CUST_NAME='" + customer.getCustName() +"'";
+		String sql = "DELETE FROM customer WHERE CUST_NAME='" + customer.getCustName() + "'";
 
 		Statement stmt;
 		try {
@@ -102,6 +114,9 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Get all Customers from DB
+	 */
 	@Override
 	public Collection<Customer> getAllCustomer() throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -131,16 +146,17 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	@Override
-	public Collection<Coupon> getCoupons() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	// @Override
+	// public Collection<Coupon> getCoupons() {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
 
 	/**
+	 * Get Customer from DB by Name input
 	 * 
 	 * @param name
-	 * @return
+	 * @return customer
 	 * @throws CouponSystemException
 	 */
 	public Customer getCustomerByName(String name) throws CouponSystemException {
@@ -167,6 +183,9 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Login as Custommer ( verify credentials with DB )
+	 */
 	@Override
 	public boolean login(String custName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -190,6 +209,12 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
+	/**
+	 * Check last available ID
+	 * 
+	 * @return available ID
+	 * @throws CouponSystemException
+	 */
 	public long getLastAvailableId() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		long id;

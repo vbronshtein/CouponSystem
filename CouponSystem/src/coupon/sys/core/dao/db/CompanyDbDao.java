@@ -89,7 +89,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	public void update(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		String sql = "UPDATE company SET COMP_NAME='" + company.getName() + "',PASSWORD='" + company.getPassword()
-				+ "',EMAIL='" + company.getEmail() + "' WHERE COMP_NAME='" + company.getName() +"'";
+				+ "',EMAIL='" + company.getEmail() + "' WHERE COMP_NAME='" + company.getName() + "'";
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -108,7 +108,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public void delete(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM company WHERE COMP_NAME='" + company.getName() +"'";
+		String sql = "DELETE FROM company WHERE COMP_NAME='" + company.getName() + "'";
 
 		Statement stmt;
 		try {
@@ -168,7 +168,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	 * Get Company by Name from DB
 	 * 
 	 * @param name
-	 * @return
+	 * @return Company from DB
 	 * @throws CouponSystemException
 	 */
 	public Company getCompanyByName(String name) throws CouponSystemException {
@@ -222,7 +222,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	/**
 	 * Get last available ID for creating new company
 	 * 
-	 * @return
+	 * @return available ID from DB
 	 * @throws CouponSystemException
 	 */
 	public long getLastAvailableId() throws CouponSystemException {

@@ -23,7 +23,7 @@ public class CouponSystem {
 	private CompanyDbDao companyDbDao;
 	private CustomerDbDao customerDbDao;
 
-	private static CouponSystem instance = new CouponSystem();
+	private static CouponSystem instance ;//= new CouponSystem();
 
 	DailyCouponExparationTask dailyExpTask;
 
@@ -34,6 +34,9 @@ public class CouponSystem {
 	}
 
 	public static CouponSystem getInstance() {
+		if(instance == null) {
+			instance = new CouponSystem();
+		}
 		return instance;
 	}
 

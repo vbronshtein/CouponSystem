@@ -15,11 +15,14 @@ import coupon.sys.core.dao.CustomerCouponDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
+ * CustomerCouponDbDao class implement methods for connect to "Customer" and
+ * "Coupon" table on Database , called on case when Customer perform actions
+ * with coupons
  * 
  * @author vbronshtein
  *
  */
-public class CustomerCouponDbDao {// implements CustomerCouponDao {
+public class CustomerCouponDbDao {
 
 	private ConnectionPool pool;
 
@@ -28,8 +31,16 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 		this.pool = ConnectionPool.getInstance();
 	}
 
+	/**
+	 * Purchase coupon from company ( Assign coupon to customer , and update amount
+	 * on company coupon pool
+	 * 
+	 * @param customer
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	// @Override
-	public void purshase(Customer customer, Coupon coupon) throws CouponSystemException {
+	public void purchase(Customer customer, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
@@ -57,6 +68,13 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 
 	}
 
+	/**
+	 * Delete coupon from Customer user
+	 * 
+	 * @param customer
+	 * @param coupon
+	 * @throws CouponSystemException
+	 */
 	// @Override
 	public void delete(Customer customer, Coupon coupon) throws CouponSystemException {
 
@@ -77,10 +95,11 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Read coupon from customer pool
 	 * 
 	 * @param customer
 	 * @param coupon
-	 * @return
+	 * @return coupon from DB
 	 * @throws CouponSystemException
 	 */
 	public Coupon read(Customer customer, Coupon coupon) throws CouponSystemException {
@@ -116,6 +135,7 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Delete all customer coupons
 	 * 
 	 * @param customer
 	 * @throws CouponSystemException
@@ -145,6 +165,7 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Delete customer from CUSTOMER_COUPON
 	 * 
 	 * @param customer
 	 * @throws CouponSystemException
@@ -166,9 +187,10 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Get all Customer Coupons
 	 * 
 	 * @param customer
-	 * @return
+	 * @return Collection of customer coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllCustomerCoupons(Customer customer) throws CouponSystemException {
@@ -205,10 +227,11 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Get customer coupons by Type category
 	 * 
 	 * @param customer
 	 * @param type
-	 * @return
+	 * @return collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponByType(Customer customer, CouponType type) throws CouponSystemException {
@@ -244,10 +267,11 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Get Customer Coupons from DB by Price filter
 	 * 
 	 * @param customer
 	 * @param price
-	 * @return
+	 * @return collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponUpToPrice(Customer customer, double price) throws CouponSystemException {
@@ -284,9 +308,10 @@ public class CustomerCouponDbDao {// implements CustomerCouponDao {
 	}
 
 	/**
+	 * Phase 1 helper , check ID on DB by Coyupon Title
 	 * 
 	 * @param coupon
-	 * @return
+	 * @return coupon ID
 	 * @throws CouponSystemException
 	 */
 	public long getCouponId(Coupon coupon) throws CouponSystemException {

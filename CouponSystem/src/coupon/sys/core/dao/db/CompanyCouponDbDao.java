@@ -122,7 +122,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	 * 
 	 * @param compId
 	 * @param couponId
-	 * @return
+	 * @return Company from DB
 	 * @throws CouponSystemException
 	 */
 	@Override
@@ -161,7 +161,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	 * Get all company coupons
 	 * 
 	 * @param company
-	 * @return
+	 * @return Collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllCoupon(Company company) throws CouponSystemException {
@@ -217,7 +217,7 @@ public class CompanyCouponDbDao implements CouponDao {
 			stmt.executeUpdate(sql_coupon);
 			stmt.executeUpdate(sql_customerCoupon);
 			stmt.executeUpdate(sql_companyCoupon);
-			
+
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to delete all Company coupons", e);
 		} finally {
@@ -225,34 +225,12 @@ public class CompanyCouponDbDao implements CouponDao {
 		}
 	}
 
-	// /**
-	// *
-	// * @param company
-	// * @throws CouponSystemException
-	// */
-	// public void deleteCompany(Company company) throws CouponSystemException {
-	// Connection connection = pool.getConnection();
-	// String sql = "DELETE FROM COMPANY_COUPON WHERE COMP_ID=" + company.getId();
-	//
-	// Statement stmt;
-	// try {
-	// stmt = connection.createStatement();
-	// stmt.executeUpdate(sql);
-	// } catch (SQLException e) {
-	// throw new CouponSystemException("Fail to delete Company :" +
-	// company.getName(), e);
-	// } finally {
-	// pool.returnConnection(connection);
-	// }
-	//
-	// }
-
 	/**
 	 * Get coupons by type
 	 * 
 	 * @param company
 	 * @param type
-	 * @return
+	 * @return Collection of Coupons from DB
 	 * @throws CouponSystemException
 	 */
 	@Override
@@ -293,7 +271,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	 * 
 	 * @param company
 	 * @param price
-	 * @return
+	 * @return Collection of coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponUpToPrice(Company company, double price) throws CouponSystemException {
@@ -333,7 +311,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	 * 
 	 * @param company
 	 * @param date
-	 * @return
+	 * @return Collection of coupons from DB
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponUpToDate(Company company, Date date) throws CouponSystemException {
@@ -372,7 +350,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	 * Check if coupon with same title already exist
 	 * 
 	 * @param title
-	 * @return
+	 * @return boolean param if coupon is exist on DB
 	 * @throws CouponSystemException
 	 */
 	public boolean isCouponTytleAlresdyExist(String title) throws CouponSystemException {
@@ -400,7 +378,7 @@ public class CompanyCouponDbDao implements CouponDao {
 	/**
 	 * Get last available ID for creating new coupon
 	 * 
-	 * @return
+	 * @return available ID from DB
 	 * @throws CouponSystemException
 	 */
 	public long getLastAvailableId() throws CouponSystemException {

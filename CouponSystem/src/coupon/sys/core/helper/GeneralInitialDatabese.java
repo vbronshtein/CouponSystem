@@ -108,26 +108,26 @@ public class GeneralInitialDatabese {
 			CustomerFacade customerFacade13 = new CustomerFacade(customer13.getCustName());
 
 			// Purchase coupons for customer 1 and 2
-			customerFacade11.purshaseCoupon(coupon1);
-			customerFacade11.purshaseCoupon(coupon2);
-			customerFacade11.purshaseCoupon(coupon3);
-			customerFacade11.purshaseCoupon(coupon4);
-			customerFacade11.purshaseCoupon(coupon5);
-			customerFacade11.purshaseCoupon(coupon6);
-			customerFacade11.purshaseCoupon(coupon7);
-			customerFacade11.purshaseCoupon(coupon8);
-			customerFacade11.purshaseCoupon(coupon9);
-			customerFacade11.purshaseCoupon(coupon10);
+			customerFacade11.purchaseCoupon(coupon1);
+			customerFacade11.purchaseCoupon(coupon2);
+			customerFacade11.purchaseCoupon(coupon3);
+			customerFacade11.purchaseCoupon(coupon4);
+			customerFacade11.purchaseCoupon(coupon5);
+			customerFacade11.purchaseCoupon(coupon6);
+			customerFacade11.purchaseCoupon(coupon7);
+			customerFacade11.purchaseCoupon(coupon8);
+			customerFacade11.purchaseCoupon(coupon9);
+			customerFacade11.purchaseCoupon(coupon10);
 
-			customerFacade12.purshaseCoupon(coupon1);
-			customerFacade12.purshaseCoupon(coupon2);
-			customerFacade12.purshaseCoupon(coupon3);
-			customerFacade12.purshaseCoupon(coupon4);
-			customerFacade12.purshaseCoupon(coupon5);
+			customerFacade12.purchaseCoupon(coupon1);
+			customerFacade12.purchaseCoupon(coupon2);
+			customerFacade12.purchaseCoupon(coupon3);
+			customerFacade12.purchaseCoupon(coupon4);
+			customerFacade12.purchaseCoupon(coupon5);
 
 		} catch (CouponSystemException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 	}
 }

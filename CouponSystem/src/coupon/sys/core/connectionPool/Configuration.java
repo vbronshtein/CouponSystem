@@ -39,7 +39,7 @@ public class Configuration {
 	/**
 	 * Read Database URL from External file : "files/db.txt"
 	 * 
-	 * @return
+	 * @return Data base URL
 	 * @throws CouponSystemException
 	 */
 	private String readDbUrlFromFile() throws CouponSystemException {

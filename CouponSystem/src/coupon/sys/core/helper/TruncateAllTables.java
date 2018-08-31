@@ -23,6 +23,13 @@ public class TruncateAllTables {
 		this.pool = ConnectionPool.getInstance();
 	}
 
+	/**
+	 * Method delete follow tables on Data Base : TRUNCATE TABLE COMPANY"; TRUNCATE
+	 * TABLE COMPANY_COUPON"; TRUNCATE TABLE COUPON"; TRUNCATE TABLE CUSTOMER";
+	 * TRUNCATE TABLE CUSTOMER_COUPON"; TRUNCATE TABLE LAST_ID";
+	 *
+	 * @throws CouponSystemException
+	 */
 	public void trancateAll() throws CouponSystemException {
 
 		Connection connection = pool.getConnection();

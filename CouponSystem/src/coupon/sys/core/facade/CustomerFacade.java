@@ -10,6 +10,12 @@ import coupon.sys.core.dao.db.CustomerCouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Customer facade , used for perform actions of Customer user
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CustomerFacade implements CouponClientFacade {
 
 	private Customer customer;
@@ -32,16 +38,24 @@ public class CustomerFacade implements CouponClientFacade {
 	 * @param coupon
 	 * @throws CouponSystemException
 	 */
-	public void purshaseCoupon(Coupon coupon) throws CouponSystemException {
+	public void purchaseCoupon(Coupon coupon) throws CouponSystemException {
 		// can buy coupon only ones ,amount > 0 , not expired
-		if (customerCouponDbDao.read(this.customer, coupon) == null
-				&& couponDbDao.getCouponAmount(coupon.getTitle()) > 0 && !couponDbDao.isExpired(coupon.getTitle())) {
-			customerCouponDbDao.purshase(this.customer, coupon);
-
+		//check if already purchased
+		if (customerCouponDbDao.read(this.customer, coupon) == null) {
+			//check if company has available coupons
+			if (couponDbDao.getCouponAmount(coupon.getTitle()) > 0) {
+				// check if coupon not expired
+				if (!couponDbDao.isExpired(coupon.getTitle())) {
+					customerCouponDbDao.purchase(this.customer, coupon);
+				} else {
+					throw new CouponSystemException("purshase coupon fail , coupon is expired");
+				}
+			} else {
+				throw new CouponSystemException("purshase coupon fail , no available coupons");
+			}
 		} else {
-			throw new CouponSystemException("purshase coupon fail , no available coupons");
+			throw new CouponSystemException("purshase coupon fail , same coupon already purchased ");
 		}
-
 	}
 
 	/**

@@ -11,6 +11,13 @@ import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Global Actions on Coupon table ( without dependencies to Companies and
+ * Customers )
+ * 
+ * @author vbronshtein
+ *
+ */
 public class GlobalCouponDbDao {
 	private ConnectionPool pool;
 
@@ -20,9 +27,10 @@ public class GlobalCouponDbDao {
 	}
 
 	/**
+	 * Get coupon Amount
 	 * 
 	 * @param title
-	 * @return
+	 * @return number of Coupons
 	 * @throws CouponSystemException
 	 */
 	public int getCouponAmount(String title) throws CouponSystemException {
@@ -50,7 +58,7 @@ public class GlobalCouponDbDao {
 	 * Check if coupon is expired
 	 * 
 	 * @param title
-	 * @return
+	 * @return boolean parameter if Coupon is expired
 	 * @throws CouponSystemException
 	 */
 	public boolean isExpired(String title) throws CouponSystemException {
@@ -79,39 +87,12 @@ public class GlobalCouponDbDao {
 		return false;
 	}
 
-	// /**
-	// *
-	// * @param date
-	// * @return Collection<Long> of removed Coupon IDs from "coupon" table
-	// * @throws CouponSystemException
-	// */
-	// public Collection<Long> RemoveExpiredCoupons(Date date) throws
-	// CouponSystemException {
-	// Connection connection = pool.getConnection();
-	//
-	// String sqlCheck = "SELECT * FROM coupon WHERE END_DATE>'" + date + "'";
-	// String sqlDelete = "DELETE FROM coupon where END_DATE<'" + date + "'";
-	//
-	// try {
-	// Collection<Long> expiredIds = new ArrayList<>();
-	//
-	// Statement stmt = connection.createStatement();
-	// ResultSet rs = stmt.executeQuery(sqlCheck);
-	// while (rs.next()) {
-	// expiredIds.add(rs.getLong("ID"));
-	// }
-	// stmt.executeUpdate(sqlDelete);
-	// return expiredIds;
-	//
-	// } catch (SQLException e) {
-	// throw new CouponSystemException("Fail to remove expired coupons" , e);
-	// } finally {
-	// pool.returnConnection(connection);
-	// }
-	// return null;
-	//
-	// }
-
+	/**
+	 * Delete all expired Coupons
+	 * 
+	 * @param date
+	 * @throws CouponSystemException
+	 */
 	public void deleteAllExpiriedCoupons(Date date) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -134,13 +115,20 @@ public class GlobalCouponDbDao {
 		}
 
 	}
-	
+
+	/**
+	 * Get coupon by Title
+	 * 
+	 * @param title
+	 * @return coupon
+	 * @throws CouponSystemException
+	 */
 	public Coupon getCouponByTitle(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
 		try {
 			// read company coupon
-			String sql = "SELECT END_DATE FROM coupon WHERE TITLE='" + title + "'";
+			String sql = "SELECT * FROM coupon WHERE TITLE='" + title + "'";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {

@@ -1,7 +1,7 @@
 package coupon.sys.core.exceptions;
 
 /**
- * Use CouponSystemException for convert system exceptoions to coupon system
+ * Use CouponSystemException for convert system exceptions to coupon system
  * exception format
  * 
  * @author vbronshtein
@@ -16,6 +16,7 @@ public class CouponSystemException extends Exception {
 	}
 
 	/**
+	 * Basic Exception Constructor params
 	 * 
 	 * @param message
 	 * @param cause
@@ -28,6 +29,7 @@ public class CouponSystemException extends Exception {
 	}
 
 	/**
+	 * Basic Exception Constructor params
 	 * 
 	 * @param message
 	 * @param cause
@@ -37,6 +39,7 @@ public class CouponSystemException extends Exception {
 	}
 
 	/**
+	 * Basic Exception Constructor params
 	 * 
 	 * @param message
 	 */
@@ -45,6 +48,7 @@ public class CouponSystemException extends Exception {
 	}
 
 	/**
+	 * Basic Exception Constructor params
 	 * 
 	 * @param cause
 	 */

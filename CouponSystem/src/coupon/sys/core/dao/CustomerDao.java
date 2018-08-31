@@ -50,11 +50,11 @@ public interface CustomerDao {
 	 */
 	Collection<Customer> getAllCustomer() throws CouponSystemException;
 
-	/**
-	 * 
-	 * @return
-	 */
-	Collection<Coupon> getCoupons();
+	// /**
+	// *
+	// * @return
+	// */
+	// Collection<Coupon> getCoupons();
 
 	/**
 	 * 
@@ -64,7 +64,5 @@ public interface CustomerDao {
 	 * @throws CouponSystemException
 	 */
 	boolean login(String custName, String password) throws CouponSystemException;
-
-
 
 }

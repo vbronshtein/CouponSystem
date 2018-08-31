@@ -21,7 +21,7 @@ public class ConnectionPool {
 	private boolean shutdown;
 
 	// singleton declaration
-	private static ConnectionPool instance = new ConnectionPool();
+	private static ConnectionPool instance;
 
 	private ConnectionPool() {
 
@@ -33,6 +33,9 @@ public class ConnectionPool {
 	}
 
 	public static ConnectionPool getInstance() {
+		if (instance == null) {
+			instance = new ConnectionPool();
+		}
 		return instance;
 	}
 
@@ -59,11 +62,10 @@ public class ConnectionPool {
 		}
 	}
 
-	// Get-Return Connection methods
 	/**
-	 * Get SQL Connection to Data Base
+	 * Get Connection to DB from Pool
 	 * 
-	 * @return
+	 * @return return Connection to Data base
 	 * @throws CouponSystemException
 	 */
 	public synchronized Connection getConnection() throws CouponSystemException {
@@ -99,7 +101,7 @@ public class ConnectionPool {
 	/**
 	 * Check current pool size
 	 * 
-	 * @return
+	 * @return number of Available connections
 	 */
 	public int poolSize() {
 		return availableConnections.size();

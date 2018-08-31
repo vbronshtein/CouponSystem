@@ -12,6 +12,12 @@ import coupon.sys.core.dao.db.GlobalCouponDbDao;
 import coupon.sys.core.dao.db.CustomerCouponDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Company facade , used for perform actions of company user
+ * 
+ * @author vbronshtein
+ *
+ */
 public class CompanyFacade implements CouponClientFacade {
 
 	private Company company;
@@ -79,7 +85,7 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Read coupon from DB
 	 * 
 	 * @param couponId
-	 * @return
+	 * @return coupon
 	 * @throws CouponSystemException
 	 */
 	public Coupon getCoupon(long couponId) throws CouponSystemException {
@@ -90,7 +96,7 @@ public class CompanyFacade implements CouponClientFacade {
 	/**
 	 * Get specific coupon from Database
 	 * 
-	 * @return
+	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getAllCoupons() throws CouponSystemException {
@@ -101,7 +107,7 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Get all company coupons by Type
 	 * 
 	 * @param couponType
-	 * @return
+	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponByType(CouponType couponType) throws CouponSystemException {
@@ -112,7 +118,7 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Get all company coupons up to price
 	 * 
 	 * @param price
-	 * @return
+	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponUptoPrice(double price) throws CouponSystemException {
@@ -123,7 +129,7 @@ public class CompanyFacade implements CouponClientFacade {
 	 * Get all company coupons up to End date
 	 * 
 	 * @param date
-	 * @return
+	 * @return Collection of coupons
 	 * @throws CouponSystemException
 	 */
 	public Collection<Coupon> getCouponUpToDate(Date date) throws CouponSystemException {

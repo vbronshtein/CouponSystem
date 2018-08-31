@@ -10,6 +10,12 @@ import coupon.sys.core.dao.db.CustomerCouponDbDao;
 import coupon.sys.core.dao.db.CustomerDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Admin facade , used for perform actions of Admin user
+ * 
+ * @author vbronshtein
+ *
+ */
 public class AdminFacade implements CouponClientFacade {
 	private CompanyDbDao companyDbDao;
 	private CompanyCouponDbDao companyCouponDbDao;
@@ -51,7 +57,7 @@ public class AdminFacade implements CouponClientFacade {
 	 * @throws CouponSystemException
 	 */
 	public void removeCompany(Company company) throws CouponSystemException {
-		
+
 		// delete all company coupons
 		companyCouponDbDao.deleteAllCompanyCoupons(company);
 		// delete company
@@ -87,7 +93,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Get all companies exist on Database
 	 * 
-	 * @return
+	 * @return Collection of companies
 	 * @throws CouponSystemException
 	 */
 	public Collection<Company> getAllCompanies() throws CouponSystemException {
@@ -101,7 +107,7 @@ public class AdminFacade implements CouponClientFacade {
 	 * Get spesific company from Database
 	 * 
 	 * @param name
-	 * @return
+	 * @return company
 	 * @throws CouponSystemException
 	 */
 	public Company getCompany(long id) throws CouponSystemException {
@@ -176,7 +182,7 @@ public class AdminFacade implements CouponClientFacade {
 	/**
 	 * Get all customers fro Database
 	 * 
-	 * @return
+	 * @return Collection of customers
 	 * @throws CouponSystemException
 	 */
 	public Collection<Customer> getAllCustomers() throws CouponSystemException {
@@ -187,10 +193,10 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	/**
-	 * Get spesific customer from database
+	 * Get specific customer from database
 	 * 
 	 * @param id
-	 * @return
+	 * @return customer
 	 * @throws CouponSystemException
 	 */
 	public Customer getCustomer(long id) throws CouponSystemException {

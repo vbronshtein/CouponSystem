@@ -66,6 +66,4 @@ public interface CompanyDao {
 	 */
 	boolean login(String compName, String password) throws CouponSystemException;
 
-
-
 }

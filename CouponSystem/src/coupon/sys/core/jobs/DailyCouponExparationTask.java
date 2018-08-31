@@ -6,6 +6,12 @@ import java.sql.Date;
 import coupon.sys.core.dao.db.GlobalCouponDbDao;
 import coupon.sys.core.exceptions.CouponSystemException;
 
+/**
+ * Thread that delete all expired coupons Thread run ones in 24 hours
+ * 
+ * @author vbronshtein
+ *
+ */
 public class DailyCouponExparationTask implements Runnable {
 
 	private GlobalCouponDbDao couponDbDao;
