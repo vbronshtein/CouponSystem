@@ -26,7 +26,7 @@ public class ConnectionPool {
 	private ConnectionPool() {
 
 		try {
-			initialyzeConnectionPool();
+			initializeConnectionPool();
 		} catch (CouponSystemException e) {
 		}
 		shutdown = false;
@@ -51,7 +51,7 @@ public class ConnectionPool {
 	}
 
 	// fill all pool
-	private void initialyzeConnectionPool() throws CouponSystemException {
+	private void initializeConnectionPool() throws CouponSystemException {
 		while (availableConnections.size() < Configuration.getInstance().DB_MAX_CONNECTIONS) {
 			try {
 				availableConnections.add(createNewConnectionForPool());

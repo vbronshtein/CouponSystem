@@ -26,14 +26,14 @@ public class Configuration {
 	// public static String DB_DRIVER;
 
 	// Singleton Declaration
-	private static Configuration istance = new Configuration();
+	private static Configuration instance = new Configuration();
 
 	private Configuration() {
 		init();
 	}
 
 	public static Configuration getInstance() {
-		return istance;
+		return instance;
 	}
 
 	/**
