@@ -99,8 +99,8 @@ public class CouponSystem {
 	private void initDailyThread() {
 
 		dailyExpTask = new DailyCouponExparationTask();
-		Thread t1 = new Thread(dailyExpTask, "dailyExpired");
-		t1.start();
+		Thread dailyThread = new Thread(dailyExpTask, "dailyExpired");
+		dailyThread.start();
 
 	}
 }
