@@ -41,9 +41,9 @@ public class ConnectionPool {
 
 	// create single SQL connection
 	private Connection createNewConnectionForPool() throws CouponSystemException {
-		Configuration configuration = Configuration.getInstance();
+//		Configuration configuration = Configuration.getInstance();
 		try {
-			Connection connection = DriverManager.getConnection(configuration.DB_URL);
+			Connection connection = DriverManager.getConnection(DataBaseConfig.DB_URL);
 			return connection;
 		} catch (SQLException e) {
 			throw new CouponSystemException("Fail to create connection for pool", e);
@@ -52,7 +52,7 @@ public class ConnectionPool {
 
 	// fill all pool
 	private void initializeConnectionPool() throws CouponSystemException {
-		while (availableConnections.size() < Configuration.getInstance().DB_MAX_CONNECTIONS) {
+		while (availableConnections.size() < DataBaseConfig.DB_MAX_CONNECTIONS) {
 			try {
 				availableConnections.add(createNewConnectionForPool());
 				connectionBackup.add(createNewConnectionForPool());

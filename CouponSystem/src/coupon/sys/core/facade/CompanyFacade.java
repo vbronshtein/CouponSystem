@@ -142,7 +142,6 @@ public class CompanyFacade implements CouponClientFacade {
 	@Deprecated
 	@Override
 	public CouponClientFacade login(String name, String password, String clientType) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
