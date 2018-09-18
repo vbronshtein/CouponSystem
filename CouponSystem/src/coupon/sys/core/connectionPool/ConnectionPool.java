@@ -41,7 +41,6 @@ public class ConnectionPool {
 
 	// create single SQL connection
 	private Connection createNewConnectionForPool() throws CouponSystemException {
-//		Configuration configuration = Configuration.getInstance();
 		try {
 			Connection connection = DriverManager.getConnection(DataBaseConfig.DB_URL);
 			return connection;
@@ -55,7 +54,7 @@ public class ConnectionPool {
 		while (availableConnections.size() < DataBaseConfig.DB_MAX_CONNECTIONS) {
 			try {
 				availableConnections.add(createNewConnectionForPool());
-				connectionBackup.add(createNewConnectionForPool());
+				connectionBackup.addAll(availableConnections);
 			} catch (CouponSystemException e) {
 				throw new CouponSystemException("Fail to initialyze Connecton Pool", e);
 			}
@@ -89,13 +88,14 @@ public class ConnectionPool {
 	/**
 	 * Return Connection to pool
 	 * 
-	 * @param connection  Connection to DataBase.
+	 * @param connection
+	 *            Connection to DataBase.
 	 */
 	public synchronized void returnConnection(Connection connection) {
-		if (!shutdown) {
-			availableConnections.add(connection);
-			notify();
-		}
+		// if (!shutdown) {
+		availableConnections.add(connection);
+		notify();
+		// }
 	}
 
 	/**
@@ -113,14 +113,24 @@ public class ConnectionPool {
 	 * @throws CouponSystemException
 	 */
 	public void closeAllConnection() throws CouponSystemException {
-		System.out.println("Pool size : " + availableConnections.size());
-		for (Connection connection : connectionBackup) {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				throw new CouponSystemException("Close SQL connection fail", e);
+		shutdown = true;
+		try {
+			// if all connections in pool close all immediately
+			if (availableConnections.size() == DataBaseConfig.DB_MAX_CONNECTIONS) {
+				for (Connection connection : availableConnections) {
+					connection.close();
+				}
+			} else {
+				// Else wait 30 sec and close all connections using backup pool
+				Thread.sleep(30000);
+				for (Connection connection : connectionBackup) {
+					connection.close();
+				}
 			}
+		} catch (SQLException | InterruptedException e) {
+			throw new CouponSystemException("Close SQL connection fail", e);
 		}
+
 	}
 
 }

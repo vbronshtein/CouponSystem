@@ -10,6 +10,7 @@ import coupon.sys.core.beans.Company;
 import coupon.sys.core.beans.Coupon;
 import coupon.sys.core.beans.CouponType;
 import coupon.sys.core.beans.Customer;
+import coupon.sys.core.connectionPool.ConnectionPool;
 import coupon.sys.core.exceptions.CouponSystemException;
 import coupon.sys.core.facade.AdminFacade;
 import coupon.sys.core.facade.CompanyFacade;
