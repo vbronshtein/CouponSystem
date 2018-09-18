@@ -15,46 +15,58 @@ import coupon.sys.core.exceptions.CouponSystemException;
 public interface CustomerDao {
 
 	/**
+	 * Create new customer on DataBase
 	 * 
-	 * @param customer  Customer
+	 * @param customer
+	 *            Customer
 	 * @throws CouponSystemException
 	 */
 	void create(Customer customer) throws CouponSystemException;
 
 	/**
+	 * Read customer from DataBase
 	 * 
-	 * @param id Customer Id
+	 * @param id
+	 *            Customer Id
 	 * @return
 	 * @throws CouponSystemException
 	 */
 	Customer read(long id) throws CouponSystemException;
 
 	/**
+	 * Update customer on Database
 	 * 
-	 * @param customer  Customer
+	 * @param customer
+	 *            Customer
 	 * @throws CouponSystemException
 	 */
 	void update(Customer customer) throws CouponSystemException;
 
 	/**
+	 * Delete customer from DataBase
 	 * 
-	 * @param customer  Customer
+	 * @param customer
+	 *            Customer
 	 * @throws CouponSystemException
 	 */
 	void delete(Customer customer) throws CouponSystemException;
 
 	/**
+	 * Read all customers from DataBase
 	 * 
 	 * @return List of customers
 	 * @throws CouponSystemException
 	 */
 	Collection<Customer> getAllCustomer() throws CouponSystemException;
 
-
 	/**
+	 * Login as customer ( compare between received user and password and DataBase
+	 * record )
 	 * 
-	 * @param custName  Customer name
-	 * @param password  Customer password
+	 * @param custName
+	 *            Customer name
+	 * @param password
+	 *            Customer password
 	 * @return Boolean ( success , fail )
 	 * @throws CouponSystemException
 	 */

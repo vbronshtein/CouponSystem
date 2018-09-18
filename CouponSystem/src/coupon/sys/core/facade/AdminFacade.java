@@ -104,9 +104,10 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	/**
+	 * Get Company from DataBase
 	 * 
 	 * @param id Company ID
-	 * @return Comapny
+	 * @return Company
 	 * @throws CouponSystemException
 	 */
 	public Company getCompany(long id) throws CouponSystemException {
@@ -153,7 +154,7 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	/**
-	 * Update Customed from DB ( all fields except customer name)
+	 * Update Customer from DB ( all fields except customer name)
 	 * 
 	 * @param customer Customer
 	 * @throws CouponSystemException
@@ -179,7 +180,7 @@ public class AdminFacade implements CouponClientFacade {
 	}
 
 	/**
-	 * Get all customers fro Database
+	 * Get all customers from Database
 	 * 
 	 * @return Collection of customers
 	 * @throws CouponSystemException

@@ -24,15 +24,15 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	private ConnectionPool pool;
 
+	/**
+	 * Default Constructor, Also assigning of Connection pool Instance to local
+	 * variable
+	 */
 	public CompanyDbDao() {
 		super();
 		this.pool = ConnectionPool.getInstance();
 	}
 
-	// Interface methods
-	/**
-	 * Create new company on DB
-	 */
 	@Override
 	public void create(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -53,9 +53,6 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
-	/**
-	 * Read company from DB
-	 */
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -82,9 +79,6 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
-	/**
-	 * Update Company fields on DB
-	 */
 	@Override
 	public void update(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -103,9 +97,6 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
-	/**
-	 * Delete company from DB
-	 */
 	@Override
 	public void delete(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -123,9 +114,6 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
-	/**
-	 * Get all companies from DB
-	 */
 	@Override
 	public Collection<Company> getAllCompanies() throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -154,9 +142,6 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 	}
 
-	/**
-	 * Method not in Use , Mark as deprecated
-	 */
 	@Deprecated
 	@Override
 	public Collection<Coupon> getCoupons() throws CouponSystemException {

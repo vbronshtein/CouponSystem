@@ -23,10 +23,13 @@ import coupon.sys.core.exceptions.CouponSystemException;
  *
  */
 public class CompanyCouponDbDao implements CouponDao {
-	// implements CompanyCouponDao {
 
 	private ConnectionPool pool;
 
+	/**
+	 * Default Constructor, Also assigning of Connection pool Instance to local
+	 * variable
+	 */
 	public CompanyCouponDbDao() {
 		super();
 		this.pool = ConnectionPool.getInstance();
@@ -58,15 +61,6 @@ public class CompanyCouponDbDao implements CouponDao {
 
 	}
 
-	/**
-	 * Update coupon info
-	 * 
-	 * @param company
-	 *            Company
-	 * @param coupon
-	 *            Coupon for update
-	 * @throws CouponSystemException
-	 */
 	@Override
 	public void update(Company company, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -86,9 +80,6 @@ public class CompanyCouponDbDao implements CouponDao {
 
 	}
 
-	/**
-	 * Delete coupon from : coupon and company_coupon tables
-	 */
 	@Override
 	public void delete(Company company, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -114,16 +105,6 @@ public class CompanyCouponDbDao implements CouponDao {
 
 	}
 
-	/**
-	 * Read company coupon
-	 * 
-	 * @param compId
-	 *            Company Id
-	 * @param couponId
-	 *            Coupon ID
-	 * @return Company from DB
-	 * @throws CouponSystemException
-	 */
 	@Override
 	public Coupon read(long compId, long couponId) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -223,16 +204,6 @@ public class CompanyCouponDbDao implements CouponDao {
 		}
 	}
 
-	/**
-	 * Get coupons by type
-	 * 
-	 * @param company
-	 *            Company
-	 * @param type
-	 *            Coupon type
-	 * @return Collection of Coupons from DB
-	 * @throws CouponSystemException
-	 */
 	@Override
 	public Collection<Coupon> getCouponByType(Company company, CouponType type) throws CouponSystemException {
 		Connection connection = pool.getConnection();

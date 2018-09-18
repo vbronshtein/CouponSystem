@@ -14,19 +14,25 @@ import coupon.sys.core.exceptions.CouponSystemException;
  *
  */
 public interface CustomerCouponDao {
-	
+
 	/**
+	 * Create new Customer coupon in DataBase
 	 * 
-	 * @param customer  Customer
-	 * @param coupon  Coupon
+	 * @param customer
+	 *            Customer
+	 * @param coupon
+	 *            Coupon
 	 * @throws CouponSystemException
 	 */
 	void create(Customer customer, Coupon coupon) throws CouponSystemException;
 
 	/**
+	 * Delete Customer coupon from DataBase
 	 * 
-	 * @param customer  Customer
-	 * @param coupon  Coupon
+	 * @param customer
+	 *            Customer
+	 * @param coupon
+	 *            Coupon
 	 * @throws CouponSystemException
 	 */
 	void delete(Customer customer, Coupon coupon) throws CouponSystemException;

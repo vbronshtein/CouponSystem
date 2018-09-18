@@ -9,8 +9,8 @@ import java.io.IOException;
 import coupon.sys.core.exceptions.CouponSystemException;
 
 /**
- * Class Configure connection to Database ( current configure to work with Derby
- * DB , without password)
+ * Class contain configuration of DataBase ( URL and Number of maximum
+ * connections ) *Configured for Derby data base
  * 
  * @author vbronshtein
  *
@@ -24,6 +24,5 @@ public final class DataBaseConfig {
 		DB_MAX_CONNECTIONS = 10;
 		DB_URL = "jdbc:derby://localhost:1527/coupon_sys_db";
 	}
-		
-}
 
+}

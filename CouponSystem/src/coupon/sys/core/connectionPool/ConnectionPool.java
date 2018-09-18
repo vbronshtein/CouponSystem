@@ -23,6 +23,10 @@ public class ConnectionPool {
 	// singleton declaration
 	private static ConnectionPool instance;
 
+	/**
+	 * Connection pool constructor , initialize pool of connection Constructor is
+	 * private for single ton class
+	 */
 	private ConnectionPool() {
 
 		try {
@@ -32,6 +36,11 @@ public class ConnectionPool {
 		shutdown = false;
 	}
 
+	/**
+	 * Get SQL Connection from pool of connections
+	 * 
+	 * @return instance - SQL Connection
+	 */
 	public static ConnectionPool getInstance() {
 		if (instance == null) {
 			instance = new ConnectionPool();
@@ -39,7 +48,13 @@ public class ConnectionPool {
 		return instance;
 	}
 
-	// create single SQL connection
+	//
+	/**
+	 * Create single SQL connection ( private method , helper for fill all pool )
+	 * 
+	 * @return
+	 * @throws CouponSystemException
+	 */
 	private Connection createNewConnectionForPool() throws CouponSystemException {
 		try {
 			Connection connection = DriverManager.getConnection(DataBaseConfig.DB_URL);
@@ -50,6 +65,12 @@ public class ConnectionPool {
 	}
 
 	// fill all pool
+	/**
+	 * Fill all Connection pool ( up to DB_MAX_CONNECTIONS from configuration class
+	 * )
+	 * 
+	 * @throws CouponSystemException
+	 */
 	private void initializeConnectionPool() throws CouponSystemException {
 		while (availableConnections.size() < DataBaseConfig.DB_MAX_CONNECTIONS) {
 			try {
@@ -62,7 +83,8 @@ public class ConnectionPool {
 	}
 
 	/**
-	 * Get Connection to DB from Pool
+	 * Get SQL Connection from pool ( connection removed from pool on return action
+	 * ) Method is synchronize (wait until connection pool have connection )
 	 * 
 	 * @return return Connection to Data base
 	 * @throws CouponSystemException
@@ -86,7 +108,8 @@ public class ConnectionPool {
 	}
 
 	/**
-	 * Return Connection to pool
+	 * Return Connection to pool ( and notify all all wait connections ) Synchronize
+	 * method
 	 * 
 	 * @param connection
 	 *            Connection to DataBase.
@@ -106,7 +129,9 @@ public class ConnectionPool {
 	}
 
 	/**
-	 * Close all Connections from Connection pool
+	 * Close all pool SQL Connections ( if all connections is in pool , method will
+	 * close all immediately , otherwise wait for 30 sec and then close all
+	 * connection using helper backup pool )
 	 * 
 	 * @throws CouponSystemException
 	 */

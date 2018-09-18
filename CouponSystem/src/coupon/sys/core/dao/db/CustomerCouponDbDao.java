@@ -26,6 +26,10 @@ public class CustomerCouponDbDao {
 
 	private ConnectionPool pool;
 
+	/**
+	 * Default Constructor, Also assigning of Connection pool Instance to local
+	 * variable
+	 */
 	public CustomerCouponDbDao() {
 		super();
 		this.pool = ConnectionPool.getInstance();
@@ -41,7 +45,6 @@ public class CustomerCouponDbDao {
 	 *            Coupon
 	 * @throws CouponSystemException
 	 */
-	// @Override
 	public void purchase(Customer customer, Coupon coupon) throws CouponSystemException {
 		Connection connection = pool.getConnection();
 
@@ -79,7 +82,6 @@ public class CustomerCouponDbDao {
 	 *            Coupon
 	 * @throws CouponSystemException
 	 */
-	// @Override
 	public void delete(Customer customer, Coupon coupon) throws CouponSystemException {
 
 		Connection connection = pool.getConnection();

@@ -17,14 +17,15 @@ public class CustomerDbDao implements CustomerDao {
 
 	private ConnectionPool pool;
 
+	/**
+	 * Default Constructor, Also assigning of Connection pool Instance to local
+	 * variable
+	 */
 	public CustomerDbDao() {
 		super();
 		this.pool = ConnectionPool.getInstance();
 	}
 
-	/**
-	 * Create new customer in DB
-	 */
 	@Override
 	public void create(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -43,9 +44,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	/**
-	 * Get customer from DB
-	 */
 	@Override
 	public Customer read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -71,9 +69,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	/**
-	 * Update Existed customer
-	 */
 	@Override
 	public void update(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -92,9 +87,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	/**
-	 * Delete customer from DB
-	 */
 	@Override
 	public void delete(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -112,9 +104,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	/**
-	 * Get all Customers from DB
-	 */
 	@Override
 	public Collection<Customer> getAllCustomer() throws CouponSystemException {
 		Connection connection = pool.getConnection();
@@ -176,9 +165,6 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-	/**
-	 * Login as Custommer ( verify credentials with DB )
-	 */
 	@Override
 	public boolean login(String custName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();

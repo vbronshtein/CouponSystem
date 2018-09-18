@@ -21,6 +21,10 @@ import coupon.sys.core.exceptions.CouponSystemException;
 public class GlobalCouponDbDao {
 	private ConnectionPool pool;
 
+	/**
+	 * Default Constructor, Also assigning of Connection pool Instance to local
+	 * variable
+	 */
 	public GlobalCouponDbDao() {
 		super();
 		this.pool = ConnectionPool.getInstance();
