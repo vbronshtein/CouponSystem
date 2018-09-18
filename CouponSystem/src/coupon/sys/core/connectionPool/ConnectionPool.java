@@ -92,10 +92,8 @@ public class ConnectionPool {
 	 *            Connection to DataBase.
 	 */
 	public synchronized void returnConnection(Connection connection) {
-		// if (!shutdown) {
 		availableConnections.add(connection);
 		notify();
-		// }
 	}
 
 	/**
