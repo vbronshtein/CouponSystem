@@ -35,8 +35,7 @@ public class GlobalCouponDbDao {
 	 */
 	public int getCouponAmount(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-
-		String sql = "SELECT AMOUNT FROM coupon WHERE TITLE='" + title + "'";
+		String sql = String.format(SQL_QUERY.SQL_Get_Coupon_Amount, title);
 
 		try {
 			Statement stmt = connection.createStatement();
@@ -57,14 +56,14 @@ public class GlobalCouponDbDao {
 	/**
 	 * Check if coupon is expired
 	 * 
-	 * @param title Coupon title
+	 * @param title
+	 *            Coupon title
 	 * @return boolean parameter if Coupon is expired
 	 * @throws CouponSystemException
 	 */
 	public boolean isExpired(String title) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-
-		String sql = "SELECT END_DATE FROM coupon WHERE TITLE='" + title + "'";
+		String sql = String.format(SQL_QUERY.SQL_is_Coupon_Expired, title);
 
 		try {
 			Statement stmt = connection.createStatement();
@@ -90,17 +89,15 @@ public class GlobalCouponDbDao {
 	/**
 	 * Delete all expired Coupons
 	 * 
-	 * @param date  Coupon end Date
+	 * @param date
+	 *            Coupon end Date
 	 * @throws CouponSystemException
 	 */
 	public void deleteAllExpiriedCoupons(Date date) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-
-		String sqlCustCoupon = "DELETE FROM customer_coupon WHERE COUPON_ID IN (select ID from coupon where end_date <='"
-				+ date + "')";
-		String sqlCompCoupon = "DELETE FROM company_coupon WHERE COUPON_ID IN (select ID from coupon where end_date <='"
-				+ date + "')";
-		String sqlCoupon = "DELETE FROM coupon WHERE END_DATE<='" + date + "'";
+		String sqlCustCoupon = String.format(SQL_QUERY.SQL_Del_All_Expiried_Coupons_Cust, date);
+		String sqlCompCoupon = String.format(SQL_QUERY.SQL_Del_All_Expiried_Coupons_Comp, date);
+		String sqlCoupon = String.format(SQL_QUERY.SQL_Del_All_Expiried_Coupons, date);
 
 		Statement stmt;
 		try {
@@ -119,7 +116,8 @@ public class GlobalCouponDbDao {
 	/**
 	 * Get coupon by Title
 	 * 
-	 * @param title  Coupon title
+	 * @param title
+	 *            Coupon title
 	 * @return coupon
 	 * @throws CouponSystemException
 	 */
@@ -128,7 +126,8 @@ public class GlobalCouponDbDao {
 
 		try {
 			// read company coupon
-			String sql = "SELECT * FROM coupon WHERE TITLE='" + title + "'";
+			String sql = String.format(SQL_QUERY.SQL_Get_Coupon_By_Title, title);
+
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {

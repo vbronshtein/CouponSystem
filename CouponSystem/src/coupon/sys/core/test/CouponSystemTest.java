@@ -103,7 +103,7 @@ public class CouponSystemTest {
 			 */
 
 			// login as Company
-			System.out.println("Login as client ...");
+			System.out.println("Login as company ...");
 			CompanyFacade compFacade = (CompanyFacade) couponSystem.login(osem.getName(), osem.getPassword(),
 					ClientType.COMPANY);
 			if (compFacade != null) {
@@ -150,7 +150,7 @@ public class CouponSystemTest {
 			 * Customer Facade Tests
 			 */
 
-			// login as Company
+			// login as Customer
 			System.out.println("Login as client ...");
 			CustomerFacade custFacade = (CustomerFacade) couponSystem.login("Yossi", "12346", ClientType.CUSTOMER);
 			if (custFacade != null) {

@@ -39,8 +39,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 
 		try {
 			long id = getLastAvailableId();
-			String sql = "INSERT INTO company VALUES(" + id + ", " + "'" + company.getName() + "'" + ", " + "'"
-					+ company.getPassword() + "'" + ", " + "'" + company.getEmail() + "'" + ")";
+			String sql = String.format(SQL_QUERY.SQL_Create_Company, id, company.getName(), company.getPassword(),
+					company.getEmail());
 
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(sql);
@@ -59,8 +59,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public Company read(long id) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		String sql = String.format(SQL_QUERY.SQL_Read_Company, id);
 
-		String sql = "SELECT * FROM company WHERE ID= " + id;
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -88,8 +88,9 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public void update(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		String sql = "UPDATE company SET COMP_NAME='" + company.getName() + "',PASSWORD='" + company.getPassword()
-				+ "',EMAIL='" + company.getEmail() + "' WHERE COMP_NAME='" + company.getName() + "'";
+		String sql = String.format(SQL_QUERY.SQL_Update_Company, company.getName(), company.getPassword(),
+				company.getEmail(), company.getName());
+
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -108,7 +109,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public void delete(Company company) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM company WHERE COMP_NAME='" + company.getName() + "'";
+		String sql = String.format(SQL_QUERY.SQL_Delete_Company, company.getName());
 
 		Statement stmt;
 		try {
@@ -129,8 +130,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	public Collection<Company> getAllCompanies() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		Collection<Company> companies = new ArrayList<>();
+		String sql = String.format(SQL_QUERY.SQL_Get_All_Companies);
 
-		String sql = "SELECT * FROM company ";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -154,7 +155,7 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	}
 
 	/**
-	 * Method non in Use , Mark as depricated
+	 * Method not in Use , Mark as deprecated
 	 */
 	@Deprecated
 	@Override
@@ -167,14 +168,15 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	/**
 	 * Get Company by Name from DB
 	 * 
-	 * @param name  Comapny name
+	 * @param name
+	 *            Comapny name
 	 * @return Company from DB
 	 * @throws CouponSystemException
 	 */
 	public Company getCompanyByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		String sql = String.format(SQL_QUERY.SQL_Get_Company_By_Name, name);
 
-		String sql = "SELECT * FROM company WHERE COMP_NAME= '" + name + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -199,8 +201,8 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	@Override
 	public boolean login(String compName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		String sql = String.format(SQL_QUERY.SQL_Login_As_Company, compName);
 
-		String sql = "SELECT PASSWORD FROM company WHERE COMP_NAME='" + compName + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -228,19 +230,19 @@ public class CompanyDbDao extends Thread implements CompanyDao {
 	public long getLastAvailableId() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		long id;
+		String sql = String.format(SQL_QUERY.SQL_Get_Last_Available_id, "Company");
 
-		String sql = "SELECT id FROM last_id WHERE type='Company'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				id = rs.getLong("ID");
 				long nextId = id + 1;
-				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Company'";
+				String sqlUpdate = String.format(SQL_QUERY.SQL_Get_Last_Available_id_Update, nextId, "Company");
 				stmt.executeUpdate(sqlUpdate);
 				return nextId;
 			} else {
-				String sqlInitTable = "INSERT INTO last_id VALUES('Company',1)";
+				String sqlInitTable = String.format(SQL_QUERY.SQL_Get_Last_Available_id_Init, "Company");
 				stmt.executeUpdate(sqlInitTable);
 				return 1;
 			}

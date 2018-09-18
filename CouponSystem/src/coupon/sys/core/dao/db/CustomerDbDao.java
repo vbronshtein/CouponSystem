@@ -30,8 +30,7 @@ public class CustomerDbDao implements CustomerDao {
 		Connection connection = pool.getConnection();
 
 		long id = getLastAvailableId();
-		String sql = "INSERT INTO CUSTOMER VALUES(" + id + ",'" + customer.getCustName() + "','"
-				+ customer.getPassword() + "')";
+		String sql = String.format(SQL_QUERY.SQL_Create_Customer, id, customer.getCustName(), customer.getPassword());
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -49,11 +48,10 @@ public class CustomerDbDao implements CustomerDao {
 	 */
 	@Override
 	public Customer read(long id) throws CouponSystemException {
-
 		Connection connection = pool.getConnection();
 		Customer customer = new Customer();
+		String sql = String.format(SQL_QUERY.SQL_Read_Customer, id);
 
-		String sql = "SELECT * FROM customer WHERE ID=" + id;
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -79,8 +77,9 @@ public class CustomerDbDao implements CustomerDao {
 	@Override
 	public void update(Customer customer) throws CouponSystemException {
 		Connection connection = pool.getConnection();
-		String sql = "UPDATE customer SET CUST_NAME='" + customer.getCustName() + "',PASSWORD='"
-				+ customer.getPassword() + "' WHERE id=" + customer.getId();
+		String sql = String.format(SQL_QUERY.SQL_Update_Customer, customer.getCustName(), customer.getPassword(),
+				customer.getId());
+
 		Statement stmt;
 		try {
 			stmt = connection.createStatement();
@@ -98,9 +97,8 @@ public class CustomerDbDao implements CustomerDao {
 	 */
 	@Override
 	public void delete(Customer customer) throws CouponSystemException {
-
 		Connection connection = pool.getConnection();
-		String sql = "DELETE FROM customer WHERE CUST_NAME='" + customer.getCustName() + "'";
+		String sql = String.format(SQL_QUERY.SQL_Delete_Customer, customer.getCustName());
 
 		Statement stmt;
 		try {
@@ -121,7 +119,7 @@ public class CustomerDbDao implements CustomerDao {
 	public Collection<Customer> getAllCustomer() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		Collection<Customer> customers = new ArrayList<>();
-		String sql = "SELECT * FROM customer";
+		String sql = String.format(SQL_QUERY.SQL_Get_All_Customer);
 
 		try {
 			Statement stmt = connection.createStatement();
@@ -146,18 +144,18 @@ public class CustomerDbDao implements CustomerDao {
 
 	}
 
-
 	/**
 	 * Get Customer from DB by Name input
 	 * 
-	 * @param name  Customer name
+	 * @param name
+	 *            Customer name
 	 * @return customer
 	 * @throws CouponSystemException
 	 */
 	public Customer getCustomerByName(String name) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		String sql = String.format(SQL_QUERY.SQL_Get_Customer_By_Name, name);
 
-		String sql = "SELECT * FROM customer WHERE CUST_NAME= '" + name + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -184,8 +182,8 @@ public class CustomerDbDao implements CustomerDao {
 	@Override
 	public boolean login(String custName, String password) throws CouponSystemException {
 		Connection connection = pool.getConnection();
+		String sql = String.format(SQL_QUERY.SQL_Login_As_Customer, custName);
 
-		String sql = "SELECT PASSWORD FROM customer WHERE CUST_NAME='" + custName + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -213,19 +211,19 @@ public class CustomerDbDao implements CustomerDao {
 	public long getLastAvailableId() throws CouponSystemException {
 		Connection connection = pool.getConnection();
 		long id;
+		String sql = String.format(SQL_QUERY.SQL_Get_Last_Available_id, "Customer");
 
-		String sql = "SELECT id FROM last_id WHERE type='Customer'";
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				id = rs.getLong("ID");
 				long nextId = id + 1;
-				String sqlUpdate = "UPDATE last_id SET id=" + nextId + " WHERE Type='Customer'";
+				String sqlUpdate = String.format(SQL_QUERY.SQL_Get_Last_Available_id_Update, nextId, "Customer");
 				stmt.executeUpdate(sqlUpdate);
 				return nextId;
 			} else {
-				String sqlInitTable = "INSERT INTO last_id VALUES('Customer',1)";
+				String sqlInitTable = String.format(SQL_QUERY.SQL_Get_Last_Available_id_Init, "Customer");
 				stmt.executeUpdate(sqlInitTable);
 				return 1;
 			}

@@ -23,7 +23,7 @@ public class CouponSystem {
 	private CompanyDbDao companyDbDao;
 	private CustomerDbDao customerDbDao;
 
-	private static CouponSystem instance ;//= new CouponSystem();
+	private static CouponSystem instance ;
 
 	DailyCouponExparationTask dailyExpTask;
 
