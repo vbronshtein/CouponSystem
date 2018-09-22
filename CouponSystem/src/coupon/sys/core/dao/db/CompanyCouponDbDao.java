@@ -296,7 +296,7 @@ public class CompanyCouponDbDao implements CouponDao {
 			Collection<Coupon> coupons = new ArrayList<>();
 			// read all company coupons
 			String sql = String.format(SQL_QUERY.SQL_Get_CompanyCoupon_Upto_Date,
-					company.getId() + " and c.end_date<'" + date);
+					company.getId(), date);
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
